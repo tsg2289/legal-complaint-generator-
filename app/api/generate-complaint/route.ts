@@ -27,21 +27,46 @@ export async function POST(request: NextRequest) {
     const sanitizedSummary = summary.trim().slice(0, 5000) // Limit length
 
     const prompt = `
-You are a legal assistant. Given a factual case summary, draft a full California Superior Court complaint with:
+You are a legal assistant. Generate a California Superior Court complaint using the EXACT format below with line numbering 1-25 on the left margin.
 
-- Caption (include placeholder court information and case number)
-- Jurisdiction and Venue
-- Parties (Plaintiff and Defendant sections)
-- General Allegations
-- Causes of Action (determine appropriate causes based on facts - may include Negligence, Property Damage, Personal Injury, Breach of Contract, etc.)
-- Prayer for Relief (including damages, costs, attorney fees, and other appropriate relief)
-- Jury Demand
+REQUIRED FORMAT:
+- Lines 1-7: Attorney information block (use placeholder attorney info)
+- Line 8: "SUPERIOR COURT OF THE STATE OF CALIFORNIA" (centered)
+- Line 9: "COUNTY OF [COUNTY], [DISTRICT] DISTRICT" (centered)
+- Lines 11-16: Case caption with parties, case number, and document title
+- Lines 17+: Body of complaint with numbered allegations
 
-Facts: """${sanitizedSummary}"""
+Facts to incorporate: """${sanitizedSummary}"""
 
-Use proper legal formatting and language. Include specific factual allegations from the summary. 
-Format the document professionally with clear headings and numbered paragraphs.
-Ensure all causes of action are supported by the facts provided.
+Generate the complaint using this EXACT format structure:
+
+Line 1: [Attorney Name], State Bar No. [Number]
+Line 2: [Email]
+Line 3: [Second Attorney Name], State Bar No. [Number]  
+Line 4: [Email]
+Line 5: [Law Firm Name]
+Line 6: Attorneys at Law
+Line 7: [Address, Phone, Fax]
+Line 8: 
+Line 9:                    SUPERIOR COURT OF THE STATE OF CALIFORNIA
+Line 10:
+Line 11:                  COUNTY OF [COUNTY], [DISTRICT] DISTRICT
+Line 12:
+Line 13: [PLAINTIFF NAME], an individual,          | Case No. [CASE_NUMBER]
+Line 14:                                           |
+Line 15:                    Plaintiff,             | COMPLAINT FOR:
+Line 16:                                           | [CAUSES OF ACTION]
+Line 17:              v.                           | 
+Line 18:                                           | DEMAND FOR JURY TRIAL
+Line 19: [DEFENDANT NAME], an individual; and      |
+Line 20: DOES 1 to 25, Inclusive                   |
+Line 21:                                           |
+Line 22:                    Defendants.            |
+Line 23: __________________________________________|
+
+Continue with numbered allegations starting around line 24, incorporating the provided facts into proper legal allegations with causes of action for negligence, damages, etc.
+
+Use standard California pleading language and ensure all factual allegations from the summary are properly incorporated.
 `
 
     const payload = {
