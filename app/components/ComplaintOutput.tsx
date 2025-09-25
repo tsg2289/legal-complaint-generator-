@@ -13,10 +13,6 @@ interface ComplaintOutputProps {
 export default function ComplaintOutput({ complaint, onNewComplaint }: ComplaintOutputProps) {
   const [copied, setCopied] = useState(false)
   const [showProofOfService, setShowProofOfService] = useState(false)
-  const [selectedCounty, setSelectedCounty] = useState('Los Angeles')
-  const [attorneyName, setAttorneyName] = useState('RANDY LENO')
-  const [attorneyEmail, setAttorneyEmail] = useState('RLENO@FAKE.com')
-  const [attorneyBarNumber, setAttorneyBarNumber] = useState('119478')
 
   // California Counties List
   const californiaCounties = [
@@ -31,30 +27,12 @@ export default function ComplaintOutput({ complaint, onNewComplaint }: Complaint
     'Tulare', 'Tuolumne', 'Ventura', 'Yolo', 'Yuba'
   ]
 
-  // Sample attorney names for dropdown
-  const attorneyNames = [
-    'RANDY LENO', 'MICHAEL JOHNSON', 'SARAH WILLIAMS', 'DAVID BROWN', 'JESSICA DAVIS',
-    'CHRISTOPHER MILLER', 'AMANDA WILSON', 'MATTHEW MOORE', 'JENNIFER TAYLOR', 'ROBERT ANDERSON'
-  ]
-
-  // Sample attorney emails for dropdown
-  const attorneyEmails = [
-    'RLENO@FAKE.com', 'MJOHNSON@LAWFIRM.com', 'SWILLIAMS@LEGAL.com', 'DBROWN@ATTORNEY.com',
-    'JDAVIS@LAWOFFICE.com', 'CMILLER@LEGAL.net', 'AWILSON@LAWFIRM.org', 'MMOORE@ATTORNEY.net',
-    'JTAYLOR@LEGAL.org', 'RANDERSON@LAWOFFICE.net'
-  ]
-
-  // Sample bar numbers for dropdown  
-  const barNumbers = [
-    '119478', '123456', '234567', '345678', '456789',
-    '567890', '678901', '789012', '890123', '901234'
-  ]
 
   const proofOfServiceText = `PROOF OF SERVICE
 
-STATE OF CALIFORNIA, COUNTY OF ${selectedCounty.toUpperCase()}
+STATE OF CALIFORNIA, COUNTY OF [COUNTY NAME]
 
-At the time of service, I was over 18 years of age and not a party to this action. I am employed in the County of ${selectedCounty}, State of California. My business address is Telluride, California.
+At the time of service, I was over 18 years of age and not a party to this action. I am employed in the County of [COUNTY NAME], State of California. My business address is [ADDRESS], California.
 
 On October 28, 2020, I served true copies of the following document(s) described as
 DEFENDANT VALERIE JASPER'S ANSWER TO PLAINTIFFS' COMPLAINT; DEMAND
@@ -89,45 +67,10 @@ Executed on October 21, 2023, at Buena Park, California.
 
   const handleDownloadWord = async () => {
     try {
-      // Create structured content for Word document
-      const documentSections = [
-        // Attorney Information Block
-        `${attorneyName.toUpperCase()} (California State Bar No. ${attorneyBarNumber})`,
-        `${attorneyEmail.toUpperCase()}`,
-        'FAKE LAW OFFICE, LLP',
-        '2465 Boulevard East, 9th Floor',
-        'Telluride, California 98623-4568',
-        'Telephone: (562) 729-4689',
-        'Facsimile: (562) 729-4689',
-        '',
-        'Attorney for Defendant',
-        '',
-        // Court Header
-        'SUPERIOR COURT OF CALIFORNIA',
-        `COUNTY OF ${selectedCounty.toUpperCase()}`,
-        '',
-        // Case Caption
-        'John Q. Public,',
-        'Plaintiff,',
-        'v.',
-        '',
-        'LMNOP Company,',
-        'Defendant.',
-        '',
-        'No. 2:05-cv-00700-ABC-DEF',
-        '',
-        // Document Title
-        'COMPLAINT',
-        '',
-        'PARTIES',
-        '',
-        'I. Jurisdiction',
-        ''
-      ]
-      
-      // Add the generated complaint content
-      const complaintLines = complaint.split('\n')
-      const allContent = [...documentSections, ...complaintLines]
+      // Use the generated complaint content directly (cleaned)
+      const cleanedComplaint = cleanComplaintText(complaint)
+      const complaintLines = cleanedComplaint.split('\n')
+      const allContent = complaintLines
       
       // Add proof of service if selected
       if (showProofOfService) {
@@ -145,7 +88,7 @@ Executed on October 21, 2023, at Buena Park, California.
         
         // Court headers - centered and bold
         if (line === 'SUPERIOR COURT OF CALIFORNIA' || 
-            line === `COUNTY OF ${selectedCounty.toUpperCase()}` ||
+            line.includes('COUNTY OF') ||
             line === 'COMPLAINT' || 
             line === 'PARTIES') {
           alignment = "center"
@@ -153,8 +96,11 @@ Executed on October 21, 2023, at Buena Park, California.
           indentFirst = 0
         }
         
-        // Case caption items - centered
-        if (line === 'Plaintiff,' || line === 'v.' || line === 'Defendant.') {
+        // Case caption items - "Plaintiff," and "Defendant." indented, "v." centered
+        if (line === 'Plaintiff,' || line === 'Defendant.') {
+          alignment = "left"
+          indentFirst = 2 // 2 inch indent for party labels
+        } else if (line === 'v.') {
           alignment = "center"
           indentFirst = 0
         }
@@ -204,10 +150,9 @@ Executed on October 21, 2023, at Buena Park, California.
       })
 
       const buffer = await Packer.toBuffer(doc)
-      const attorneyLastName = attorneyName.split(' ').pop() || 'Attorney'
       const fileName = showProofOfService 
-        ? `${selectedCounty}-County-Complaint-${attorneyLastName}-with-Proof-of-Service-${new Date().toISOString().slice(0, 10)}.docx`
-        : `${selectedCounty}-County-Complaint-${attorneyLastName}-${new Date().toISOString().slice(0, 10)}.docx`
+        ? `Complaint-with-Proof-of-Service-${new Date().toISOString().slice(0, 10)}.docx`
+        : `Complaint-${new Date().toISOString().slice(0, 10)}.docx`
       
       const blob = new Blob([new Uint8Array(buffer)], { 
         type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
@@ -223,10 +168,112 @@ Executed on October 21, 2023, at Buena Park, California.
     setShowProofOfService(!showProofOfService)
   }
 
+  // Function to clean up markdown formatting from AI-generated text
+  const cleanComplaintText = (text: string) => {
+    return text
+      .replace(/^```plaintext\s*/i, '') // Remove opening ```plaintext
+      .replace(/^```\s*/m, '') // Remove opening ``` 
+      .replace(/```\s*$/m, '') // Remove closing ```
+      .replace(/^'''/m, '') // Remove opening '''
+      .replace(/'''\s*$/m, '') // Remove closing '''
+      .trim()
+  }
+
   // Function to detect and highlight causes of action in the complaint
   const formatComplaintText = (text: string) => {
-    const lines = text.split('\n')
-    return lines.map((line, index) => {
+    const cleanedText = cleanComplaintText(text)
+    const lines = cleanedText.split('\n')
+    
+    // Find case caption section (between court header and complaint title)
+    let captionStartIndex = -1
+    let captionEndIndex = -1
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim()
+      // Start of case caption (after court/county info)
+      if (line.includes('COUNTY OF') && captionStartIndex === -1) {
+        captionStartIndex = i + 1
+      }
+      // End of case caption (before "COMPLAINT" title)
+      if ((line === 'COMPLAINT' || line.includes('Case No.') || line.includes('No.')) && captionStartIndex !== -1 && captionEndIndex === -1) {
+        captionEndIndex = i
+        break
+      }
+    }
+    
+    // Process case caption as table if found
+    if (captionStartIndex !== -1 && captionEndIndex !== -1) {
+      const beforeCaption = lines.slice(0, captionStartIndex)
+      const captionLines = lines.slice(captionStartIndex, captionEndIndex)
+      const afterCaption = lines.slice(captionEndIndex)
+      
+      // Separate left side (parties) and right side (case info)
+      const leftSide = []
+      const rightSide = []
+      
+      for (const line of captionLines) {
+        const trimmed = line.trim()
+        if (trimmed.includes('Case No.') || trimmed.includes('No.') || trimmed.match(/^\d+:/) || trimmed === 'COMPLAINT') {
+          rightSide.push(trimmed)
+        } else if (trimmed && !trimmed.includes('COUNTY OF') && !trimmed.includes('SUPERIOR COURT')) {
+          leftSide.push(trimmed)
+        }
+      }
+      
+      // Render case caption as table
+      const caseCaption = (
+        <div key="case-caption" style={{ 
+          display: 'flex', 
+          fontSize: '12pt', 
+          fontFamily: 'Times New Roman, serif', 
+          lineHeight: '24pt',
+          margin: '24pt 0',
+          borderBottom: '1px solid black',
+          paddingBottom: '12pt'
+        }}>
+          {/* Left side - Parties */}
+          <div style={{ flex: 1, paddingRight: '20px' }}>
+            {leftSide.map((line, idx) => (
+              <div key={idx} style={{
+                textIndent: (line === 'Plaintiff,' || line === 'Defendant.') ? '2in' : '0.5in'
+              }}>
+                {line}
+              </div>
+            ))}
+          </div>
+          
+          {/* Vertical divider */}
+          <div style={{ width: '1px', backgroundColor: 'black', margin: '0 10px' }}></div>
+          
+          {/* Right side - Case information */}
+          <div style={{ width: '200px', paddingLeft: '10px' }}>
+            {rightSide.map((line, idx) => (
+              <div key={idx} style={{ marginBottom: idx === 0 ? '12pt' : '0' }}>
+                {line}
+              </div>
+            ))}
+            {!rightSide.includes('COMPLAINT') && (
+              <div style={{ fontWeight: 'bold', marginTop: '12pt' }}>
+                COMPLAINT
+              </div>
+            )}
+          </div>
+        </div>
+      )
+      
+      return [
+        ...beforeCaption.map((line, index) => formatSingleLine(line, index)),
+        caseCaption,
+        ...afterCaption.map((line, index) => formatSingleLine(line, index + captionEndIndex))
+      ]
+    }
+    
+    // Fallback to original formatting
+    return lines.map((line, index) => formatSingleLine(line, index))
+  }
+  
+  // Helper function to format individual lines
+  const formatSingleLine = (line: string, index: number) => {
       const trimmedLine = line.trim()
       
       // Check if this line is a cause of action heading
@@ -238,15 +285,34 @@ Executed on October 21, 2023, at Buena Park, California.
       // Check if this line contains CACI reference
       const hasCACIReference = trimmedLine.match(/CACI\s+\d+/i)
       
+      // Check if this line is part of attorney information (first 10 lines typically contain attorney info)
+      const isAttorneyInfo = index < 10 && (
+        trimmedLine.match(/\(California State Bar No\./i) ||
+        trimmedLine.match(/@.*\.(com|org|net|edu)/i) ||
+        trimmedLine.match(/^[A-Z][a-zA-Z\s]+$/i) ||
+        trimmedLine.match(/^\d+.*[Aa]ve|[Ss]t|[Bb]lvd|[Rr]d|[Dd]r|[Ll]ane|[Cc]ourt/i) ||
+        trimmedLine.match(/^Telephone:/i) ||
+        trimmedLine.match(/^Attorney for/i)
+      )
+
+      // Check if this line is a law firm name (typically contains common law firm suffixes)
+      const isLawFirmName = index < 10 && (
+        trimmedLine.match(/\b(LLC|LLP|P\.?C\.?|Inc\.?|Corporation|Associates?|Group|Partners?|Law Offices?|Legal|Attorneys?)\b/i) ||
+        trimmedLine.match(/\b(Law Firm|Legal Group|& Associates|and Associates)\b/i)
+      )
+
+      // Check if this line is "Plaintiff," or "Defendant." for special indentation
+      const isPartyLabel = trimmedLine === 'Plaintiff,' || trimmedLine === 'Defendant.'
+      
       return (
         <div 
           key={index + 21} 
           style={{ 
             fontSize: '12pt',
             fontFamily: 'Times New Roman, serif',
-            lineHeight: '24pt',
-            textIndent: line.trim().length > 0 ? '0.5in' : '0',
-            fontWeight: isCauseHeading ? 'bold' : 'normal',
+            lineHeight: isAttorneyInfo ? '14pt' : '24pt', // Single spacing for attorney info
+            textIndent: isPartyLabel ? '2in' : (line.trim().length > 0 ? '0.5in' : '0'),
+            fontWeight: (isCauseHeading || isLawFirmName) ? 'bold' : 'normal',
             textAlign: isCauseHeading ? 'center' : 'left',
             backgroundColor: isCauseHeading ? '#f0f9ff' : 'transparent',
             padding: isCauseHeading ? '4px' : '0',
@@ -265,11 +331,10 @@ Executed on October 21, 2023, at Buena Park, California.
               )}
             </span>
           ) : (
-            line || '\u00A0'
+            isLawFirmName ? (line || '\u00A0').toUpperCase() : (line || '\u00A0')
           )}
         </div>
       )
-    })
   }
 
 
@@ -283,91 +348,7 @@ Executed on October 21, 2023, at Buena Park, California.
             <FileText className="w-6 h-6 text-primary-500" />
             <h2 className="text-2xl font-bold text-gray-900">Generated Complaint</h2>
           </div>
-          <div className="flex items-center space-x-3 flex-wrap">
-            <div className="flex items-center space-x-2">
-              <label htmlFor="county-select" className="text-sm font-medium text-gray-700">
-                County:
-              </label>
-              <select
-                id="county-select"
-                value={selectedCounty}
-                onChange={(e) => setSelectedCounty(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
-                {californiaCounties.map((county) => (
-                  <option key={county} value={county}>
-                    {county}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex items-center space-x-2">
-              <label htmlFor="attorney-name-select" className="text-sm font-medium text-gray-700">
-                Attorney:
-              </label>
-              <select
-                id="attorney-name-select"
-                value={attorneyName}
-                onChange={(e) => setAttorneyName(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
-                {attorneyNames.map((name) => (
-                  <option key={name} value={name}>
-                    {name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex items-center space-x-2">
-              <label htmlFor="attorney-email-select" className="text-sm font-medium text-gray-700">
-                Email:
-              </label>
-              <select
-                id="attorney-email-select"
-                value={attorneyEmail}
-                onChange={(e) => setAttorneyEmail(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
-                {attorneyEmails.map((email) => (
-                  <option key={email} value={email}>
-                    {email}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex items-center space-x-2">
-              <label htmlFor="bar-number-select" className="text-sm font-medium text-gray-700">
-                Bar #:
-              </label>
-              <select
-                id="bar-number-select"
-                value={attorneyBarNumber}
-                onChange={(e) => setAttorneyBarNumber(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
-                {barNumbers.map((number) => (
-                  <option key={number} value={number}>
-                    {number}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              onClick={handleCopy}
-              className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4 text-green-600" />
-                  <span className="text-green-600 font-medium">Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4 text-gray-600" />
-                  <span className="text-gray-600">Copy</span>
-                </>
-              )}
-            </button>
+          <div className="flex items-center space-x-3">
             <button
               onClick={handleAddProofOfService}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
@@ -377,21 +358,21 @@ Executed on October 21, 2023, at Buena Park, California.
               }`}
             >
               <Plus className="w-4 h-4" />
-              <span>{showProofOfService ? 'Remove' : 'Add'} Proof of Service</span>
+              <span className="text-sm font-medium">{showProofOfService ? 'Remove' : 'Add'} Proof of Service</span>
             </button>
             <button
               onClick={handleDownloadWord}
-              className="btn-secondary flex items-center space-x-2"
+              className="flex items-center space-x-2 px-4 py-2 bg-dark-800 hover:bg-dark-700 text-white rounded-lg transition-colors"
             >
               <FileIcon className="w-4 h-4" />
-              <span>Download Word</span>
+              <span className="text-sm font-medium">Download Word</span>
             </button>
             <button
               onClick={onNewComplaint}
-              className="btn-primary flex items-center space-x-2"
+              className="flex items-center space-x-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>New Complaint</span>
+              <span className="text-sm font-medium">New Complaint</span>
             </button>
           </div>
         </div>
@@ -465,108 +446,8 @@ Executed on October 21, 2023, at Buena Park, California.
               
               {/* Main content area */}
               <div style={{ marginLeft: '1.25in', padding: '0 0.5in' }}>
-                {/* Court Document Header and Content - Following CAED Pleading Paper Instructions */}
+                {/* Generated complaint content with proper formatting */}
                 <div>
-                  {/* Attorney Information Block - Body Text Style */}
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    {attorneyName.toUpperCase()} (California State Bar No. {attorneyBarNumber})
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    {attorneyEmail.toUpperCase()}
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    FAKE LAW OFFICE, LLP
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    2465 Boulevard East, 9th Floor
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    Telluride, California 98623-4568
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    Telephone: (562) 729-4689
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    Facsimile: (562) 729-4689
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    \u00A0
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                    Attorney for Defendant
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
-                    \u00A0
-                  </div>
-                  
-                  {/* Court Header - Title Style (bold, all caps, centered) */}
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
-                    SUPERIOR COURT OF CALIFORNIA
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
-                    COUNTY OF {selectedCounty.toUpperCase()}
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
-                    \u00A0
-                  </div>
-                  
-                  {/* Case Caption - Following CAED format */}
-                  <div style={{ display: 'flex' }}>
-                    {/* Left side - Parties */}
-                    <div style={{ flex: '1', paddingRight: '20px' }}>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                        John Q. Public,
-                      </div>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center' }}>
-                        Plaintiff,
-                      </div>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center' }}>
-                        v.
-                      </div>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
-                        \u00A0
-                      </div>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
-                        LMNOP Company,
-                      </div>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center' }}>
-                        Defendant.
-                      </div>
-                    </div>
-                    
-                    {/* Right side - Case Info */}
-                    <div style={{ width: '200px', paddingLeft: '10px', borderLeft: '1px solid black' }}>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
-                        No. 2:05-cv-00700-ABC-DEF
-                      </div>
-                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
-                        \u00A0
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Document Title - Title Style (bold, all caps, centered) */}
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
-                    COMPLAINT
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
-                    \u00A0
-                  </div>
-                  
-                  {/* Document sections with proper heading styles */}
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
-                    PARTIES
-                  </div>
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
-                    \u00A0
-                  </div>
-                  
-                  {/* Title 1 Style - bold, indent left 0.5" */}
-                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', fontWeight: 'bold', marginLeft: '0.5in' }}>
-                    I. Jurisdiction
-                  </div>
-                  
-                  {/* Generated complaint content with proper Body Text formatting and CACI highlighting */}
                   {formatComplaintText(showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint)}
                 </div>
               </div>

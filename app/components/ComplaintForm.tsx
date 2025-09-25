@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { FileText, Loader2, Send, AlertCircle, FileEdit } from 'lucide-react'
+import { FileText, Loader2, Send, AlertCircle, FileEdit, Plus, X, User } from 'lucide-react'
 
 interface ComplaintFormProps {
   onComplaintGenerated: (complaint: string) => void
@@ -17,6 +17,26 @@ interface CauseOfAction {
   elements: string[]
 }
 
+interface Attorney {
+  id: string
+  name: string
+  email: string
+  barNumber: string
+  lawFirmName: string
+  lawFirmAddress: string
+  lawFirmPhone: string
+}
+
+interface Plaintiff {
+  id: string
+  name: string
+}
+
+interface Defendant {
+  id: string
+  name: string
+}
+
 export default function ComplaintForm({ 
   onComplaintGenerated, 
   isGenerating, 
@@ -28,6 +48,30 @@ export default function ComplaintForm({
   const [showManualTemplate, setShowManualTemplate] = useState(false)
   const [selectedCausesOfAction, setSelectedCausesOfAction] = useState<string[]>([])
   const [showCauseSelection, setShowCauseSelection] = useState(false)
+  const [attorneys, setAttorneys] = useState<Attorney[]>([
+    { id: '1', name: '', email: '', barNumber: '', lawFirmName: '', lawFirmAddress: '', lawFirmPhone: '' }
+  ])
+  const [selectedCounty, setSelectedCounty] = useState('')
+  const [plaintiffs, setPlaintiffs] = useState<Plaintiff[]>([
+    { id: '1', name: '' }
+  ])
+  const [defendants, setDefendants] = useState<Defendant[]>([
+    { id: '1', name: '' }
+  ])
+  const [caseNumber, setCaseNumber] = useState('')
+
+  // California counties list
+  const californiaCounties = [
+    'Alameda', 'Alpine', 'Amador', 'Butte', 'Calaveras', 'Colusa', 'Contra Costa', 
+    'Del Norte', 'El Dorado', 'Fresno', 'Glenn', 'Humboldt', 'Imperial', 'Inyo', 
+    'Kern', 'Kings', 'Lake', 'Lassen', 'Los Angeles', 'Madera', 'Marin', 'Mariposa', 
+    'Mendocino', 'Merced', 'Modoc', 'Mono', 'Monterey', 'Napa', 'Nevada', 'Orange', 
+    'Placer', 'Plumas', 'Riverside', 'Sacramento', 'San Benito', 'San Bernardino', 
+    'San Diego', 'San Francisco', 'San Joaquin', 'San Luis Obispo', 'San Mateo', 
+    'Santa Barbara', 'Santa Clara', 'Santa Cruz', 'Shasta', 'Sierra', 'Siskiyou', 
+    'Solano', 'Sonoma', 'Stanislaus', 'Sutter', 'Tehama', 'Trinity', 'Tulare', 
+    'Tuolumne', 'Ventura', 'Yolo', 'Yuba'
+  ]
 
   // Available causes of action based on CACI
   const availableCausesOfAction: CauseOfAction[] = [
@@ -148,26 +192,130 @@ export default function ComplaintForm({
     }
   }, [rateLimitCooldown])
 
-  const generateManualTemplate = () => {
-    const template = `ATTORNEY NAME (California State Bar No. [NUMBER])
-EMAIL
-LAW FIRM NAME
-ADDRESS
-CITY, STATE ZIP
-Telephone: PHONE
+  // Attorney management functions
+  const addAttorney = () => {
+    if (attorneys.length < 5) {
+      const newAttorney: Attorney = {
+        id: Date.now().toString(),
+        name: '',
+        email: '',
+        barNumber: '',
+        lawFirmName: '',
+        lawFirmAddress: '',
+        lawFirmPhone: ''
+      }
+      setAttorneys([...attorneys, newAttorney])
+    }
+  }
 
-Attorney for [PARTY]
+  const removeAttorney = (id: string) => {
+    if (attorneys.length > 1) {
+      setAttorneys(attorneys.filter(attorney => attorney.id !== id))
+    }
+  }
+
+  const updateAttorney = (id: string, field: keyof Omit<Attorney, 'id'>, value: string) => {
+    setAttorneys(attorneys.map(attorney => 
+      attorney.id === id ? { ...attorney, [field]: value } : attorney
+    ))
+  }
+
+  // Plaintiff management functions
+  const addPlaintiff = () => {
+    if (plaintiffs.length < 10) {
+      const newPlaintiff: Plaintiff = {
+        id: Date.now().toString(),
+        name: ''
+      }
+      setPlaintiffs([...plaintiffs, newPlaintiff])
+    }
+  }
+
+  const removePlaintiff = (id: string) => {
+    if (plaintiffs.length > 1) {
+      setPlaintiffs(plaintiffs.filter(plaintiff => plaintiff.id !== id))
+    }
+  }
+
+  const updatePlaintiff = (id: string, name: string) => {
+    setPlaintiffs(plaintiffs.map(plaintiff => 
+      plaintiff.id === id ? { ...plaintiff, name } : plaintiff
+    ))
+  }
+
+  // Defendant management functions
+  const addDefendant = () => {
+    if (defendants.length < 10) {
+      const newDefendant: Defendant = {
+        id: Date.now().toString(),
+        name: ''
+      }
+      setDefendants([...defendants, newDefendant])
+    }
+  }
+
+  const removeDefendant = (id: string) => {
+    if (defendants.length > 1) {
+      setDefendants(defendants.filter(defendant => defendant.id !== id))
+    }
+  }
+
+  const updateDefendant = (id: string, name: string) => {
+    setDefendants(defendants.map(defendant => 
+      defendant.id === id ? { ...defendant, name } : defendant
+    ))
+  }
+
+  const generateManualTemplate = () => {
+    // Generate attorney header section
+    const attorneyHeader = attorneys
+      .filter(att => att.name.trim() || att.email.trim() || att.barNumber.trim() || att.lawFirmName.trim())
+      .map((attorney, index) => {
+        const name = attorney.name.trim() || '[ATTORNEY NAME]'
+        const barNumber = attorney.barNumber.trim() || '[BAR NUMBER]'
+        const email = attorney.email.trim() || '[EMAIL]'
+        const lawFirmName = attorney.lawFirmName.trim() || '[LAW FIRM NAME]'
+        const lawFirmAddress = attorney.lawFirmAddress.trim() || '[ADDRESS]\n[CITY, STATE ZIP]'
+        const lawFirmPhone = attorney.lawFirmPhone.trim() || '[PHONE]'
+        
+        return `${name} (California State Bar No. ${barNumber})
+${email}
+${lawFirmName}
+${lawFirmAddress}
+Telephone: ${lawFirmPhone}${index === 0 ? '\n\nAttorney for [PARTY]' : ''}`
+      }).join('\n\n') || `[ATTORNEY NAME] (California State Bar No. [BAR NUMBER])
+[EMAIL]
+[LAW FIRM NAME]
+[ADDRESS]
+[CITY, STATE ZIP]
+Telephone: [PHONE]
+
+Attorney for [PARTY]`
+
+    // Generate plaintiff names for case caption
+    const plaintiffNames = plaintiffs
+      .filter(p => p.name.trim())
+      .map(p => p.name.trim())
+      .join(', ') || '[PLAINTIFF NAME]'
+
+    // Generate defendant names for case caption
+    const defendantNames = defendants
+      .filter(d => d.name.trim())
+      .map(d => d.name.trim())
+      .join(', ') || '[DEFENDANT NAME]'
+
+    const template = `${attorneyHeader}
 
 SUPERIOR COURT OF CALIFORNIA
-COUNTY OF [COUNTY NAME]
+COUNTY OF ${selectedCounty.toUpperCase() || '[COUNTY NAME]'}
 
-[PLAINTIFF NAME],
-    Plaintiff,
+${plaintiffNames},
+    Plaintiff${plaintiffs.filter(p => p.name.trim()).length > 1 ? 's' : ''},
 v.
-[DEFENDANT NAME],
-    Defendant.
+${defendantNames},
+    Defendant${defendants.filter(d => d.name.trim()).length > 1 ? 's' : ''}.
 
-No. [CASE NUMBER]
+No. ${caseNumber.trim() || '[CASE NUMBER]'}
 
 COMPLAINT
 
@@ -233,6 +381,23 @@ Dated: ${new Date().toLocaleDateString()}
       return
     }
 
+    if (!selectedCounty) {
+      setError('Please select a California county')
+      return
+    }
+
+    const validPlaintiffs = plaintiffs.filter(p => p.name.trim())
+    if (validPlaintiffs.length === 0) {
+      setError('Please enter at least one plaintiff name')
+      return
+    }
+
+    const validDefendants = defendants.filter(d => d.name.trim())
+    if (validDefendants.length === 0) {
+      setError('Please enter at least one defendant name')
+      return
+    }
+
     // Check local storage cache first
     const cacheKey = `complaint_${encodeURIComponent(summary.trim().toLowerCase()).replace(/%/g, '_')}`
     const cachedResult = localStorage.getItem(cacheKey)
@@ -265,7 +430,15 @@ Dated: ${new Date().toLocaleDateString()}
         },
         body: JSON.stringify({
           summary: summary.trim(),
-          causesOfAction: selectedCausesOfAction.length > 0 ? selectedCausesOfAction : null
+          causesOfAction: selectedCausesOfAction.length > 0 ? selectedCausesOfAction : null,
+          attorneys: attorneys.filter(att => 
+            att.name.trim() || att.email.trim() || att.barNumber.trim() || 
+            att.lawFirmName.trim() || att.lawFirmAddress.trim() || att.lawFirmPhone.trim()
+          ),
+          county: selectedCounty,
+          plaintiffs: plaintiffs.filter(p => p.name.trim()),
+          defendants: defendants.filter(d => d.name.trim()),
+          caseNumber: caseNumber.trim()
         }),
       })
 
@@ -352,6 +525,345 @@ Dated: ${new Date().toLocaleDateString()}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Attorney Information Section */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Attorney Information
+              </label>
+              <span className="text-xs text-gray-500">
+                {attorneys.length}/5 attorneys
+              </span>
+            </div>
+            <p className="text-gray-600 text-sm mb-4">
+              Enter attorney details for the complaint header. At least one attorney is required.
+            </p>
+            
+            <div className="space-y-4">
+              {attorneys.map((attorney, index) => (
+                <div key={attorney.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                      <User className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm font-medium text-gray-700">
+                        Attorney {index + 1}
+                      </span>
+                    </div>
+                    {attorneys.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeAttorney(attorney.id)}
+                        className="text-red-600 hover:text-red-800 p-1 rounded"
+                        disabled={isGenerating}
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {/* Attorney Personal Information */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                          Attorney Name
+                        </label>
+                        <input
+                          type="text"
+                          value={attorney.name}
+                          onChange={(e) => updateAttorney(attorney.id, 'name', e.target.value)}
+                          placeholder="Full Name"
+                          className="input-field text-sm"
+                          disabled={isGenerating}
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          value={attorney.email}
+                          onChange={(e) => updateAttorney(attorney.id, 'email', e.target.value)}
+                          placeholder="attorney@lawfirm.com"
+                          className="input-field text-sm"
+                          disabled={isGenerating}
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                          California State Bar Number
+                        </label>
+                        <input
+                          type="text"
+                          value={attorney.barNumber}
+                          onChange={(e) => updateAttorney(attorney.id, 'barNumber', e.target.value)}
+                          placeholder="123456"
+                          className="input-field text-sm"
+                          disabled={isGenerating}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Law Firm Information */}
+                    <div className="border-t border-gray-200 pt-3">
+                      <h4 className="text-xs font-semibold text-gray-700 mb-3 uppercase tracking-wide">
+                        Law Firm Information
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                            Law Firm Name
+                          </label>
+                          <input
+                            type="text"
+                            value={attorney.lawFirmName}
+                            onChange={(e) => updateAttorney(attorney.id, 'lawFirmName', e.target.value)}
+                            placeholder="Law Firm Name"
+                            className="input-field text-sm"
+                            disabled={isGenerating}
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                            Law Firm Address
+                          </label>
+                          <input
+                            type="text"
+                            value={attorney.lawFirmAddress}
+                            onChange={(e) => updateAttorney(attorney.id, 'lawFirmAddress', e.target.value)}
+                            placeholder="123 Main St, City, State ZIP"
+                            className="input-field text-sm"
+                            disabled={isGenerating}
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                            Telephone Number
+                          </label>
+                          <input
+                            type="tel"
+                            value={attorney.lawFirmPhone}
+                            onChange={(e) => updateAttorney(attorney.id, 'lawFirmPhone', e.target.value)}
+                            placeholder="(555) 123-4567"
+                            className="input-field text-sm"
+                            disabled={isGenerating}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              {attorneys.length < 5 && (
+                <button
+                  type="button"
+                  onClick={addAttorney}
+                  className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium text-sm p-2 rounded-lg hover:bg-primary-50 transition-colors"
+                  disabled={isGenerating}
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Another Attorney</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* County Selection */}
+          <div>
+            <label htmlFor="county" className="block text-sm font-medium text-gray-700 mb-2">
+              California County *
+            </label>
+            <p className="text-gray-600 text-sm mb-3">
+              Select the county where the complaint will be filed.
+            </p>
+            <select
+              id="county"
+              value={selectedCounty}
+              onChange={(e) => setSelectedCounty(e.target.value)}
+              className="input-field"
+              disabled={isGenerating}
+              required
+            >
+              <option value="">Select a County</option>
+              {californiaCounties.map((county) => (
+                <option key={county} value={county}>
+                  {county} County
+                </option>
+              ))}
+            </select>
+            {selectedCounty && (
+              <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded-lg">
+                <span className="text-green-700 text-sm font-medium">
+                  ✓ Filing in {selectedCounty} County Superior Court
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Plaintiff Information Section */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Plaintiff Information *
+              </label>
+              <span className="text-xs text-gray-500">
+                {plaintiffs.length}/10 plaintiffs
+              </span>
+            </div>
+            <p className="text-gray-600 text-sm mb-4">
+              Enter the name(s) of the plaintiff(s) in this case. At least one plaintiff is required.
+            </p>
+            
+            <div className="space-y-3">
+              {plaintiffs.map((plaintiff, index) => (
+                <div key={plaintiff.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                      <User className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm font-medium text-gray-700">
+                        Plaintiff {index + 1}
+                      </span>
+                    </div>
+                    {plaintiffs.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removePlaintiff(plaintiff.id)}
+                        className="text-red-600 hover:text-red-800 p-1 rounded"
+                        disabled={isGenerating}
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                      Plaintiff Name
+                    </label>
+                    <input
+                      type="text"
+                      value={plaintiff.name}
+                      onChange={(e) => updatePlaintiff(plaintiff.id, e.target.value)}
+                      placeholder="Full Legal Name"
+                      className="input-field text-sm"
+                      disabled={isGenerating}
+                    />
+                  </div>
+                </div>
+              ))}
+              
+              {plaintiffs.length < 10 && (
+                <button
+                  type="button"
+                  onClick={addPlaintiff}
+                  className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium text-sm p-2 rounded-lg hover:bg-primary-50 transition-colors"
+                  disabled={isGenerating}
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Another Plaintiff</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Defendant Information Section */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Defendant Information *
+              </label>
+              <span className="text-xs text-gray-500">
+                {defendants.length}/10 defendants
+              </span>
+            </div>
+            <p className="text-gray-600 text-sm mb-4">
+              Enter the name(s) of the defendant(s) in this case. At least one defendant is required.
+            </p>
+            
+            <div className="space-y-3">
+              {defendants.map((defendant, index) => (
+                <div key={defendant.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                      <User className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm font-medium text-gray-700">
+                        Defendant {index + 1}
+                      </span>
+                    </div>
+                    {defendants.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeDefendant(defendant.id)}
+                        className="text-red-600 hover:text-red-800 p-1 rounded"
+                        disabled={isGenerating}
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                      Defendant Name
+                    </label>
+                    <input
+                      type="text"
+                      value={defendant.name}
+                      onChange={(e) => updateDefendant(defendant.id, e.target.value)}
+                      placeholder="Full Legal Name"
+                      className="input-field text-sm"
+                      disabled={isGenerating}
+                    />
+                  </div>
+                </div>
+              ))}
+              
+              {defendants.length < 10 && (
+                <button
+                  type="button"
+                  onClick={addDefendant}
+                  className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium text-sm p-2 rounded-lg hover:bg-primary-50 transition-colors"
+                  disabled={isGenerating}
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Another Defendant</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Case Number Section */}
+          <div>
+            <label htmlFor="caseNumber" className="block text-sm font-medium text-gray-700 mb-2">
+              Case Number
+            </label>
+            <p className="text-gray-600 text-sm mb-3">
+              Enter the case number if already assigned by the court (optional).
+            </p>
+            <input
+              id="caseNumber"
+              type="text"
+              value={caseNumber}
+              onChange={(e) => setCaseNumber(e.target.value)}
+              placeholder="e.g., 24STCV12345"
+              className="input-field"
+              disabled={isGenerating}
+            />
+            {caseNumber.trim() && (
+              <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg">
+                <span className="text-blue-700 text-sm font-medium">
+                  ℹ️ Case Number: {caseNumber.trim()}
+                </span>
+              </div>
+            )}
+          </div>
+
           <div>
             <label htmlFor="summary" className="block text-sm font-medium text-gray-700 mb-2">
               Case Summary *
@@ -594,7 +1106,7 @@ I. Jurisdiction
           <div className="space-y-3">
             <button
               type="submit"
-              disabled={isGenerating || !summary.trim() || summary.length < 50 || rateLimitCooldown > 0}
+              disabled={isGenerating || !summary.trim() || summary.length < 50 || !selectedCounty || plaintiffs.filter(p => p.name.trim()).length === 0 || defendants.filter(d => d.name.trim()).length === 0 || rateLimitCooldown > 0}
               className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isGenerating ? (

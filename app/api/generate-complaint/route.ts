@@ -53,7 +53,7 @@ async function handleComplaintGeneration(request: NextRequest): Promise<NextResp
   
   try {
     const body = await request.json()
-    const { summary, causesOfAction } = body
+    const { summary, causesOfAction, attorneys, county, plaintiffs, defendants, caseNumber } = body
 
     // Validation
     if (!summary || typeof summary !== 'string') {
@@ -96,6 +96,35 @@ async function handleComplaintGeneration(request: NextRequest): Promise<NextResp
       ? `\n\nSPECIFIC CAUSES OF ACTION REQUESTED: ${causesOfAction.join(', ').toUpperCase()}\nInclude ONLY these causes of action in the complaint, structured according to their respective CACI elements.`
       : '\n\nAUTO-DETERMINE CAUSES: Analyze the facts and determine the most appropriate causes of action from the available options.'
 
+    // Build attorney information for header
+    const attorneyInfo = attorneys && attorneys.length > 0 
+      ? attorneys.map((attorney: any) => ({
+          name: attorney.name?.trim() || '[ATTORNEY NAME]',
+          email: attorney.email?.trim() || '[EMAIL]',
+          barNumber: attorney.barNumber?.trim() || '[BAR NUMBER]',
+          lawFirmName: attorney.lawFirmName?.trim() || '[LAW FIRM NAME]',
+          lawFirmAddress: attorney.lawFirmAddress?.trim() || '[ADDRESS]\n[CITY, STATE ZIP]',
+          lawFirmPhone: attorney.lawFirmPhone?.trim() || '[PHONE]'
+        }))
+      : [{ 
+          name: '[ATTORNEY NAME]', 
+          email: '[EMAIL]', 
+          barNumber: '[BAR NUMBER]',
+          lawFirmName: '[LAW FIRM NAME]',
+          lawFirmAddress: '[ADDRESS]\n[CITY, STATE ZIP]',
+          lawFirmPhone: '[PHONE]'
+        }]
+
+    // Create plaintiff names string
+    const plaintiffNames = plaintiffs && plaintiffs.length > 0 
+      ? plaintiffs.map((p: any) => p.name?.trim()).filter(Boolean).join(', ')
+      : 'Plaintiff'
+
+    const attorneyHeader = attorneyInfo
+      .map((attorney: { name: string; email: string; barNumber: string; lawFirmName: string; lawFirmAddress: string; lawFirmPhone: string }, index: number) => 
+        `${attorney.name} (California State Bar No. ${attorney.barNumber})\n${attorney.email}\n${attorney.lawFirmName}\n${attorney.lawFirmAddress}\nTelephone: ${attorney.lawFirmPhone}${index === 0 ? `\n\nAttorney for Plaintiff ${plaintiffNames}` : ''}`
+      ).join('\n\n')
+
     const prompt = `Generate comprehensive California Superior Court complaint with MULTIPLE causes of action. ABSOLUTE REQUIREMENT: Include 3-6+ causes of action when facts support them. DO NOT LIMIT TO 1-2 CAUSES.
 
 FACTS: ${sanitizedSummary}${causesInstruction}
@@ -109,21 +138,62 @@ MANDATORY MULTI-CAUSE ANALYSIS - Check ALL these CACI options:
 • TRESPASS (CACI 2000) • DEFAMATION (CACI 1700) • INVASION PRIVACY (CACI 1800)
 • PUNITIVE DAMAGES (CACI 3940-3949) - for malicious, oppressive, or fraudulent conduct
 
-STRUCTURE - COMPLETE FULL COMPLAINT:
-1. Attorney information block
-2. Court header and case caption
-3. Jurisdictional allegations (paragraphs 1-3)
-4. General factual allegations (paragraphs 4-10)
-5. FIRST CAUSE OF ACTION (Name - CACI XXX)
-6. SECOND CAUSE OF ACTION (Name - CACI XXX)
-7. THIRD CAUSE OF ACTION (Name - CACI XXX)
-8. FOURTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
-9. FIFTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
-10. SIXTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
-11. Prayer for Relief (comprehensive)
-12. Jury Demand
+ATTORNEY HEADER TO USE:
+${attorneyHeader}
+
+COURT AND COUNTY INFORMATION:
+Filing County: ${county || '[COUNTY NAME]'}
+Court: Superior Court of California, County of ${county ? county.toUpperCase() : '[COUNTY NAME]'}
+
+PLAINTIFF INFORMATION:
+${plaintiffs && plaintiffs.length > 0 
+  ? plaintiffs.map((p: any) => p.name?.trim()).filter(Boolean).join(', ') || '[PLAINTIFF NAME]'
+  : '[PLAINTIFF NAME]'}
+
+DEFENDANT INFORMATION:
+${defendants && defendants.length > 0 
+  ? defendants.map((d: any) => d.name?.trim()).filter(Boolean).join(', ') || '[DEFENDANT NAME]'
+  : '[DEFENDANT NAME]'}
+
+CASE NUMBER:
+${caseNumber?.trim() || '[CASE NUMBER]'}
+
+CRITICAL INSTRUCTION - START THE COMPLAINT WITH THIS EXACT ATTORNEY HEADER:
+${attorneyHeader}
+
+STRUCTURE - COMPLETE FULL COMPLAINT (START WITH ATTORNEY HEADER ABOVE):
+1. BEGIN WITH: Use the exact attorney header shown above - DO NOT use any other attorney information like "RANDY LENO" or placeholder text
+2. Court header and case caption (SUPERIOR COURT OF CALIFORNIA, COUNTY OF ${county ? county.toUpperCase() : '[COUNTY NAME]'})
+3. CRITICAL - Use these EXACT party names in the case caption:
+   PLAINTIFFS: ${plaintiffs && plaintiffs.length > 0 ? plaintiffs.map((p: any) => p.name?.trim()).filter(Boolean).join(', ') : '[PLAINTIFF NAME]'}
+   DEFENDANTS: ${defendants && defendants.length > 0 ? defendants.map((d: any) => d.name?.trim()).filter(Boolean).join(', ') : '[DEFENDANT NAME]'}
+   
+   Format the case caption exactly like this:
+   ${plaintiffs && plaintiffs.length > 0 ? plaintiffs.map((p: any) => p.name?.trim()).filter(Boolean).join(',\n') : '[PLAINTIFF NAME]'},
+   
+                        Plaintiff${plaintiffs && plaintiffs.length > 1 ? 's' : ''},
+   
+   vs.
+   
+   ${defendants && defendants.length > 0 ? defendants.map((d: any) => d.name?.trim()).filter(Boolean).join(',\n') : '[DEFENDANT NAME]'},
+   
+                        Defendant${defendants && defendants.length > 1 ? 's' : ''}.
+
+4. Case number: ${caseNumber?.trim() || '[CASE NUMBER]'}
+5. COMPLAINT title
+6. Jurisdictional allegations (paragraphs 1-3)
+7. General factual allegations (paragraphs 4-10)
+8. FIRST CAUSE OF ACTION (Name - CACI XXX)
+9. SECOND CAUSE OF ACTION (Name - CACI XXX)
+10. THIRD CAUSE OF ACTION (Name - CACI XXX)
+11. FOURTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
+12. FIFTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
+13. SIXTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
+14. Prayer for Relief (comprehensive)
+15. Jury Demand
 
 CRITICAL REQUIREMENTS:
+- START WITH ATTORNEY HEADER - NO "RANDY LENO" OR OTHER PLACEHOLDER ATTORNEY NAMES
 - MUST include 3+ causes when facts reasonably support them
 - Use overlapping theories (negligence + negligence per se + specific liability)
 - Each cause should have 4-6 paragraphs with proper CACI elements
@@ -144,7 +214,7 @@ LENGTH: Generate full, complete complaint with all causes of action. Do not limi
       messages: [
         { 
           role: "system", 
-          content: "You are an experienced California plaintiffs' attorney who drafts comprehensive complaints following California Civil Jury Instructions (CACI) standards. You are known for thorough legal analysis and including ALL viable causes of action to maximize client recovery. CRITICAL INSTRUCTIONS: (1) Analyze facts against the entire CACI library - do not be conservative, (2) Include 3-6+ causes of action when facts support them, (3) Consider overlapping theories (negligence + negligence per se + premises liability, etc.), (4) Use specific CACI instruction numbers, (5) Structure each cause with proper CACI elements, (6) Use aggressive but legally sound pleading strategies. Remember: It's better to include a potentially viable cause than to miss a recovery theory." 
+          content: "You are an experienced California plaintiffs' attorney who drafts comprehensive complaints following California Civil Jury Instructions (CACI) standards. You are known for thorough legal analysis and including ALL viable causes of action to maximize client recovery. CRITICAL INSTRUCTIONS: (1) ALWAYS start with the exact attorney header information provided - NEVER use placeholder names like 'RANDY LENO' or any hardcoded attorney information, (2) Use the EXACT plaintiff and defendant names provided in the prompt - DO NOT use generic names like 'Any Plaintiff' or 'Any Defendant', (3) Analyze facts against the entire CACI library - do not be conservative, (4) Include 3-6+ causes of action when facts support them, (5) Consider overlapping theories (negligence + negligence per se + premises liability, etc.), (6) Use specific CACI instruction numbers, (7) Structure each cause with proper CACI elements, (8) Use aggressive but legally sound pleading strategies. Remember: It's better to include a potentially viable cause than to miss a recovery theory. MOST IMPORTANT: Use only the attorney information AND party names provided in the prompt - no hardcoded names or placeholder text." 
         },
         { role: "user", content: prompt }
       ],
