@@ -9,6 +9,14 @@ interface ComplaintFormProps {
   setIsGenerating: (generating: boolean) => void
 }
 
+interface CauseOfAction {
+  id: string
+  name: string
+  description: string
+  caciSeries: string
+  elements: string[]
+}
+
 export default function ComplaintForm({ 
   onComplaintGenerated, 
   isGenerating, 
@@ -18,6 +26,117 @@ export default function ComplaintForm({
   const [error, setError] = useState('')
   const [rateLimitCooldown, setRateLimitCooldown] = useState(0)
   const [showManualTemplate, setShowManualTemplate] = useState(false)
+  const [selectedCausesOfAction, setSelectedCausesOfAction] = useState<string[]>([])
+  const [showCauseSelection, setShowCauseSelection] = useState(false)
+
+  // Available causes of action based on CACI
+  const availableCausesOfAction: CauseOfAction[] = [
+    {
+      id: 'negligence',
+      name: 'Negligence',
+      description: 'General negligence claim requiring duty, breach, causation, and damages',
+      caciSeries: 'CACI 400-series',
+      elements: ['Duty of care', 'Breach of duty', 'Causation', 'Damages']
+    },
+    {
+      id: 'negligence_per_se',
+      name: 'Negligence Per Se',
+      description: 'Negligence based on violation of statute or regulation',
+      caciSeries: 'CACI 418',
+      elements: ['Statutory violation', 'Plaintiff in protected class', 'Harm type statute intended to prevent', 'Causation', 'Damages']
+    },
+    {
+      id: 'premises_liability',
+      name: 'Premises Liability',
+      description: 'Liability for dangerous conditions on property',
+      caciSeries: 'CACI 1000-series',
+      elements: ['Dangerous condition', 'Knowledge or constructive knowledge', 'Failure to use reasonable care', 'Causation', 'Damages']
+    },
+    {
+      id: 'motor_vehicle',
+      name: 'Motor Vehicle Negligence',
+      description: 'Negligence in operation of motor vehicle',
+      caciSeries: 'CACI 700-series',
+      elements: ['Operation of motor vehicle', 'Negligent operation', 'Causation', 'Damages']
+    },
+    {
+      id: 'products_liability',
+      name: 'Products Liability',
+      description: 'Liability for defective products',
+      caciSeries: 'CACI 1200-series',
+      elements: ['Defective product', 'Use as intended', 'Causation', 'Damages']
+    },
+    {
+      id: 'intentional_tort',
+      name: 'Intentional Tort',
+      description: 'Intentional harmful or offensive conduct',
+      caciSeries: 'CACI 1300-series',
+      elements: ['Intent', 'Harmful or offensive contact/conduct', 'Causation', 'Damages']
+    },
+    {
+      id: 'breach_of_contract',
+      name: 'Breach of Contract',
+      description: 'Breach of contractual obligations',
+      caciSeries: 'CACI 300-series',
+      elements: ['Valid contract', 'Performance or excuse', 'Breach by defendant', 'Damages']
+    },
+    {
+      id: 'fraud',
+      name: 'Fraud/Misrepresentation',
+      description: 'Intentional misrepresentation or fraud',
+      caciSeries: 'CACI 1900-series',
+      elements: ['False representation', 'Knowledge of falsity', 'Intent to induce reliance', 'Justifiable reliance', 'Damages']
+    },
+    {
+      id: 'medical_malpractice',
+      name: 'Medical Malpractice',
+      description: 'Professional negligence by healthcare providers',
+      caciSeries: 'CACI 500-series',
+      elements: ['Doctor-patient relationship', 'Standard of care', 'Breach of standard', 'Causation', 'Damages']
+    },
+    {
+      id: 'gross_negligence',
+      name: 'Gross Negligence',
+      description: 'Extreme departure from ordinary standard of care',
+      caciSeries: 'CACI 425',
+      elements: ['Duty of care', 'Extreme breach', 'Want of even scant care', 'Causation', 'Damages']
+    },
+    {
+      id: 'battery',
+      name: 'Battery',
+      description: 'Intentional harmful or offensive contact',
+      caciSeries: 'CACI 1300',
+      elements: ['Intent to contact', 'Harmful or offensive contact', 'Lack of consent', 'Damages']
+    },
+    {
+      id: 'iied',
+      name: 'Intentional Infliction of Emotional Distress',
+      description: 'Extreme and outrageous conduct causing severe emotional distress',
+      caciSeries: 'CACI 1600',
+      elements: ['Extreme/outrageous conduct', 'Intent or recklessness', 'Severe emotional distress', 'Causation']
+    },
+    {
+      id: 'negligent_misrepresentation',
+      name: 'Negligent Misrepresentation',
+      description: 'Careless provision of false information',
+      caciSeries: 'CACI 1903',
+      elements: ['False representation', 'No reasonable grounds', 'Intent to induce reliance', 'Justifiable reliance', 'Damages']
+    },
+    {
+      id: 'unfair_business_practices',
+      name: 'Unfair Business Practices',
+      description: 'Violations of Business & Professions Code §17200',
+      caciSeries: 'Bus. & Prof. Code §17200',
+      elements: ['Unlawful/unfair/fraudulent business act', 'Injury in fact', 'Lost money or property', 'Causation']
+    },
+    {
+      id: 'punitive_damages',
+      name: 'Punitive Damages',
+      description: 'Enhanced damages for malicious, oppressive, or fraudulent conduct',
+      caciSeries: 'CACI 3940-3949',
+      elements: ['Malicious, oppressive, or fraudulent conduct', 'Clear and convincing evidence', 'Reprehensibility of conduct', 'Relationship to compensatory damages']
+    }
+  ]
 
   // Handle cooldown timer
   useEffect(() => {
@@ -145,7 +264,8 @@ Dated: ${new Date().toLocaleDateString()}
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          summary: summary.trim()
+          summary: summary.trim(),
+          causesOfAction: selectedCausesOfAction.length > 0 ? selectedCausesOfAction : null
         }),
       })
 
@@ -260,6 +380,87 @@ Dated: ${new Date().toLocaleDateString()}
                 <span className="text-green-600 text-sm font-medium">✓ Ready to generate</span>
               )}
             </div>
+          </div>
+
+          {/* Causes of Action Selection */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <label className="block text-sm font-medium text-gray-700">
+                Causes of Action (Optional)
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowCauseSelection(!showCauseSelection)}
+                className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+              >
+                {showCauseSelection ? 'Hide' : 'Select Specific'} Causes
+              </button>
+            </div>
+            <p className="text-gray-600 text-sm mb-3">
+              {showCauseSelection 
+                ? 'Select specific causes of action to include in your complaint. If none selected, the AI will automatically determine appropriate causes based on your case summary.'
+                : 'The AI will automatically determine appropriate causes of action based on your case summary, or you can select specific ones.'
+              }
+            </p>
+            
+            {showCauseSelection && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-gray-50 rounded-lg border">
+                {availableCausesOfAction.map((cause) => (
+                  <div key={cause.id} className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      id={cause.id}
+                      checked={selectedCausesOfAction.includes(cause.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedCausesOfAction([...selectedCausesOfAction, cause.id])
+                        } else {
+                          setSelectedCausesOfAction(selectedCausesOfAction.filter(id => id !== cause.id))
+                        }
+                      }}
+                      className="mt-1 h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                      disabled={isGenerating}
+                    />
+                    <div className="flex-1">
+                      <label htmlFor={cause.id} className="text-sm font-medium text-gray-900 cursor-pointer">
+                        {cause.name}
+                      </label>
+                      <p className="text-xs text-gray-600 mt-1">{cause.description}</p>
+                      <p className="text-xs text-primary-600 font-medium mt-1">{cause.caciSeries}</p>
+                      <div className="text-xs text-gray-500 mt-1">
+                        Elements: {cause.elements.join(', ')}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {selectedCausesOfAction.length > 0 && (
+                  <div className="col-span-full mt-4 p-3 bg-primary-50 border border-primary-200 rounded-lg">
+                    <h4 className="text-sm font-medium text-primary-900 mb-2">
+                      Selected Causes ({selectedCausesOfAction.length}):
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedCausesOfAction.map((id) => {
+                        const cause = availableCausesOfAction.find(c => c.id === id)
+                        return cause ? (
+                          <span key={id} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                            {cause.name}
+                            <button
+                              type="button"
+                              onClick={() => setSelectedCausesOfAction(selectedCausesOfAction.filter(cId => cId !== id))}
+                              className="ml-1 text-primary-600 hover:text-primary-800"
+                              disabled={isGenerating}
+                            >
+                              ×
+                            </button>
+                          </span>
+                        ) : null
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Rate Limit Helper */}

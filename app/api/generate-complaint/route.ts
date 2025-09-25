@@ -53,7 +53,7 @@ async function handleComplaintGeneration(request: NextRequest): Promise<NextResp
   
   try {
     const body = await request.json()
-    const { summary } = body
+    const { summary, causesOfAction } = body
 
     // Validation
     if (!summary || typeof summary !== 'string') {
@@ -91,26 +91,65 @@ async function handleComplaintGeneration(request: NextRequest): Promise<NextResp
       })
     }
 
-    const prompt = `Generate a California Superior Court complaint. Format: attorney info (lines 1-7), court header (lines 8-11), case caption (lines 13-22), then numbered allegations.
+    // Build causes of action instruction
+    const causesInstruction = causesOfAction && causesOfAction.length > 0 
+      ? `\n\nSPECIFIC CAUSES OF ACTION REQUESTED: ${causesOfAction.join(', ').toUpperCase()}\nInclude ONLY these causes of action in the complaint, structured according to their respective CACI elements.`
+      : '\n\nAUTO-DETERMINE CAUSES: Analyze the facts and determine the most appropriate causes of action from the available options.'
 
-Facts: ${sanitizedSummary}
+    const prompt = `Generate comprehensive California Superior Court complaint with MULTIPLE causes of action. ABSOLUTE REQUIREMENT: Include 3-6+ causes of action when facts support them. DO NOT LIMIT TO 1-2 CAUSES.
 
-Include: negligence claims, damages, proper legal language, case number, parties, jury demand.`
+FACTS: ${sanitizedSummary}${causesInstruction}
 
-    // Try different models to work around rate limits
-    const models = ["gpt-3.5-turbo", "gpt-3.5-turbo-0125", "gpt-3.5-turbo-1106"]
+MANDATORY MULTI-CAUSE ANALYSIS - Check ALL these CACI options:
+• NEGLIGENCE (CACI 400) • NEGLIGENCE PER SE (CACI 418) • GROSS NEGLIGENCE (CACI 425)
+• PREMISES LIABILITY (CACI 1000) • MOTOR VEHICLE (CACI 700) • PRODUCTS LIABILITY (CACI 1200)
+• MEDICAL MALPRACTICE (CACI 500) • BATTERY (CACI 1300) • IIED (CACI 1600)
+• BREACH CONTRACT (CACI 300) • FRAUD (CACI 1900) • NEGLIGENT MISREP (CACI 1903)
+• UNFAIR BUSINESS PRACTICES (B&P 17200) • DRAM SHOP LIABILITY • CONVERSION (CACI 2100)
+• TRESPASS (CACI 2000) • DEFAMATION (CACI 1700) • INVASION PRIVACY (CACI 1800)
+• PUNITIVE DAMAGES (CACI 3940-3949) - for malicious, oppressive, or fraudulent conduct
+
+STRUCTURE - COMPLETE FULL COMPLAINT:
+1. Attorney information block
+2. Court header and case caption
+3. Jurisdictional allegations (paragraphs 1-3)
+4. General factual allegations (paragraphs 4-10)
+5. FIRST CAUSE OF ACTION (Name - CACI XXX)
+6. SECOND CAUSE OF ACTION (Name - CACI XXX)
+7. THIRD CAUSE OF ACTION (Name - CACI XXX)
+8. FOURTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
+9. FIFTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
+10. SIXTH CAUSE OF ACTION (Name - CACI XXX) [if applicable]
+11. Prayer for Relief (comprehensive)
+12. Jury Demand
+
+CRITICAL REQUIREMENTS:
+- MUST include 3+ causes when facts reasonably support them
+- Use overlapping theories (negligence + negligence per se + specific liability)
+- Each cause should have 4-6 paragraphs with proper CACI elements
+- Include specific CACI instruction numbers
+- Generate COMPLETE complaint - do not truncate or abbreviate
+- Use aggressive but legally sound pleading strategy
+- Include incorporation by reference for each cause
+- Include PUNITIVE DAMAGES cause when conduct is malicious, oppressive, or fraudulent (drunk driving, intentional acts, cover-ups, etc.)
+- Consider punitive damages for: DUI cases, medical malpractice with cover-up, intentional torts, fraud, gross negligence
+
+LENGTH: Generate full, complete complaint with all causes of action. Do not limit length.`
+
+    // Try different models with higher capabilities for comprehensive complaints
+    const models = ["gpt-4o-mini", "gpt-4", "gpt-3.5-turbo", "gpt-3.5-turbo-0125"]
     
     const createPayload = (model: string) => ({
       model,
       messages: [
         { 
           role: "system", 
-          content: "You are an experienced legal assistant who drafts professional complaints under California law. Always use proper legal formatting, clear language, and ensure all allegations are factually supported." 
+          content: "You are an experienced California plaintiffs' attorney who drafts comprehensive complaints following California Civil Jury Instructions (CACI) standards. You are known for thorough legal analysis and including ALL viable causes of action to maximize client recovery. CRITICAL INSTRUCTIONS: (1) Analyze facts against the entire CACI library - do not be conservative, (2) Include 3-6+ causes of action when facts support them, (3) Consider overlapping theories (negligence + negligence per se + premises liability, etc.), (4) Use specific CACI instruction numbers, (5) Structure each cause with proper CACI elements, (6) Use aggressive but legally sound pleading strategies. Remember: It's better to include a potentially viable cause than to miss a recovery theory." 
         },
         { role: "user", content: prompt }
       ],
-      temperature: 0.3, // Lower temperature for more consistent legal language
-      max_tokens: 2000 // Reduced tokens to minimize rate limits
+      temperature: 0.3 // Lower temperature for more consistent legal language
+      // No max_tokens limit - use full model capacity for comprehensive complaints
     })
 
     // Retry logic with different models to work around rate limits

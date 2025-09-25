@@ -223,6 +223,55 @@ Executed on October 21, 2023, at Buena Park, California.
     setShowProofOfService(!showProofOfService)
   }
 
+  // Function to detect and highlight causes of action in the complaint
+  const formatComplaintText = (text: string) => {
+    const lines = text.split('\n')
+    return lines.map((line, index) => {
+      const trimmedLine = line.trim()
+      
+      // Check if this line is a cause of action heading
+      const isCauseHeading = (
+        trimmedLine.match(/^(FIRST|SECOND|THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH|NINTH|TENTH)\s+CAUSE\s+OF\s+ACTION/i) ||
+        trimmedLine.match(/^\((Negligence|Premises Liability|Motor Vehicle|Products Liability|Intentional Tort|Breach of Contract|Fraud|Misrepresentation|Negligence Per Se|Medical Malpractice|Gross Negligence|Battery|Intentional Infliction|Negligent Misrepresentation|Unfair Business Practices|Punitive Damages)\)$/i)
+      )
+      
+      // Check if this line contains CACI reference
+      const hasCACIReference = trimmedLine.match(/CACI\s+\d+/i)
+      
+      return (
+        <div 
+          key={index + 21} 
+          style={{ 
+            fontSize: '12pt',
+            fontFamily: 'Times New Roman, serif',
+            lineHeight: '24pt',
+            textIndent: line.trim().length > 0 ? '0.5in' : '0',
+            fontWeight: isCauseHeading ? 'bold' : 'normal',
+            textAlign: isCauseHeading ? 'center' : 'left',
+            backgroundColor: isCauseHeading ? '#f0f9ff' : 'transparent',
+            padding: isCauseHeading ? '4px' : '0',
+            marginBottom: isCauseHeading ? '8px' : '0',
+            borderLeft: isCauseHeading ? '4px solid #0ea5e9' : 'none'
+          }}
+        >
+          {hasCACIReference ? (
+            <span>
+              {line.split(/(CACI\s+\d+)/i).map((part, i) => 
+                part.match(/CACI\s+\d+/i) ? (
+                  <span key={i} style={{ backgroundColor: '#fef3c7', padding: '2px 4px', borderRadius: '3px', fontSize: '11pt' }}>
+                    {part}
+                  </span>
+                ) : part
+              )}
+            </span>
+          ) : (
+            line || '\u00A0'
+          )}
+        </div>
+      )
+    })
+  }
+
 
 
   return (
@@ -352,12 +401,38 @@ Executed on October 21, 2023, at Buena Park, California.
           <div className="flex items-center space-x-2">
             <Check className="w-5 h-5 text-green-600" />
             <span className="text-green-800 font-medium">
-              Complaint generated successfully!
+              Complaint generated successfully with CACI-formatted causes of action!
             </span>
           </div>
           <p className="text-green-700 text-sm mt-1">
+            This complaint follows California Civil Jury Instructions (CACI) formatting standards. 
             Review the content below and make any necessary adjustments before filing.
           </p>
+        </div>
+
+        {/* CACI Information Panel */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <h4 className="font-medium text-blue-900 mb-2">📖 CACI Formatting Features</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <h5 className="font-medium text-blue-800 mb-1">Cause of Action Structure:</h5>
+              <ul className="text-blue-700 space-y-1">
+                <li>• <span style={{backgroundColor: '#f0f9ff', padding: '2px 4px', borderLeft: '3px solid #0ea5e9'}}>Highlighted headings</span> for each cause</li>
+                <li>• Elements based on specific CACI instructions</li>
+                <li>• Proper incorporation by reference</li>
+                <li>• Sequential numbering throughout</li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="font-medium text-blue-800 mb-1">CACI References:</h5>
+              <ul className="text-blue-700 space-y-1">
+                <li>• <span style={{backgroundColor: '#fef3c7', padding: '2px 4px', borderRadius: '3px'}}>CACI numbers</span> highlighted in yellow</li>
+                <li>• Series-based organization (400, 700, 1000, etc.)</li>
+                <li>• Element-specific allegations</li>
+                <li>• California law compliance</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         {/* Complaint Content */}
@@ -491,20 +566,8 @@ Executed on October 21, 2023, at Buena Park, California.
                     I. Jurisdiction
                   </div>
                   
-                  {/* Generated complaint content with proper Body Text formatting */}
-                  {(showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint).split('\n').map((line, index) => (
-                    <div 
-                      key={index + 21} 
-                      style={{ 
-                        fontSize: '12pt',
-                        fontFamily: 'Times New Roman, serif',
-                        lineHeight: '24pt',
-                        textIndent: line.trim().length > 0 ? '0.5in' : '0'
-                      }}
-                    >
-                      {line || '\u00A0'}
-                    </div>
-                  ))}
+                  {/* Generated complaint content with proper Body Text formatting and CACI highlighting */}
+                  {formatComplaintText(showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint)}
                 </div>
               </div>
               
