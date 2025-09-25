@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { FileText, Loader2, Send, AlertCircle } from 'lucide-react'
+import { FileText, Loader2, Send, AlertCircle, FileEdit } from 'lucide-react'
 
 interface ComplaintFormProps {
   onComplaintGenerated: (complaint: string) => void
@@ -17,6 +17,7 @@ export default function ComplaintForm({
   const [summary, setSummary] = useState('')
   const [error, setError] = useState('')
   const [rateLimitCooldown, setRateLimitCooldown] = useState(0)
+  const [showManualTemplate, setShowManualTemplate] = useState(false)
 
   // Handle cooldown timer
   useEffect(() => {
@@ -27,6 +28,78 @@ export default function ComplaintForm({
       return () => clearTimeout(timer)
     }
   }, [rateLimitCooldown])
+
+  const generateManualTemplate = () => {
+    const template = `ATTORNEY NAME (California State Bar No. [NUMBER])
+EMAIL
+LAW FIRM NAME
+ADDRESS
+CITY, STATE ZIP
+Telephone: PHONE
+
+Attorney for [PARTY]
+
+SUPERIOR COURT OF CALIFORNIA
+COUNTY OF [COUNTY NAME]
+
+[PLAINTIFF NAME],
+    Plaintiff,
+v.
+[DEFENDANT NAME],
+    Defendant.
+
+No. [CASE NUMBER]
+
+COMPLAINT
+
+PARTIES
+
+I. Jurisdiction
+
+1. This Court has jurisdiction over this action because [jurisdiction basis].
+
+2. Venue is proper in this County because [venue basis].
+
+FIRST CAUSE OF ACTION
+(Negligence)
+
+3. ${summary.trim() ? `Based on the following facts: ${summary.trim()}` : '[State your factual allegations here]'}
+
+4. Defendant owed Plaintiff a duty of care.
+
+5. Defendant breached that duty by [specific actions that caused the incident].
+
+6. As a proximate result of Defendant's negligence, Plaintiff suffered damages including [describe injuries/damages].
+
+SECOND CAUSE OF ACTION
+(Negligence Per Se)
+[If applicable based on violation of statute/regulation]
+
+PRAYER FOR RELIEF
+
+WHEREFORE, Plaintiff prays for judgment against Defendant as follows:
+
+1. General damages according to proof;
+2. Special damages according to proof;
+3. Medical expenses according to proof;
+4. Lost wages and earning capacity according to proof;
+5. Costs of suit;
+6. Such other relief as the Court deems just and proper.
+
+JURY DEMAND
+
+Plaintiff demands trial by jury on all issues so triable.
+
+Dated: ${new Date().toLocaleDateString()}
+
+                    _________________________
+                    [ATTORNEY SIGNATURE]
+                    [ATTORNEY NAME]
+                    Attorney for Plaintiff`
+    
+    onComplaintGenerated(template)
+    setShowManualTemplate(true)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -78,6 +151,20 @@ export default function ComplaintForm({
 
       if (!response.ok) {
         const errorData = await response.json()
+        
+        // Handle quota exceeded specifically
+        if (errorData.type === 'quota_exceeded') {
+          setError(errorData.userMessage || errorData.error)
+          return
+        }
+        
+        // Handle rate limiting
+        if (errorData.type === 'rate_limit_exceeded') {
+          setError(errorData.error)
+          setRateLimitCooldown(errorData.retryAfter || 120)
+          return
+        }
+        
         throw new Error(errorData.error || 'Failed to generate complaint')
       }
 
@@ -190,66 +277,157 @@ export default function ComplaintForm({
 
           {error && (
             <div className={`border rounded-lg p-4 ${
-              error.includes('Rate limit exceeded') 
-                ? 'bg-amber-50 border-amber-200' 
-                : 'bg-red-50 border-red-200'
+              error.includes('quota') || error.includes('billing')
+                ? 'bg-red-50 border-red-200'
+                : error.includes('Rate limit exceeded') 
+                  ? 'bg-amber-50 border-amber-200' 
+                  : 'bg-red-50 border-red-200'
             }`}>
               <div className="flex items-center space-x-2">
                 <AlertCircle className={`w-5 h-5 ${
-                  error.includes('Rate limit exceeded') 
-                    ? 'text-amber-600' 
-                    : 'text-red-600'
+                  error.includes('quota') || error.includes('billing')
+                    ? 'text-red-600'
+                    : error.includes('Rate limit exceeded') 
+                      ? 'text-amber-600' 
+                      : 'text-red-600'
                 }`} />
                 <span className={`font-medium ${
-                  error.includes('Rate limit exceeded') 
-                    ? 'text-amber-800' 
-                    : 'text-red-800'
+                  error.includes('quota') || error.includes('billing')
+                    ? 'text-red-800'
+                    : error.includes('Rate limit exceeded') 
+                      ? 'text-amber-800' 
+                      : 'text-red-800'
                 }`}>
-                  {error.includes('Rate limit exceeded') ? 'Rate Limit Reached' : 'Error'}
+                  {error.includes('quota') || error.includes('billing') 
+                    ? 'OpenAI Quota Exceeded' 
+                    : error.includes('Rate limit exceeded') 
+                      ? 'Rate Limit Reached' 
+                      : 'Error'}
                 </span>
               </div>
-              <p className={`mt-1 ${
-                error.includes('Rate limit exceeded') 
-                  ? 'text-amber-700' 
-                  : 'text-red-700'
-              }`}>
-                {error}
-              </p>
-              {error.includes('Rate limit exceeded') && rateLimitCooldown > 0 && (
-                <div className="mt-3 p-3 bg-amber-100 rounded-lg">
-                  <p className="text-amber-800 text-sm font-medium">
-                    ⏱️ Automatic retry in {rateLimitCooldown} seconds
+              
+              {/* Quota exceeded - show structured message */}
+              {(error.includes('quota') || error.includes('billing')) && (
+                <div className="mt-3 space-y-3">
+                  <p className="text-red-700 text-sm">
+                    Your OpenAI API usage has exceeded the current billing limits.
                   </p>
-                  <p className="text-amber-700 text-sm mt-1">
-                    To avoid rate limits in the future, consider upgrading your OpenAI API plan or wait longer between requests.
-                  </p>
+                  
+                  <div className="bg-red-100 rounded-lg p-3">
+                    <h4 className="font-medium text-red-900 mb-2">Solutions:</h4>
+                    <ul className="text-red-800 text-sm space-y-1">
+                      <li>• <a href="https://platform.openai.com/usage" target="_blank" rel="noopener noreferrer" className="underline hover:text-red-900">Check your usage limits</a></li>
+                      <li>• <a href="https://platform.openai.com/account/billing" target="_blank" rel="noopener noreferrer" className="underline hover:text-red-900">Add payment method or increase limits</a></li>
+                      <li>• Wait for your quota to reset (if on free tier)</li>
+                      <li>• <button 
+                           onClick={generateManualTemplate}
+                           className="underline hover:text-red-900 text-left"
+                         >
+                           Generate manual template instead
+                         </button></li>
+                    </ul>
+                    <p className="text-red-700 text-xs mt-2">
+                      📖 For detailed setup instructions, see <code className="bg-red-200 px-1 rounded">OPENAI_SETUP.md</code> in your project folder.
+                    </p>
+                  </div>
+                  
+                  <details className="text-sm">
+                    <summary className="text-red-700 cursor-pointer hover:text-red-800">Show manual complaint template</summary>
+                    <div className="mt-2 p-3 bg-gray-100 rounded text-gray-700 font-mono text-xs">
+                      <pre>{`[Attorney Name] (California State Bar No. [Number])
+[Email]
+[Law Firm Name]
+[Address]
+[City, State ZIP]
+Telephone: [Phone]
+
+Attorney for [Party]
+
+SUPERIOR COURT OF CALIFORNIA
+COUNTY OF [COUNTY NAME]
+
+[Plaintiff Name],
+    Plaintiff,
+v.
+[Defendant Name],
+    Defendant.
+
+No. [Case Number]
+
+COMPLAINT
+
+PARTIES
+
+I. Jurisdiction
+[Your allegations here...]`}</pre>
+                    </div>
+                  </details>
                 </div>
+              )}
+              
+              {/* Rate limit error */}
+              {!error.includes('quota') && !error.includes('billing') && (
+                <>
+                  <p className={`mt-1 ${
+                    error.includes('Rate limit exceeded') 
+                      ? 'text-amber-700' 
+                      : 'text-red-700'
+                  }`}>
+                    {error}
+                  </p>
+                  {error.includes('Rate limit exceeded') && rateLimitCooldown > 0 && (
+                    <div className="mt-3 p-3 bg-amber-100 rounded-lg">
+                      <p className="text-amber-800 text-sm font-medium">
+                        ⏱️ Automatic retry in {rateLimitCooldown} seconds
+                      </p>
+                      <p className="text-amber-700 text-sm mt-1">
+                        To avoid rate limits in the future, consider upgrading your OpenAI API plan or wait longer between requests.
+                      </p>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={isGenerating || !summary.trim() || summary.length < 50 || rateLimitCooldown > 0}
-            className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Generating Complaint...</span>
-              </>
-            ) : rateLimitCooldown > 0 ? (
-              <>
-                <AlertCircle className="w-5 h-5" />
-                <span>Please wait {rateLimitCooldown}s (Rate Limited)</span>
-              </>
-            ) : (
-              <>
-                <Send className="w-5 h-5" />
-                <span>Generate Legal Complaint</span>
-              </>
-            )}
-          </button>
+          <div className="space-y-3">
+            <button
+              type="submit"
+              disabled={isGenerating || !summary.trim() || summary.length < 50 || rateLimitCooldown > 0}
+              className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Generating Complaint...</span>
+                </>
+              ) : rateLimitCooldown > 0 ? (
+                <>
+                  <AlertCircle className="w-5 h-5" />
+                  <span>Please wait {rateLimitCooldown}s (Rate Limited)</span>
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5" />
+                  <span>Generate AI-Powered Complaint</span>
+                </>
+              )}
+            </button>
+            
+            <div className="text-center">
+              <span className="text-gray-500 text-sm">or</span>
+            </div>
+            
+            <button
+              type="button"
+              onClick={generateManualTemplate}
+              disabled={isGenerating}
+              className="btn-secondary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <FileEdit className="w-5 h-5" />
+              <span>Use Manual Template</span>
+            </button>
+          </div>
         </form>
 
         {/* Example Summaries */}

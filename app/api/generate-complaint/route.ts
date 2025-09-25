@@ -176,35 +176,53 @@ Include: negligence claims, damages, proper legal language, case number, parties
           { status: 401 }
         )
       }
-      
-        if (response.status === 429) {
-          console.log(`Rate limit hit on attempt ${attempt}/${maxRetries}`)
-          console.log('Full error response:', errorData)
-          console.log('Response headers:', Object.fromEntries(response.headers.entries()))
-          console.log('Current model:', currentModel)
+
+      // Handle quota exceeded error specifically
+      if (response.status === 429) {
+        const errorMessage = errorData.error?.message || ''
+        const errorCode = errorData.error?.code || ''
+        
+        console.log(`Rate limit/quota error on attempt ${attempt}/${maxRetries}`)
+        console.log('Error message:', errorMessage)
+        console.log('Error code:', errorCode)
+        console.log('Full error response:', errorData)
+        
+        // Check if this is a quota exceeded error (not just rate limiting)
+        const isQuotaExceeded = errorMessage.toLowerCase().includes('quota') || 
+                               errorMessage.toLowerCase().includes('billing') ||
+                               errorCode === 'insufficient_quota'
+        
+        if (isQuotaExceeded) {
+          // Don't retry for quota errors - they won't resolve with waiting
+          return NextResponse.json(
+            { 
+              error: 'OpenAI API quota exceeded. Please check your billing and usage limits at https://platform.openai.com/usage',
+              type: 'quota_exceeded',
+              userMessage: 'Your OpenAI API usage has exceeded the current billing limits. To continue using this service, please:\n\n1. Check your usage at https://platform.openai.com/usage\n2. Add payment method or increase limits at https://platform.openai.com/account/billing\n3. Wait for your quota to reset (if on free tier)\n\nAlternatively, you can manually draft your complaint using the legal template format shown in previous examples.',
+              details: {
+                message: errorMessage,
+                code: errorCode,
+                docsUrl: 'https://platform.openai.com/docs/guides/error-codes/api-errors'
+              }
+            },
+            { status: 429 }
+          )
+        }
+        
+        // Handle regular rate limiting (temporary)
+        if (attempt === maxRetries) {
+          const rateLimitMessage = 'Rate limit exceeded. This happens when too many requests are made to OpenAI. Please wait 60 seconds before trying again. Consider upgrading your OpenAI API plan for higher limits.'
           
-          // If this is our last attempt, return the error
-          if (attempt === maxRetries) {
-            const errorMessage = errorData.error?.message || 'Rate limit exceeded. This happens when too many requests are made to OpenAI. Please wait 60 seconds before trying again. Consider upgrading your OpenAI API plan for higher limits.'
-            const errorType = errorData.error?.type || 'rate_limit'
-            
-            console.log('Final rate limit error:', {
-              message: errorMessage,
-              type: errorType,
-              code: errorData.error?.code,
-              param: errorData.error?.param
-            })
-            
-            return NextResponse.json(
-              { 
-                error: errorMessage,
-                retryAfter: 60,
-                type: errorType,
-                details: errorData.error
-              },
-              { status: 429 }
-            )
-          }
+          return NextResponse.json(
+            { 
+              error: rateLimitMessage,
+              retryAfter: 60,
+              type: 'rate_limit_exceeded',
+              details: errorData.error
+            },
+            { status: 429 }
+          )
+        }
 
           // Wait before retrying (exponential backoff with longer delays)
           const waitTime = Math.min(5000 * Math.pow(2, attempt - 1), 30000) // Start at 5s, cap at 30s
