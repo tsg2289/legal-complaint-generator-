@@ -115,7 +115,7 @@ Dated: ${new Date().toLocaleDateString()}
     }
 
     // Check local storage cache first
-    const cacheKey = `complaint_${btoa(summary.trim().toLowerCase())}`
+    const cacheKey = `complaint_${encodeURIComponent(summary.trim().toLowerCase()).replace(/%/g, '_')}`
     const cachedResult = localStorage.getItem(cacheKey)
     
     if (cachedResult) {
@@ -171,7 +171,7 @@ Dated: ${new Date().toLocaleDateString()}
       const data = await response.json()
       
       // Cache the result in localStorage
-      const cacheKey = `complaint_${btoa(summary.trim().toLowerCase())}`
+      const cacheKey = `complaint_${encodeURIComponent(summary.trim().toLowerCase()).replace(/%/g, '_')}`
       const cacheData = {
         complaint: data.complaint,
         timestamp: Date.now(),
