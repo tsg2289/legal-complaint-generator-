@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Download, FileText, Copy, Check, RotateCcw, Printer, Plus, FileIcon } from 'lucide-react'
-import jsPDF from 'jspdf'
-import { Document, Packer, Paragraph, TextRun, AlignmentType } from 'docx'
+import { FileText, Copy, Check, RotateCcw, Plus, FileIcon } from 'lucide-react'
+import { Document, Packer, Paragraph, TextRun } from 'docx'
 import { saveAs } from 'file-saver'
 
 interface ComplaintOutputProps {
@@ -14,12 +13,48 @@ interface ComplaintOutputProps {
 export default function ComplaintOutput({ complaint, onNewComplaint }: ComplaintOutputProps) {
   const [copied, setCopied] = useState(false)
   const [showProofOfService, setShowProofOfService] = useState(false)
+  const [selectedCounty, setSelectedCounty] = useState('Los Angeles')
+  const [attorneyName, setAttorneyName] = useState('RANDY LENO')
+  const [attorneyEmail, setAttorneyEmail] = useState('RLENO@FAKE.com')
+  const [attorneyBarNumber, setAttorneyBarNumber] = useState('119478')
+
+  // California Counties List
+  const californiaCounties = [
+    'Alameda', 'Alpine', 'Amador', 'Butte', 'Calaveras', 'Colusa', 'Contra Costa',
+    'Del Norte', 'El Dorado', 'Fresno', 'Glenn', 'Humboldt', 'Imperial', 'Inyo',
+    'Kern', 'Kings', 'Lake', 'Lassen', 'Los Angeles', 'Madera', 'Marin',
+    'Mariposa', 'Mendocino', 'Merced', 'Modoc', 'Mono', 'Monterey', 'Napa',
+    'Nevada', 'Orange', 'Placer', 'Plumas', 'Riverside', 'Sacramento', 'San Benito',
+    'San Bernardino', 'San Diego', 'San Francisco', 'San Joaquin', 'San Luis Obispo',
+    'San Mateo', 'Santa Barbara', 'Santa Clara', 'Santa Cruz', 'Shasta', 'Sierra',
+    'Siskiyou', 'Solano', 'Sonoma', 'Stanislaus', 'Sutter', 'Tehama', 'Trinity',
+    'Tulare', 'Tuolumne', 'Ventura', 'Yolo', 'Yuba'
+  ]
+
+  // Sample attorney names for dropdown
+  const attorneyNames = [
+    'RANDY LENO', 'MICHAEL JOHNSON', 'SARAH WILLIAMS', 'DAVID BROWN', 'JESSICA DAVIS',
+    'CHRISTOPHER MILLER', 'AMANDA WILSON', 'MATTHEW MOORE', 'JENNIFER TAYLOR', 'ROBERT ANDERSON'
+  ]
+
+  // Sample attorney emails for dropdown
+  const attorneyEmails = [
+    'RLENO@FAKE.com', 'MJOHNSON@LAWFIRM.com', 'SWILLIAMS@LEGAL.com', 'DBROWN@ATTORNEY.com',
+    'JDAVIS@LAWOFFICE.com', 'CMILLER@LEGAL.net', 'AWILSON@LAWFIRM.org', 'MMOORE@ATTORNEY.net',
+    'JTAYLOR@LEGAL.org', 'RANDERSON@LAWOFFICE.net'
+  ]
+
+  // Sample bar numbers for dropdown  
+  const barNumbers = [
+    '119478', '123456', '234567', '345678', '456789',
+    '567890', '678901', '789012', '890123', '901234'
+  ]
 
   const proofOfServiceText = `PROOF OF SERVICE
 
-STATE OF CALIFORNIA, COUNTY OF ORANGE
+STATE OF CALIFORNIA, COUNTY OF ${selectedCounty.toUpperCase()}
 
-At the time of service, I was over 18 years of age and not a party to this action. I am employed in the County of Orange, State of California. My business address is Telluride, California.
+At the time of service, I was over 18 years of age and not a party to this action. I am employed in the County of ${selectedCounty}, State of California. My business address is Telluride, California.
 
 On October 28, 2020, I served true copies of the following document(s) described as
 DEFENDANT VALERIE JASPER'S ANSWER TO PLAINTIFFS' COMPLAINT; DEMAND
@@ -50,98 +85,102 @@ Executed on October 21, 2023, at Buena Park, California.
     }
   }
 
-  const handleDownloadPDF = () => {
-    try {
-      const doc = new jsPDF()
-      const pageWidth = doc.internal.pageSize.getWidth()
-      const leftMargin = 25 // Space for line numbers
-      const rightMargin = 20
-      const lineHeight = 14 // Standard court document line height
-      const maxLineWidth = pageWidth - (leftMargin + rightMargin)
-      
-      // Set up court document formatting
-      doc.setFont('times', 'normal')
-      doc.setFontSize(12)
-      
-      const currentContent = showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint
-      const lines = currentContent.split('\n')
-      let yPosition = 36 // Start position (1.5 inches from top)
-      let pageLines = 1
-      
-      lines.forEach((line: string, index: number) => {
-        const lineNumber = index + 1
-        const isComplaintSection = index < complaint.split('\n').length
-        
-        // Check if we need a new page (25 lines per page standard)
-        if (yPosition > doc.internal.pageSize.getHeight() - 36) {
-          doc.addPage()
-          yPosition = 36
-          pageLines = 1
-        }
-        
-        // Add line number (only for complaint section, first 25 lines)
-        if (lineNumber <= 25 && isComplaintSection && !showProofOfService) {
-          doc.setFontSize(10)
-          doc.text(lineNumber.toString(), 15, yPosition)
-        }
-        
-        // Add line content
-        doc.setFontSize(12)
-        if (line.trim()) {
-          // Handle long lines by wrapping
-          const wrappedLines = doc.splitTextToSize(line, maxLineWidth)
-          wrappedLines.forEach((wrappedLine: string, wrapIndex: number) => {
-            if (wrapIndex === 0) {
-              doc.text(wrappedLine, leftMargin, yPosition)
-            } else {
-              yPosition += lineHeight
-              doc.text(wrappedLine, leftMargin, yPosition)
-            }
-          })
-        }
-        
-        yPosition += lineHeight
-        pageLines++
-      })
-      
-      const fileName = showProofOfService 
-        ? `CA-Superior-Court-Complaint-with-Proof-of-Service-${new Date().toISOString().slice(0, 10)}.pdf`
-        : `CA-Superior-Court-Complaint-${new Date().toISOString().slice(0, 10)}.pdf`
-      
-      doc.save(fileName)
-    } catch (err) {
-      console.error('Failed to generate PDF:', err)
-      alert('Failed to generate PDF. Please try copying the text instead.')
-    }
-  }
+  
 
   const handleDownloadWord = async () => {
     try {
-      const currentContent = showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint
-      const lines = currentContent.split('\n')
+      // Create structured content for Word document
+      const documentSections = [
+        // Attorney Information Block
+        `${attorneyName.toUpperCase()} (California State Bar No. ${attorneyBarNumber})`,
+        `${attorneyEmail.toUpperCase()}`,
+        'FAKE LAW OFFICE, LLP',
+        '2465 Boulevard East, 9th Floor',
+        'Telluride, California 98623-4568',
+        'Telephone: (562) 729-4689',
+        'Facsimile: (562) 729-4689',
+        '',
+        'Attorney for Defendant',
+        '',
+        // Court Header
+        'SUPERIOR COURT OF CALIFORNIA',
+        `COUNTY OF ${selectedCounty.toUpperCase()}`,
+        '',
+        // Case Caption
+        'John Q. Public,',
+        'Plaintiff,',
+        'v.',
+        '',
+        'LMNOP Company,',
+        'Defendant.',
+        '',
+        'No. 2:05-cv-00700-ABC-DEF',
+        '',
+        // Document Title
+        'COMPLAINT',
+        '',
+        'PARTIES',
+        '',
+        'I. Jurisdiction',
+        ''
+      ]
       
-      const paragraphs = lines.map((line, index) => {
+      // Add the generated complaint content
+      const complaintLines = complaint.split('\n')
+      const allContent = [...documentSections, ...complaintLines]
+      
+      // Add proof of service if selected
+      if (showProofOfService) {
+        allContent.push('', ...proofOfServiceText.split('\n'))
+      }
+      
+      const paragraphs = allContent.map((line, index) => {
         const lineNumber = index + 1
-        const hasLineNumber = lineNumber <= 25 && !showProofOfService
+        const hasLineNumber = lineNumber <= 28
+        
+        // Determine formatting based on content
+        let alignment: "left" | "center" | "right" | undefined = "left"
+        let bold = false
+        let indentFirst = 0.5 // 0.5 inch first line indent for body text
+        
+        // Court headers - centered and bold
+        if (line === 'SUPERIOR COURT OF CALIFORNIA' || 
+            line === `COUNTY OF ${selectedCounty.toUpperCase()}` ||
+            line === 'COMPLAINT' || 
+            line === 'PARTIES') {
+          alignment = "center"
+          bold = true
+          indentFirst = 0
+        }
+        
+        // Case caption items - centered
+        if (line === 'Plaintiff,' || line === 'v.' || line === 'Defendant.') {
+          alignment = "center"
+          indentFirst = 0
+        }
+        
+        // Title 1 style for jurisdiction
+        if (line === 'I. Jurisdiction') {
+          bold = true
+          indentFirst = 0.5
+        }
         
         return new Paragraph({
           children: [
-            ...(hasLineNumber ? [
-              new TextRun({
-                text: lineNumber.toString().padStart(2, ' ') + ' ',
-                font: 'Times New Roman',
-                size: 20, // 10pt
-                color: '666666'
-              })
-            ] : []),
             new TextRun({
               text: line || ' ',
               font: 'Times New Roman',
-              size: 24 // 12pt
+              size: 24, // 12pt
+              bold: bold
             })
           ],
+          alignment: alignment,
+          indent: {
+            firstLine: indentFirst * 1440 // Convert inches to twips
+          },
           spacing: {
-            after: 240 // Equivalent to 14pt line spacing
+            line: 480, // Double spacing in twips (480 twips = double spacing)
+            lineRule: "auto"
           }
         })
       })
@@ -152,10 +191,10 @@ Executed on October 21, 2023, at Buena Park, California.
             properties: {
               page: {
                 margin: {
-                  top: 1440, // 1 inch
-                  right: 1440,
-                  bottom: 1440,
-                  left: 1440
+                  top: 1080, // 0.75 inch (3/4 inch)
+                  right: 1440, // 1 inch
+                  bottom: 1080, // 0.75 inch (3/4 inch)
+                  left: 1440 // 1 inch
                 }
               }
             },
@@ -165,11 +204,15 @@ Executed on October 21, 2023, at Buena Park, California.
       })
 
       const buffer = await Packer.toBuffer(doc)
+      const attorneyLastName = attorneyName.split(' ').pop() || 'Attorney'
       const fileName = showProofOfService 
-        ? `CA-Superior-Court-Complaint-with-Proof-of-Service-${new Date().toISOString().slice(0, 10)}.docx`
-        : `CA-Superior-Court-Complaint-${new Date().toISOString().slice(0, 10)}.docx`
+        ? `${selectedCounty}-County-Complaint-${attorneyLastName}-with-Proof-of-Service-${new Date().toISOString().slice(0, 10)}.docx`
+        : `${selectedCounty}-County-Complaint-${attorneyLastName}-${new Date().toISOString().slice(0, 10)}.docx`
       
-      saveAs(new Blob([buffer]), fileName)
+      const blob = new Blob([new Uint8Array(buffer)], { 
+        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
+      })
+      saveAs(blob, fileName)
     } catch (err) {
       console.error('Failed to generate Word document:', err)
       alert('Failed to generate Word document. Please try copying the text instead.')
@@ -180,63 +223,7 @@ Executed on October 21, 2023, at Buena Park, California.
     setShowProofOfService(!showProofOfService)
   }
 
-  const handlePrint = () => {
-    const printWindow = window.open('', '_blank')
-    if (printWindow) {
-      const currentContent = showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint
-      const lines = currentContent.split('\n')
-      const formattedContent = lines.map((line, index) => {
-        const lineNumber = index + 1
-        const lineNumberText = lineNumber <= 25 && !showProofOfService ? lineNumber.toString().padStart(2, ' ') : '  '
-        return `<div class="line"><span class="line-number">${lineNumberText}</span><span class="line-content">${line || '&nbsp;'}</span></div>`
-      }).join('')
 
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>California Superior Court Complaint</title>
-            <style>
-              body { 
-                font-family: 'Times New Roman', serif; 
-                margin: 1in; 
-                color: #000;
-                font-size: 12pt;
-                line-height: 14pt;
-              }
-              .line {
-                display: flex;
-                min-height: 14pt;
-                page-break-inside: avoid;
-              }
-              .line-number {
-                width: 25px;
-                text-align: right;
-                padding-right: 10px;
-                font-size: 10pt;
-                color: #666;
-                flex-shrink: 0;
-              }
-              .line-content {
-                flex: 1;
-              }
-              @media print {
-                body { 
-                  margin: 1in;
-                  -webkit-print-color-adjust: exact;
-                }
-                .no-print { display: none; }
-              }
-            </style>
-          </head>
-          <body>
-            ${formattedContent}
-          </body>
-        </html>
-      `)
-      printWindow.document.close()
-      printWindow.print()
-    }
-  }
 
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200">
@@ -248,6 +235,74 @@ Executed on October 21, 2023, at Buena Park, California.
             <h2 className="text-2xl font-bold text-gray-900">Generated Complaint</h2>
           </div>
           <div className="flex items-center space-x-3 flex-wrap">
+            <div className="flex items-center space-x-2">
+              <label htmlFor="county-select" className="text-sm font-medium text-gray-700">
+                County:
+              </label>
+              <select
+                id="county-select"
+                value={selectedCounty}
+                onChange={(e) => setSelectedCounty(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              >
+                {californiaCounties.map((county) => (
+                  <option key={county} value={county}>
+                    {county}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center space-x-2">
+              <label htmlFor="attorney-name-select" className="text-sm font-medium text-gray-700">
+                Attorney:
+              </label>
+              <select
+                id="attorney-name-select"
+                value={attorneyName}
+                onChange={(e) => setAttorneyName(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              >
+                {attorneyNames.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center space-x-2">
+              <label htmlFor="attorney-email-select" className="text-sm font-medium text-gray-700">
+                Email:
+              </label>
+              <select
+                id="attorney-email-select"
+                value={attorneyEmail}
+                onChange={(e) => setAttorneyEmail(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              >
+                {attorneyEmails.map((email) => (
+                  <option key={email} value={email}>
+                    {email}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center space-x-2">
+              <label htmlFor="bar-number-select" className="text-sm font-medium text-gray-700">
+                Bar #:
+              </label>
+              <select
+                id="bar-number-select"
+                value={attorneyBarNumber}
+                onChange={(e) => setAttorneyBarNumber(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              >
+                {barNumbers.map((number) => (
+                  <option key={number} value={number}>
+                    {number}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button
               onClick={handleCopy}
               className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -274,20 +329,6 @@ Executed on October 21, 2023, at Buena Park, California.
             >
               <Plus className="w-4 h-4" />
               <span>{showProofOfService ? 'Remove' : 'Add'} Proof of Service</span>
-            </button>
-            <button
-              onClick={handlePrint}
-              className="flex items-center space-x-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-            >
-              <Printer className="w-4 h-4 text-gray-600" />
-              <span className="text-gray-600">Print</span>
-            </button>
-            <button
-              onClick={handleDownloadPDF}
-              className="btn-secondary flex items-center space-x-2"
-            >
-              <Download className="w-4 h-4" />
-              <span>Download PDF</span>
             </button>
             <button
               onClick={handleDownloadWord}
@@ -322,29 +363,156 @@ Executed on October 21, 2023, at Buena Park, California.
         {/* Complaint Content */}
         <div className="border border-gray-200 rounded-lg">
           <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
-            <h3 className="font-medium text-gray-900">California Superior Court Complaint</h3>
+            <h3 className="font-medium text-gray-900">California Superior Court Document</h3>
             <p className="text-gray-600 text-sm">Generated: {new Date().toLocaleString()}</p>
           </div>
-          <div className="p-6 bg-white">
-            <div className="complaint-document font-mono text-sm leading-6">
-              {(showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint).split('\n').map((line, index) => {
-                const lineNumber = index + 1;
-                const isComplaintSection = index < complaint.split('\n').length;
-                const showLineNumber = lineNumber <= 25 && isComplaintSection && !showProofOfService;
-                
-                return (
-                  <div key={index} className="flex">
-                    <div className="w-8 text-right text-gray-500 pr-2 flex-shrink-0">
-                      {showLineNumber ? lineNumber : ''}
+          <div className="bg-white" style={{ padding: '0.75in 1in', fontFamily: 'Times New Roman, serif', fontSize: '12pt', lineHeight: '1.2' }}>
+            {/* Court Document Container with proper margins and line numbering */}
+            <div className="relative" style={{ minHeight: '9.5in', width: '6.5in', margin: '0 auto', backgroundColor: 'white', border: '1px solid #ccc' }}>
+              {/* Left margin for line numbers */}
+              <div className="absolute left-0 top-0 bottom-0" style={{ width: '1.25in', borderRight: '1px solid #ddd' }}>
+                {/* Line numbers 1-28 */}
+                {Array.from({ length: 28 }, (_, i) => (
+                  <div 
+                    key={i + 1} 
+                    className="text-center border-b border-gray-200" 
+                    style={{ 
+                      height: '14pt', 
+                      lineHeight: '14pt', 
+                      fontSize: '10pt',
+                      borderBottom: '1px solid #eee'
+                    }}
+                  >
+                    {i + 1}
+                  </div>
+                ))}
+              </div>
+              
+              {/* Main content area */}
+              <div style={{ marginLeft: '1.25in', padding: '0 0.5in' }}>
+                {/* Court Document Header and Content - Following CAED Pleading Paper Instructions */}
+                <div>
+                  {/* Attorney Information Block - Body Text Style */}
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    {attorneyName.toUpperCase()} (California State Bar No. {attorneyBarNumber})
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    {attorneyEmail.toUpperCase()}
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    FAKE LAW OFFICE, LLP
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    2465 Boulevard East, 9th Floor
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    Telluride, California 98623-4568
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    Telephone: (562) 729-4689
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    Facsimile: (562) 729-4689
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    \u00A0
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                    Attorney for Defendant
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
+                    \u00A0
+                  </div>
+                  
+                  {/* Court Header - Title Style (bold, all caps, centered) */}
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
+                    SUPERIOR COURT OF CALIFORNIA
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
+                    COUNTY OF {selectedCounty.toUpperCase()}
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
+                    \u00A0
+                  </div>
+                  
+                  {/* Case Caption - Following CAED format */}
+                  <div style={{ display: 'flex' }}>
+                    {/* Left side - Parties */}
+                    <div style={{ flex: '1', paddingRight: '20px' }}>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                        John Q. Public,
+                      </div>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center' }}>
+                        Plaintiff,
+                      </div>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center' }}>
+                        v.
+                      </div>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
+                        \u00A0
+                      </div>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textIndent: '0.5in' }}>
+                        LMNOP Company,
+                      </div>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center' }}>
+                        Defendant.
+                      </div>
                     </div>
-                    <div className="flex-1 min-h-[24px]">
-                      <span className="font-serif text-black">
-                        {line || '\u00A0'}
-                      </span>
+                    
+                    {/* Right side - Case Info */}
+                    <div style={{ width: '200px', paddingLeft: '10px', borderLeft: '1px solid black' }}>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
+                        No. 2:05-cv-00700-ABC-DEF
+                      </div>
+                      <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
+                        \u00A0
+                      </div>
                     </div>
                   </div>
-                );
-              })}
+                  
+                  {/* Document Title - Title Style (bold, all caps, centered) */}
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
+                    COMPLAINT
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
+                    \u00A0
+                  </div>
+                  
+                  {/* Document sections with proper heading styles */}
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', textAlign: 'center', fontWeight: 'bold' }}>
+                    PARTIES
+                  </div>
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt' }}>
+                    \u00A0
+                  </div>
+                  
+                  {/* Title 1 Style - bold, indent left 0.5" */}
+                  <div style={{ fontSize: '12pt', fontFamily: 'Times New Roman, serif', lineHeight: '24pt', fontWeight: 'bold', marginLeft: '0.5in' }}>
+                    I. Jurisdiction
+                  </div>
+                  
+                  {/* Generated complaint content with proper Body Text formatting */}
+                  {(showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint).split('\n').map((line, index) => (
+                    <div 
+                      key={index + 21} 
+                      style={{ 
+                        fontSize: '12pt',
+                        fontFamily: 'Times New Roman, serif',
+                        lineHeight: '24pt',
+                        textIndent: line.trim().length > 0 ? '0.5in' : '0'
+                      }}
+                    >
+                      {line || '\u00A0'}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Footer */}
+              <div className="absolute bottom-0 left-0 right-0 text-center border-t border-gray-300" style={{ padding: '10px', fontSize: '10pt' }}>
+                <div>-1-</div>
+                <div style={{ fontSize: '8pt', color: '#666' }}>DEFENDANT'S ANSWER TO COMPLAINT</div>
+              </div>
             </div>
           </div>
         </div>

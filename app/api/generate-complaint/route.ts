@@ -1,6 +1,56 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Simple in-memory queue to prevent concurrent requests
+let isProcessing = false
+const requestQueue: Array<() => void> = []
+
+// Simple cache to store recent responses (in production, use Redis or similar)
+const responseCache = new Map<string, { complaint: string, timestamp: number }>()
+const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours
+
+// Generate cache key from summary
+const generateCacheKey = (summary: string): string => {
+  return Buffer.from(summary.toLowerCase().trim()).toString('base64')
+}
+
+// Process queue
+const processQueue = async () => {
+  if (requestQueue.length > 0 && !isProcessing) {
+    const nextRequest = requestQueue.shift()
+    if (nextRequest) {
+      try {
+        await nextRequest()
+      } catch (error) {
+        console.error('Error processing queued request:', error)
+      }
+    }
+  }
+}
+
 export async function POST(request: NextRequest) {
+  // If another request is processing, queue this one
+  if (isProcessing) {
+    return new Promise<NextResponse>((resolve, reject) => {
+      requestQueue.push(async () => {
+        try {
+          const response = await handleComplaintGeneration(request)
+          resolve(response)
+        } catch (error) {
+          reject(error)
+        }
+      })
+      
+      // Process the queue after adding the request
+      setTimeout(processQueue, 100)
+    })
+  }
+
+  return handleComplaintGeneration(request)
+}
+
+async function handleComplaintGeneration(request: NextRequest): Promise<NextResponse> {
+  isProcessing = true
+  
   try {
     const body = await request.json()
     const { summary } = body
@@ -26,51 +76,29 @@ export async function POST(request: NextRequest) {
     // Sanitize input
     const sanitizedSummary = summary.trim().slice(0, 5000) // Limit length
 
-    const prompt = `
-You are a legal assistant. Generate a California Superior Court complaint using the EXACT format below with line numbering 1-25 on the left margin.
+    // Check cache first
+    const cacheKey = generateCacheKey(sanitizedSummary)
+    const cached = responseCache.get(cacheKey)
+    
+    if (cached && (Date.now() - cached.timestamp) < CACHE_DURATION) {
+      console.log('Returning cached response')
+      return NextResponse.json({ 
+        complaint: cached.complaint,
+        cached: true 
+      })
+    }
 
-REQUIRED FORMAT:
-- Lines 1-7: Attorney information block (use placeholder attorney info)
-- Line 8: "SUPERIOR COURT OF THE STATE OF CALIFORNIA" (centered)
-- Line 9: "COUNTY OF [COUNTY], [DISTRICT] DISTRICT" (centered)
-- Lines 11-16: Case caption with parties, case number, and document title
-- Lines 17+: Body of complaint with numbered allegations
+    const prompt = `Generate a California Superior Court complaint. Format: attorney info (lines 1-7), court header (lines 8-11), case caption (lines 13-22), then numbered allegations.
 
-Facts to incorporate: """${sanitizedSummary}"""
+Facts: ${sanitizedSummary}
 
-Generate the complaint using this EXACT format structure:
+Include: negligence claims, damages, proper legal language, case number, parties, jury demand.`
 
-Line 1: [Attorney Name], State Bar No. [Number]
-Line 2: [Email]
-Line 3: [Second Attorney Name], State Bar No. [Number]  
-Line 4: [Email]
-Line 5: [Law Firm Name]
-Line 6: Attorneys at Law
-Line 7: [Address, Phone, Fax]
-Line 8: 
-Line 9:                    SUPERIOR COURT OF THE STATE OF CALIFORNIA
-Line 10:
-Line 11:                  COUNTY OF [COUNTY], [DISTRICT] DISTRICT
-Line 12:
-Line 13: [PLAINTIFF NAME], an individual,          | Case No. [CASE_NUMBER]
-Line 14:                                           |
-Line 15:                    Plaintiff,             | COMPLAINT FOR:
-Line 16:                                           | [CAUSES OF ACTION]
-Line 17:              v.                           | 
-Line 18:                                           | DEMAND FOR JURY TRIAL
-Line 19: [DEFENDANT NAME], an individual; and      |
-Line 20: DOES 1 to 25, Inclusive                   |
-Line 21:                                           |
-Line 22:                    Defendants.            |
-Line 23: __________________________________________|
-
-Continue with numbered allegations starting around line 24, incorporating the provided facts into proper legal allegations with causes of action for negligence, damages, etc.
-
-Use standard California pleading language and ensure all factual allegations from the summary are properly incorporated.
-`
-
-    const payload = {
-      model: "gpt-3.5-turbo",
+    // Try different models to work around rate limits
+    const models = ["gpt-3.5-turbo", "gpt-3.5-turbo-0125", "gpt-3.5-turbo-1106"]
+    
+    const createPayload = (model: string) => ({
+      model,
       messages: [
         { 
           role: "system", 
@@ -79,19 +107,64 @@ Use standard California pleading language and ensure all factual allegations fro
         { role: "user", content: prompt }
       ],
       temperature: 0.3, // Lower temperature for more consistent legal language
-      max_tokens: 3000
-    }
-
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify(payload)
+      max_tokens: 2000 // Reduced tokens to minimize rate limits
     })
 
-    if (!response.ok) {
+    // Retry logic with different models to work around rate limits
+    const maxRetries = 3
+    let lastError = null
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      // Use different model for each attempt to spread rate limits
+      const modelIndex = (attempt - 1) % models.length
+      const currentModel = models[modelIndex]
+      const payload = createPayload(currentModel)
+      
+      console.log(`Attempt ${attempt}/${maxRetries} using model: ${currentModel}`)
+      
+      try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify(payload)
+        })
+
+        if (response.ok) {
+          // Success! Process the response
+          const data = await response.json()
+          
+          if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+            return NextResponse.json(
+              { error: 'Invalid response from OpenAI' },
+              { status: 500 }
+            )
+          }
+
+          const complaint = data.choices[0].message.content.trim()
+          
+          // Cache the response
+          responseCache.set(cacheKey, {
+            complaint,
+            timestamp: Date.now()
+          })
+          
+          // Clean old cache entries (simple cleanup)
+          if (responseCache.size > 100) {
+            const entries = Array.from(responseCache.entries())
+            entries.sort((a, b) => a[1].timestamp - b[1].timestamp)
+            // Remove oldest 20 entries
+            for (let i = 0; i < 20; i++) {
+              responseCache.delete(entries[i][0])
+            }
+          }
+          
+          return NextResponse.json({ complaint })
+        }
+
+        // Handle errors
       const errorData = await response.json().catch(() => ({}))
       
       if (response.status === 401) {
@@ -102,30 +175,54 @@ Use standard California pleading language and ensure all factual allegations fro
       }
       
       if (response.status === 429) {
+          console.log(`Rate limit hit on attempt ${attempt}/${maxRetries}, error details:`, errorData)
+          
+          // If this is our last attempt, return the error
+          if (attempt === maxRetries) {
         return NextResponse.json(
-          { error: 'Rate limit exceeded. Please try again in a moment.' },
+              { 
+                error: 'Rate limit exceeded. This happens when too many requests are made to OpenAI. Please wait 60 seconds before trying again. Consider upgrading your OpenAI API plan for higher limits.',
+                retryAfter: 60,
+                type: 'rate_limit'
+              },
           { status: 429 }
         )
       }
 
+          // Wait before retrying (exponential backoff with longer delays)
+          const waitTime = Math.min(5000 * Math.pow(2, attempt - 1), 30000) // Start at 5s, cap at 30s
+          console.log(`Waiting ${waitTime}ms before retry ${attempt + 1}`)
+          await new Promise(resolve => setTimeout(resolve, waitTime))
+          continue
+        }
+
+        // For other errors, don't retry
       return NextResponse.json(
         { error: errorData.error?.message || 'Failed to generate complaint' },
         { status: response.status }
       )
+        
+      } catch (error) {
+        lastError = error
+        console.error(`Attempt ${attempt} failed:`, error)
+        
+        if (attempt === maxRetries) {
+          break
+        }
+        
+        // Wait before retrying with longer delays
+        const waitTime = Math.min(5000 * Math.pow(2, attempt - 1), 30000)
+        console.log(`Network error, waiting ${waitTime}ms before retry`)
+        await new Promise(resolve => setTimeout(resolve, waitTime))
+      }
     }
 
-    const data = await response.json()
-    
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+    // If we get here, all retries failed
+    console.error('All retry attempts failed:', lastError)
       return NextResponse.json(
-        { error: 'Invalid response from OpenAI' },
+      { error: 'Failed to generate complaint after multiple attempts. Please try again later.' },
         { status: 500 }
       )
-    }
-
-    const complaint = data.choices[0].message.content.trim()
-
-    return NextResponse.json({ complaint })
 
   } catch (error) {
     console.error('Error generating complaint:', error)
@@ -133,6 +230,10 @@ Use standard California pleading language and ensure all factual allegations fro
       { error: 'Internal server error' },
       { status: 500 }
     )
+  } finally {
+    isProcessing = false
+    // Process next request in queue
+    setTimeout(processQueue, 100) // Small delay to prevent tight loops
   }
 }
 

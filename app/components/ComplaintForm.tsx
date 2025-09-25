@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FileText, Loader2, Send, AlertCircle } from 'lucide-react'
 
 interface ComplaintFormProps {
@@ -16,6 +16,17 @@ export default function ComplaintForm({
 }: ComplaintFormProps) {
   const [summary, setSummary] = useState('')
   const [error, setError] = useState('')
+  const [rateLimitCooldown, setRateLimitCooldown] = useState(0)
+
+  // Handle cooldown timer
+  useEffect(() => {
+    if (rateLimitCooldown > 0) {
+      const timer = setTimeout(() => {
+        setRateLimitCooldown(rateLimitCooldown - 1)
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [rateLimitCooldown])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,6 +39,27 @@ export default function ComplaintForm({
     if (summary.trim().length < 50) {
       setError('Please provide a more detailed case summary (at least 50 characters)')
       return
+    }
+
+    // Check local storage cache first
+    const cacheKey = `complaint_${btoa(summary.trim().toLowerCase())}`
+    const cachedResult = localStorage.getItem(cacheKey)
+    
+    if (cachedResult) {
+      try {
+        const parsed = JSON.parse(cachedResult)
+        const cacheAge = Date.now() - parsed.timestamp
+        const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours
+        
+        if (cacheAge < CACHE_DURATION) {
+          console.log('Using cached complaint from localStorage')
+          onComplaintGenerated(parsed.complaint)
+          return
+        }
+      } catch (e) {
+        // Invalid cache, continue with API call
+        localStorage.removeItem(cacheKey)
+      }
     }
 
     setIsGenerating(true)
@@ -50,9 +82,49 @@ export default function ComplaintForm({
       }
 
       const data = await response.json()
+      
+      // Cache the result in localStorage
+      const cacheKey = `complaint_${btoa(summary.trim().toLowerCase())}`
+      const cacheData = {
+        complaint: data.complaint,
+        timestamp: Date.now(),
+        summary: summary.trim()
+      }
+      
+      try {
+        localStorage.setItem(cacheKey, JSON.stringify(cacheData))
+        
+        // Clean up old cache entries (keep only 10 most recent)
+        const allKeys = Object.keys(localStorage).filter(key => key.startsWith('complaint_'))
+        if (allKeys.length > 10) {
+          const entries = allKeys.map(key => {
+            try {
+              const data = JSON.parse(localStorage.getItem(key) || '{}')
+              return { key, timestamp: data.timestamp || 0 }
+            } catch {
+              return { key, timestamp: 0 }
+            }
+          })
+          
+          entries.sort((a, b) => a.timestamp - b.timestamp)
+          // Remove oldest entries
+          for (let i = 0; i < allKeys.length - 10; i++) {
+            localStorage.removeItem(entries[i].key)
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to cache complaint in localStorage:', e)
+      }
+      
       onComplaintGenerated(data.complaint)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred')
+      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred'
+      setError(errorMessage)
+      
+      // If it's a rate limit error, start longer cooldown
+      if (errorMessage.includes('Rate limit exceeded')) {
+        setRateLimitCooldown(120) // 2 minute cooldown to match server delays
+      }
     } finally {
       setIsGenerating(false)
     }
@@ -103,25 +175,73 @@ export default function ComplaintForm({
             </div>
           </div>
 
+          {/* Rate Limit Helper */}
+          {rateLimitCooldown === 0 && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+              <h4 className="font-medium text-blue-900 mb-2">💡 Tips to Avoid Rate Limits</h4>
+              <ul className="text-blue-800 text-sm space-y-1">
+                <li>• Wait 2+ minutes between requests</li>
+                <li>• Use the example summaries to test (they're cached)</li>
+                <li>• Similar case summaries will return cached results instantly</li>
+                <li>• Consider upgrading your OpenAI API plan for higher limits</li>
+              </ul>
+            </div>
+          )}
+
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className={`border rounded-lg p-4 ${
+              error.includes('Rate limit exceeded') 
+                ? 'bg-amber-50 border-amber-200' 
+                : 'bg-red-50 border-red-200'
+            }`}>
               <div className="flex items-center space-x-2">
-                <AlertCircle className="w-5 h-5 text-red-600" />
-                <span className="text-red-800 font-medium">Error</span>
+                <AlertCircle className={`w-5 h-5 ${
+                  error.includes('Rate limit exceeded') 
+                    ? 'text-amber-600' 
+                    : 'text-red-600'
+                }`} />
+                <span className={`font-medium ${
+                  error.includes('Rate limit exceeded') 
+                    ? 'text-amber-800' 
+                    : 'text-red-800'
+                }`}>
+                  {error.includes('Rate limit exceeded') ? 'Rate Limit Reached' : 'Error'}
+                </span>
               </div>
-              <p className="text-red-700 mt-1">{error}</p>
+              <p className={`mt-1 ${
+                error.includes('Rate limit exceeded') 
+                  ? 'text-amber-700' 
+                  : 'text-red-700'
+              }`}>
+                {error}
+              </p>
+              {error.includes('Rate limit exceeded') && rateLimitCooldown > 0 && (
+                <div className="mt-3 p-3 bg-amber-100 rounded-lg">
+                  <p className="text-amber-800 text-sm font-medium">
+                    ⏱️ Automatic retry in {rateLimitCooldown} seconds
+                  </p>
+                  <p className="text-amber-700 text-sm mt-1">
+                    To avoid rate limits in the future, consider upgrading your OpenAI API plan or wait longer between requests.
+                  </p>
+                </div>
+              )}
             </div>
           )}
 
           <button
             type="submit"
-            disabled={isGenerating || !summary.trim() || summary.length < 50}
+            disabled={isGenerating || !summary.trim() || summary.length < 50 || rateLimitCooldown > 0}
             className="btn-primary w-full flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGenerating ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
                 <span>Generating Complaint...</span>
+              </>
+            ) : rateLimitCooldown > 0 ? (
+              <>
+                <AlertCircle className="w-5 h-5" />
+                <span>Please wait {rateLimitCooldown}s (Rate Limited)</span>
               </>
             ) : (
               <>
