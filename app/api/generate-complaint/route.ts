@@ -72,9 +72,12 @@ async function handleComplaintGeneration(request: NextRequest): Promise<NextResp
         { status: 500 }
       )
     }
-
+    
     // Sanitize input
     const sanitizedSummary = summary.trim().slice(0, 5000) // Limit length
+    
+    console.log('API Key configured:', apiKey ? `${apiKey.slice(0, 7)}...${apiKey.slice(-4)}` : 'NOT SET')
+    console.log('Request summary length:', sanitizedSummary.length)
 
     // Check cache first
     const cacheKey = generateCacheKey(sanitizedSummary)
@@ -174,20 +177,34 @@ Include: negligence claims, damages, proper legal language, case number, parties
         )
       }
       
-      if (response.status === 429) {
-          console.log(`Rate limit hit on attempt ${attempt}/${maxRetries}, error details:`, errorData)
+        if (response.status === 429) {
+          console.log(`Rate limit hit on attempt ${attempt}/${maxRetries}`)
+          console.log('Full error response:', errorData)
+          console.log('Response headers:', Object.fromEntries(response.headers.entries()))
+          console.log('Current model:', currentModel)
           
           // If this is our last attempt, return the error
           if (attempt === maxRetries) {
-        return NextResponse.json(
+            const errorMessage = errorData.error?.message || 'Rate limit exceeded. This happens when too many requests are made to OpenAI. Please wait 60 seconds before trying again. Consider upgrading your OpenAI API plan for higher limits.'
+            const errorType = errorData.error?.type || 'rate_limit'
+            
+            console.log('Final rate limit error:', {
+              message: errorMessage,
+              type: errorType,
+              code: errorData.error?.code,
+              param: errorData.error?.param
+            })
+            
+            return NextResponse.json(
               { 
-                error: 'Rate limit exceeded. This happens when too many requests are made to OpenAI. Please wait 60 seconds before trying again. Consider upgrading your OpenAI API plan for higher limits.',
+                error: errorMessage,
                 retryAfter: 60,
-                type: 'rate_limit'
+                type: errorType,
+                details: errorData.error
               },
-          { status: 429 }
-        )
-      }
+              { status: 429 }
+            )
+          }
 
           // Wait before retrying (exponential backoff with longer delays)
           const waitTime = Math.min(5000 * Math.pow(2, attempt - 1), 30000) // Start at 5s, cap at 30s
