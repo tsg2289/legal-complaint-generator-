@@ -78,8 +78,6 @@ Executed on October 21, 2023, at Buena Park, California.
       }
       
       const paragraphs = allContent.map((line, index) => {
-        const lineNumber = index + 1
-        const hasLineNumber = lineNumber <= 28
         
         // Determine formatting based on content
         let alignment: "left" | "center" | "right" | undefined = "left"
@@ -247,16 +245,16 @@ Executed on October 21, 2023, at Buena Park, California.
           
           {/* Right side - Case information */}
           <div style={{ width: '200px', paddingLeft: '10px' }}>
-            {rightSide.map((line, idx) => (
-              <div key={idx} style={{ marginBottom: idx === 0 ? '12pt' : '0' }}>
+            {/* Case number first */}
+            {rightSide.filter(line => line.includes('Case No.') || line.includes('No.') || line.match(/^\d+:/)).map((line, idx) => (
+              <div key={`case-${idx}`} style={{ marginBottom: '12pt' }}>
                 {line}
               </div>
             ))}
-            {!rightSide.includes('COMPLAINT') && (
-              <div style={{ fontWeight: 'bold', marginTop: '12pt' }}>
-                COMPLAINT
-              </div>
-            )}
+            {/* COMPLAINT title */}
+            <div style={{ fontWeight: 'bold', marginTop: '12pt' }}>
+              COMPLAINT
+            </div>
           </div>
         </div>
       )
@@ -317,7 +315,10 @@ Executed on October 21, 2023, at Buena Park, California.
             backgroundColor: isCauseHeading ? '#f0f9ff' : 'transparent',
             padding: isCauseHeading ? '4px' : '0',
             marginBottom: isCauseHeading ? '8px' : '0',
-            borderLeft: isCauseHeading ? '4px solid #0ea5e9' : 'none'
+            borderLeft: isCauseHeading ? '4px solid #0ea5e9' : 'none',
+            counterReset: 'none',
+            listStyle: 'none',
+            counterIncrement: 'none'
           }}
         >
           {hasCACIReference ? (
@@ -423,31 +424,13 @@ Executed on October 21, 2023, at Buena Park, California.
             <p className="text-gray-600 text-sm">Generated: {new Date().toLocaleString()}</p>
           </div>
           <div className="bg-white" style={{ padding: '0.75in 1in', fontFamily: 'Times New Roman, serif', fontSize: '12pt', lineHeight: '1.2' }}>
-            {/* Court Document Container with proper margins and line numbering */}
+            {/* Court Document Container with proper margins */}
             <div className="relative" style={{ minHeight: '9.5in', width: '6.5in', margin: '0 auto', backgroundColor: 'white', border: '1px solid #ccc' }}>
-              {/* Left margin for line numbers */}
-              <div className="absolute left-0 top-0 bottom-0" style={{ width: '1.25in', borderRight: '1px solid #ddd' }}>
-                {/* Line numbers 1-28 */}
-                {Array.from({ length: 28 }, (_, i) => (
-                  <div 
-                    key={i + 1} 
-                    className="text-center border-b border-gray-200" 
-                    style={{ 
-                      height: '14pt', 
-                      lineHeight: '14pt', 
-                      fontSize: '10pt',
-                      borderBottom: '1px solid #eee'
-                    }}
-                  >
-                    {i + 1}
-                  </div>
-                ))}
-              </div>
               
               {/* Main content area */}
-              <div style={{ marginLeft: '1.25in', padding: '0 0.5in' }}>
+              <div style={{ padding: '0.5in' }}>
                 {/* Generated complaint content with proper formatting */}
-                <div>
+                <div className="complaint-content" style={{ counterReset: 'none', listStyle: 'none' }}>
                   {formatComplaintText(showProofOfService ? `${complaint}\n\n${proofOfServiceText}` : complaint)}
                 </div>
               </div>

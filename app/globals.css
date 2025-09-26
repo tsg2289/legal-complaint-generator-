@@ -24,4 +24,17 @@
   .textarea-field {
     @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200 resize-y min-h-[150px];
   }
+  
+  /* Disable automatic line numbering in complaint output */
+  .complaint-content {
+    counter-reset: none !important;
+    counter-increment: none !important;
+    list-style: none !important;
+  }
+  
+  .complaint-content * {
+    counter-reset: none !important;
+    counter-increment: none !important;
+    list-style: none !important;
+  }
 }
