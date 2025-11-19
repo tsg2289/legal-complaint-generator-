@@ -341,21 +341,21 @@ Executed on October 21, 2023, at Buena Park, California.
 
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+    <div className="glass-card rounded-2xl shadow-2xl border border-white/20">
       <div className="p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
-            <FileText className="w-6 h-6 text-primary-500" />
-            <h2 className="text-2xl font-bold text-gray-900">Generated Complaint</h2>
+            <FileText className="w-6 h-6 text-white drop-shadow-lg" />
+            <h2 className="text-2xl font-bold text-white drop-shadow-lg">Generated Complaint</h2>
           </div>
           <div className="flex items-center space-x-3">
             <button
               onClick={handleAddProofOfService}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 ${
                 showProofOfService 
-                  ? 'bg-primary-100 text-primary-700 border border-primary-300' 
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+                  ? 'glass-button text-white border border-white/40' 
+                  : 'glass text-white hover:bg-white/20 border border-white/20'
               }`}
             >
               <Plus className="w-4 h-4" />
@@ -363,14 +363,14 @@ Executed on October 21, 2023, at Buena Park, California.
             </button>
             <button
               onClick={handleDownloadWord}
-              className="flex items-center space-x-2 px-4 py-2 bg-dark-800 hover:bg-dark-700 text-white rounded-lg transition-colors"
+              className="flex items-center space-x-2 px-4 py-2 glass-button text-white rounded-xl transition-all duration-300"
             >
               <FileIcon className="w-4 h-4" />
               <span className="text-sm font-medium">Download Word</span>
             </button>
             <button
               onClick={onNewComplaint}
-              className="flex items-center space-x-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
+              className="flex items-center space-x-2 px-4 py-2 glass-button text-white rounded-xl transition-all duration-300"
             >
               <RotateCcw className="w-4 h-4" />
               <span className="text-sm font-medium">New Complaint</span>
@@ -379,36 +379,36 @@ Executed on October 21, 2023, at Buena Park, California.
         </div>
 
         {/* Success Message */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+        <div className="glass border border-green-400/30 rounded-xl p-4 mb-6">
           <div className="flex items-center space-x-2">
-            <Check className="w-5 h-5 text-green-600" />
-            <span className="text-green-800 font-medium">
+            <Check className="w-5 h-5 text-green-300" />
+            <span className="text-green-100 font-medium">
               Complaint generated successfully with CACI-formatted causes of action!
             </span>
           </div>
-          <p className="text-green-700 text-sm mt-1">
+          <p className="text-green-100 text-sm mt-1 opacity-90">
             This complaint follows California Civil Jury Instructions (CACI) formatting standards. 
             Review the content below and make any necessary adjustments before filing.
           </p>
         </div>
 
         {/* CACI Information Panel */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <h4 className="font-medium text-blue-900 mb-2">📖 CACI Formatting Features</h4>
+        <div className="glass border border-blue-400/30 rounded-xl p-4 mb-6">
+          <h4 className="font-medium text-white mb-2">📖 CACI Formatting Features</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <h5 className="font-medium text-blue-800 mb-1">Cause of Action Structure:</h5>
-              <ul className="text-blue-700 space-y-1">
-                <li>• <span style={{backgroundColor: '#f0f9ff', padding: '2px 4px', borderLeft: '3px solid #0ea5e9'}}>Highlighted headings</span> for each cause</li>
+              <h5 className="font-medium text-blue-100 mb-1">Cause of Action Structure:</h5>
+              <ul className="text-blue-50 space-y-1 opacity-90">
+                <li>• <span style={{backgroundColor: 'rgba(255,255,255,0.2)', padding: '2px 4px', borderLeft: '3px solid #60a5fa', borderRadius: '2px'}}>Highlighted headings</span> for each cause</li>
                 <li>• Elements based on specific CACI instructions</li>
                 <li>• Proper incorporation by reference</li>
                 <li>• Sequential numbering throughout</li>
               </ul>
             </div>
             <div>
-              <h5 className="font-medium text-blue-800 mb-1">CACI References:</h5>
-              <ul className="text-blue-700 space-y-1">
-                <li>• <span style={{backgroundColor: '#fef3c7', padding: '2px 4px', borderRadius: '3px'}}>CACI numbers</span> highlighted in yellow</li>
+              <h5 className="font-medium text-blue-100 mb-1">CACI References:</h5>
+              <ul className="text-blue-50 space-y-1 opacity-90">
+                <li>• <span style={{backgroundColor: 'rgba(255,255,255,0.2)', padding: '2px 4px', borderRadius: '3px'}}>CACI numbers</span> highlighted in yellow</li>
                 <li>• Series-based organization (400, 700, 1000, etc.)</li>
                 <li>• Element-specific allegations</li>
                 <li>• California law compliance</li>
@@ -418,10 +418,10 @@ Executed on October 21, 2023, at Buena Park, California.
         </div>
 
         {/* Complaint Content */}
-        <div className="border border-gray-200 rounded-lg">
-          <div className="bg-gray-50 px-4 py-2 border-b border-gray-200">
-            <h3 className="font-medium text-gray-900">California Superior Court Document</h3>
-            <p className="text-gray-600 text-sm">Generated: {new Date().toLocaleString()}</p>
+        <div className="border border-white/20 rounded-xl glass">
+          <div className="glass-dark px-4 py-2 border-b border-white/20 rounded-t-xl">
+            <h3 className="font-medium text-white">California Superior Court Document</h3>
+            <p className="text-gray-200 text-sm opacity-90">Generated: {new Date().toLocaleString()}</p>
           </div>
           <div className="bg-white" style={{ padding: '0.75in 1in', fontFamily: 'Times New Roman, serif', fontSize: '12pt', lineHeight: '1.2' }}>
             {/* Court Document Container with proper margins */}
@@ -436,7 +436,7 @@ Executed on October 21, 2023, at Buena Park, California.
               </div>
               
               {/* Footer */}
-              <div className="absolute bottom-0 left-0 right-0 text-center border-t border-gray-300" style={{ padding: '10px', fontSize: '10pt' }}>
+              <div className="absolute bottom-0 left-0 right-0 text-center border-t border-gray-400" style={{ padding: '10px', fontSize: '10pt' }}>
                 <div>-1-</div>
                 <div style={{ fontSize: '8pt', color: '#666' }}>DEFENDANT'S ANSWER TO COMPLAINT</div>
               </div>
@@ -445,9 +445,9 @@ Executed on October 21, 2023, at Buena Park, California.
         </div>
 
         {/* Disclaimer */}
-        <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <h4 className="font-medium text-amber-900 mb-2">⚠️ Legal Disclaimer</h4>
-          <p className="text-amber-800 text-sm">
+        <div className="mt-6 glass border border-amber-400/30 rounded-xl p-4">
+          <h4 className="font-medium text-amber-100 mb-2">⚠️ Legal Disclaimer</h4>
+          <p className="text-amber-50 text-sm opacity-90">
             This document is AI-generated and should be reviewed by a qualified attorney before filing. 
             The content may require modifications to meet specific jurisdictional requirements and 
             case-specific details. Always consult with legal counsel for proper legal advice.

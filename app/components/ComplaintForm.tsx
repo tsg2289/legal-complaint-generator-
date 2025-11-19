@@ -1577,13 +1577,253 @@ export default function ComplaintForm({
       id: 'series_1700',
       seriesNumber: 1700,
       title: 'DEFAMATION',
-      causes: []
+      causes: [
+        {
+          id: 'defamation_per_se_public_1700',
+          name: 'Defamation per se—Essential Factual Elements (Public Officer/Figure and Limited Public Figure)',
+          description: 'Defamatory statement that is defamatory on its face for public figures',
+          caciSeries: 'CACI 1700',
+          elements: ['False statement', 'Published to third party', 'Defamatory on its face', 'Plaintiff is public figure', 'Damages']
+        },
+        {
+          id: 'defamation_per_quod_public_1701',
+          name: 'Defamation per quod—Essential Factual Elements (Public Officer/Figure and Limited Public Figure)',
+          description: 'Defamatory statement requiring extrinsic facts for public figures',
+          caciSeries: 'CACI 1701',
+          elements: ['False statement', 'Published to third party', 'Requires extrinsic facts', 'Plaintiff is public figure', 'Special damages']
+        },
+        {
+          id: 'defamation_per_se_private_public_concern_1702',
+          name: 'Defamation per se—Essential Factual Elements (Private Figure—Matter of Public Concern)',
+          description: 'Defamatory statement on its face for private figures regarding public concern',
+          caciSeries: 'CACI 1702',
+          elements: ['False statement', 'Published to third party', 'Defamatory on its face', 'Plaintiff is private figure', 'Matter of public concern', 'Damages']
+        },
+        {
+          id: 'defamation_per_quod_private_public_concern_1703',
+          name: 'Defamation per quod—Essential Factual Elements (Private Figure—Matter of Public Concern)',
+          description: 'Defamatory statement requiring extrinsic facts for private figures regarding public concern',
+          caciSeries: 'CACI 1703',
+          elements: ['False statement', 'Published to third party', 'Requires extrinsic facts', 'Plaintiff is private figure', 'Matter of public concern', 'Special damages']
+        },
+        {
+          id: 'defamation_per_se_private_private_concern_1704',
+          name: 'Defamation per se—Essential Factual Elements (Private Figure—Matter of Private Concern)',
+          description: 'Defamatory statement on its face for private figures regarding private concern',
+          caciSeries: 'CACI 1704',
+          elements: ['False statement', 'Published to third party', 'Defamatory on its face', 'Plaintiff is private figure', 'Matter of private concern', 'Damages']
+        },
+        {
+          id: 'defamation_per_quod_private_private_concern_1705',
+          name: 'Defamation per quod—Essential Factual Elements (Private Figure—Matter of Private Concern)',
+          description: 'Defamatory statement requiring extrinsic facts for private figures regarding private concern',
+          caciSeries: 'CACI 1705',
+          elements: ['False statement', 'Published to third party', 'Requires extrinsic facts', 'Plaintiff is private figure', 'Matter of private concern', 'Special damages']
+        },
+        {
+          id: 'definition_statement_1706',
+          name: 'Definition of Statement',
+          description: 'What constitutes a defamatory statement',
+          caciSeries: 'CACI 1706',
+          elements: ['Statement made', 'Capable of defamatory meaning', 'Context considered']
+        },
+        {
+          id: 'fact_versus_opinion_1707',
+          name: 'Fact Versus Opinion',
+          description: 'Distinguishing factual statements from protected opinion',
+          caciSeries: 'CACI 1707',
+          elements: ['Statement at issue', 'Factual assertion vs opinion', 'Context and language', 'Verifiability']
+        },
+        {
+          id: 'coerced_self_publication_1708',
+          name: 'Coerced Self-Publication',
+          description: 'Defamation through forced republication by plaintiff',
+          caciSeries: 'CACI 1708',
+          elements: ['Defamatory statement', 'Plaintiff compelled to republish', 'Reasonable compulsion', 'Damages from republication']
+        },
+        {
+          id: 'retraction_news_1709',
+          name: 'Retraction: News Publication or Broadcast (Civ. Code, § 48a)',
+          description: 'Effect of retraction on damages for news publications',
+          caciSeries: 'CACI 1709',
+          elements: ['Defamatory statement', 'News publication or broadcast', 'Retraction requested', 'Retraction effect on damages']
+        },
+        {
+          id: 'affirmative_defense_truth_1720',
+          name: 'Affirmative Defense—Truth',
+          description: 'Truth as complete defense to defamation',
+          caciSeries: 'CACI 1720',
+          elements: ['Statement was true', 'Substantial truth', 'Complete defense']
+        },
+        {
+          id: 'affirmative_defense_consent_1721',
+          name: 'Affirmative Defense—Consent',
+          description: 'Consent as defense to defamation',
+          caciSeries: 'CACI 1721',
+          elements: ['Plaintiff consented', 'Consent to publication', 'Complete defense']
+        },
+        {
+          id: 'affirmative_defense_sol_defamation_1722',
+          name: 'Affirmative Defense—Statute of Limitations—Defamation',
+          description: 'Statute of limitations defense for defamation claims',
+          caciSeries: 'CACI 1722',
+          elements: ['Defamation claim', 'Statute of limitations period', 'Claim filed outside period']
+        },
+        {
+          id: 'common_interest_privilege_1723',
+          name: 'Common Interest Privilege—Malice (Civ. Code, § 47(c))',
+          description: 'Privileged communication to interested persons, defeated by malice',
+          caciSeries: 'CACI 1723',
+          elements: ['Statement to interested persons', 'Common interest', 'Malice defeats privilege']
+        },
+        {
+          id: 'fair_true_reporting_privilege_1724',
+          name: 'Fair and True Reporting Privilege (Civ. Code, § 47(d))',
+          description: 'Privilege for fair and true reports of official proceedings',
+          caciSeries: 'CACI 1724',
+          elements: ['Official proceeding', 'Fair and true report', 'Public interest', 'Privileged']
+        },
+        {
+          id: 'slander_title_1730',
+          name: 'Slander of Title—Essential Factual Elements',
+          description: 'False statement disparaging property title',
+          caciSeries: 'CACI 1730',
+          elements: ['False statement', 'Disparaging title', 'Published to third party', 'Malice', 'Special damages']
+        },
+        {
+          id: 'trade_libel_1731',
+          name: 'Trade Libel—Essential Factual Elements',
+          description: 'False statement disparaging business or product',
+          caciSeries: 'CACI 1731',
+          elements: ['False statement', 'Disparaging business/product', 'Published to third party', 'Malice', 'Special damages']
+        }
+      ]
     },
     {
       id: 'series_1800',
       seriesNumber: 1800,
       title: 'RIGHT OF PRIVACY',
-      causes: []
+      causes: [
+        {
+          id: 'intrusion_private_affairs_1800',
+          name: 'Intrusion Into Private Affairs',
+          description: 'Unreasonable intrusion into private matters',
+          caciSeries: 'CACI 1800',
+          elements: ['Intrusion into private affairs', 'Highly offensive to reasonable person', 'Intrusion was intentional', 'Plaintiff had reasonable expectation of privacy', 'Damages']
+        },
+        {
+          id: 'public_disclosure_private_facts_1801',
+          name: 'Public Disclosure of Private Facts',
+          description: 'Public disclosure of private information',
+          caciSeries: 'CACI 1801',
+          elements: ['Private facts disclosed', 'Public disclosure', 'Highly offensive to reasonable person', 'Not newsworthy or legitimate public concern', 'Damages']
+        },
+        {
+          id: 'false_light_1802',
+          name: 'False Light',
+          description: 'Placing plaintiff in false light in public eye',
+          caciSeries: 'CACI 1802',
+          elements: ['False or misleading information', 'Publicized', 'Places plaintiff in false light', 'Highly offensive to reasonable person', 'Damages']
+        },
+        {
+          id: 'appropriation_name_likeness_1803',
+          name: 'Appropriation of Name or Likeness—Essential Factual Elements',
+          description: 'Unauthorized use of name or likeness for commercial benefit',
+          caciSeries: 'CACI 1803',
+          elements: ['Use of name or likeness', 'Without consent', 'For commercial benefit', 'Identifiable plaintiff', 'Damages']
+        },
+        {
+          id: 'use_name_likeness_3344_1804a',
+          name: 'Use of Name or Likeness (Civ. Code, § 3344)',
+          description: 'Statutory claim for unauthorized use of name or likeness',
+          caciSeries: 'CACI 1804A',
+          elements: ['Use of name, voice, signature, photograph, or likeness', 'Without consent', 'For advertising or solicitation', 'Identifiable person', 'Damages']
+        },
+        {
+          id: 'use_name_likeness_news_1804b',
+          name: 'Use of Name or Likeness—Use in Connection With News, Public Affairs, or Sports Broadcast or Account, or Political Campaign (Civ. Code, § 3344(d))',
+          description: 'Exception for news, public affairs, sports, or political use',
+          caciSeries: 'CACI 1804B',
+          elements: ['Use in news/public affairs/sports/political context', 'Newsworthy or public interest', 'Exception applies']
+        },
+        {
+          id: 'affirmative_defense_first_amendment_1805',
+          name: 'Affirmative Defense to Use or Appropriation of Name or Likeness—First Amendment (Comedy III)',
+          description: 'First Amendment defense to appropriation claims',
+          caciSeries: 'CACI 1805',
+          elements: ['First Amendment protection', 'Transformative use', 'Public interest', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_first_amendment_balancing_1806',
+          name: 'Affirmative Defense to Invasion of Privacy—First Amendment Balancing Test—Public Interest',
+          description: 'First Amendment balancing test for privacy claims',
+          caciSeries: 'CACI 1806',
+          elements: ['Public interest', 'First Amendment protection', 'Balancing test', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_privacy_justified_1807',
+          name: 'Affirmative Defense—Invasion of Privacy Justified',
+          description: 'Justification defense to privacy invasion',
+          caciSeries: 'CACI 1807',
+          elements: ['Invasion justified', 'Legitimate purpose', 'Reasonable means', 'Defense applies']
+        },
+        {
+          id: 'stalking_1808',
+          name: 'Stalking (Civ. Code, § 1708.7)',
+          description: 'Civil stalking claim',
+          caciSeries: 'CACI 1808',
+          elements: ['Pattern of conduct', 'Directed at plaintiff', 'Serious alarm, annoyance, or harassment', 'Reasonable person would suffer emotional distress', 'Damages']
+        },
+        {
+          id: 'recording_confidential_info_1809',
+          name: 'Recording of Confidential Information (Pen. Code, §§ 632, 637.2)',
+          description: 'Unauthorized recording of confidential communications',
+          caciSeries: 'CACI 1809',
+          elements: ['Confidential communication', 'Recorded without consent', 'Reasonable expectation of privacy', 'Intentional recording', 'Damages']
+        },
+        {
+          id: 'distribution_private_sexually_explicit_1810',
+          name: 'Distribution of Private Sexually Explicit Materials—Essential Factual Elements (Civ. Code, § 1708.85)',
+          description: 'Distribution of private sexually explicit materials without consent',
+          caciSeries: 'CACI 1810',
+          elements: ['Private sexually explicit material', 'Distributed without consent', 'Intent to cause harm', 'Plaintiff identifiable', 'Damages']
+        },
+        {
+          id: 'computer_data_access_fraud_1812',
+          name: 'Comprehensive Computer Data and Access Fraud Act—Essential Factual Elements (Pen. Code, § 502)',
+          description: 'Unauthorized access to computer data',
+          caciSeries: 'CACI 1812',
+          elements: ['Unauthorized access', 'Computer system or data', 'Intent to defraud or obtain money/property', 'Damages']
+        },
+        {
+          id: 'definition_access_1813',
+          name: 'Definition of "Access" (Pen. Code, § 502(b)(1))',
+          description: 'Definition of access under computer fraud statute',
+          caciSeries: 'CACI 1813',
+          elements: ['Access defined', 'Computer system', 'Without permission']
+        },
+        {
+          id: 'damages_investigating_computer_violations_1814',
+          name: 'Damages for Investigating Violations of Comprehensive Computer Data and Access Fraud Act (Pen. Code, § 502(e)(1))',
+          description: 'Damages for investigating computer access violations',
+          caciSeries: 'CACI 1814',
+          elements: ['Violation occurred', 'Investigation costs', 'Reasonable investigation', 'Damages recoverable']
+        },
+        {
+          id: 'damages_privacy_1820',
+          name: 'Damages',
+          description: 'General damages for invasion of privacy',
+          caciSeries: 'CACI 1820',
+          elements: ['Invasion of privacy proven', 'Emotional distress', 'Economic damages', 'Punitive damages if applicable']
+        },
+        {
+          id: 'damages_name_likeness_1821',
+          name: 'Damages for Use of Name or Likeness (Civ. Code § 3344(a))',
+          description: 'Statutory damages for unauthorized use of name or likeness',
+          caciSeries: 'CACI 1821',
+          elements: ['Unauthorized use proven', 'Actual damages', 'Statutory damages', 'Profits from use']
+        }
+      ]
     },
     {
       id: 'series_1900',
@@ -1591,18 +1831,116 @@ export default function ComplaintForm({
       title: 'FRAUD OR DECEIT',
       causes: [
         {
-          id: 'fraud',
-          name: 'Fraud/Misrepresentation',
-          description: 'Intentional misrepresentation or fraud',
-          caciSeries: 'CACI 1900-series',
-          elements: ['False representation', 'Knowledge of falsity', 'Intent to induce reliance', 'Justifiable reliance', 'Damages']
-    },
-    {
-      id: 'negligent_misrepresentation',
+          id: 'intentional_misrepresentation_1900',
+          name: 'Intentional Misrepresentation',
+          description: 'Intentional false statement of fact',
+          caciSeries: 'CACI 1900',
+          elements: ['False representation', 'Knowledge of falsity', 'Intent to deceive', 'Justifiable reliance', 'Damages']
+        },
+        {
+          id: 'concealment_1901',
+          name: 'Concealment',
+          description: 'Intentional concealment of material facts',
+          caciSeries: 'CACI 1901',
+          elements: ['Material fact concealed', 'Defendant had duty to disclose', 'Intent to deceive', 'Justifiable reliance', 'Damages']
+        },
+        {
+          id: 'false_promise_1902',
+          name: 'False Promise',
+          description: 'Promise made without intent to perform',
+          caciSeries: 'CACI 1902',
+          elements: ['Promise made', 'No intent to perform', 'Intent to induce reliance', 'Justifiable reliance', 'Damages']
+        },
+        {
+          id: 'negligent_misrepresentation_1903',
       name: 'Negligent Misrepresentation',
       description: 'Careless provision of false information',
       caciSeries: 'CACI 1903',
       elements: ['False representation', 'No reasonable grounds', 'Intent to induce reliance', 'Justifiable reliance', 'Damages']
+        },
+        {
+          id: 'opinions_as_facts_1904',
+          name: 'Opinions as Statements of Fact',
+          description: 'Opinion presented as fact in fraud context',
+          caciSeries: 'CACI 1904',
+          elements: ['Opinion stated', 'Presented as fact', 'Special knowledge or expertise', 'Reliance reasonable', 'Damages']
+        },
+        {
+          id: 'definition_important_fact_1905',
+          name: 'Definition of Important Fact/Promise',
+          description: 'What constitutes an important fact or promise',
+          caciSeries: 'CACI 1905',
+          elements: ['Fact or promise', 'Material to transaction', 'Would affect decision']
+        },
+        {
+          id: 'misrepresentation_to_others_1906',
+          name: 'Misrepresentations Made to Persons Other Than the Plaintiff',
+          description: 'Fraud through misrepresentation to third parties',
+          caciSeries: 'CACI 1906',
+          elements: ['Misrepresentation to third party', 'Intended to reach plaintiff', 'Plaintiff relied', 'Damages']
+        },
+        {
+          id: 'reliance_1907',
+          name: 'Reliance',
+          description: 'Plaintiff relied on misrepresentation',
+          caciSeries: 'CACI 1907',
+          elements: ['Misrepresentation made', 'Plaintiff relied', 'Reliance was cause of damages']
+        },
+        {
+          id: 'reasonable_reliance_1908',
+          name: 'Reasonable Reliance',
+          description: 'Whether reliance was reasonable under circumstances',
+          caciSeries: 'CACI 1908',
+          elements: ['Reliance occurred', 'Reasonable under circumstances', 'Not obviously false']
+        },
+        {
+          id: 'real_estate_seller_nondisclosure_1910',
+          name: 'Real Estate Seller\'s Nondisclosure of Material Facts',
+          description: 'Seller\'s duty to disclose material defects',
+          caciSeries: 'CACI 1910',
+          elements: ['Material defect', 'Seller knew or should have known', 'Not apparent to buyer', 'Duty to disclose', 'Damages']
+        },
+        {
+          id: 'buyer_damages_property_1920',
+          name: 'Buyer\'s Damages for Purchase or Acquisition of Property',
+          description: 'Damages recoverable by defrauded buyer',
+          caciSeries: 'CACI 1920',
+          elements: ['Fraud proven', 'Property purchased', 'Actual damages', 'Out of pocket or benefit of bargain']
+        },
+        {
+          id: 'buyer_damages_lost_profits_1921',
+          name: 'Buyer\'s Damages for Purchase or Acquisition of Property—Lost Profits',
+          description: 'Lost profits as damages in property fraud',
+          caciSeries: 'CACI 1921',
+          elements: ['Fraud proven', 'Lost profits', 'Reasonably certain', 'Caused by fraud']
+        },
+        {
+          id: 'seller_damages_property_1922',
+          name: 'Seller\'s Damages for Sale or Exchange of Property',
+          description: 'Damages recoverable by defrauded seller',
+          caciSeries: 'CACI 1922',
+          elements: ['Fraud proven', 'Property sold', 'Actual damages', 'Difference in value']
+        },
+        {
+          id: 'damages_out_of_pocket_1923',
+          name: 'Damages—"Out of Pocket" Rule',
+          description: 'Out of pocket measure of damages',
+          caciSeries: 'CACI 1923',
+          elements: ['Fraud proven', 'Out of pocket loss', 'Difference between value received and value given']
+        },
+        {
+          id: 'damages_benefit_bargain_1924',
+          name: 'Damages—"Benefit of the Bargain" Rule',
+          description: 'Benefit of bargain measure of damages',
+          caciSeries: 'CACI 1924',
+          elements: ['Fraud proven', 'Benefit of bargain', 'Difference between value as represented and actual value']
+        },
+        {
+          id: 'affirmative_defense_sol_fraud_1925',
+          name: 'Affirmative Defense—Statute of Limitations—Fraud or Mistake',
+          description: 'Statute of limitations defense for fraud claims',
+          caciSeries: 'CACI 1925',
+          elements: ['Fraud claim', 'Statute of limitations period', 'Delayed discovery rule', 'Claim filed outside period']
         }
       ]
     },
@@ -1610,37 +1948,834 @@ export default function ComplaintForm({
       id: 'series_2000',
       seriesNumber: 2000,
       title: 'TRESPASS',
-      causes: []
+      causes: [
+        {
+          id: 'trespass_essential_2000',
+          name: 'Trespass—Essential Factual Elements',
+          description: 'Unauthorized entry onto property',
+          caciSeries: 'CACI 2000',
+          elements: ['Intentional entry', 'Onto plaintiff\'s property', 'Without permission', 'Damages']
+        },
+        {
+          id: 'trespass_extrahazardous_2001',
+          name: 'Trespass—Extrahazardous Activities',
+          description: 'Trespass involving extrahazardous activities',
+          caciSeries: 'CACI 2001',
+          elements: ['Extrahazardous activity', 'Trespass occurred', 'Strict liability', 'Damages']
+        },
+        {
+          id: 'trespass_timber_2002',
+          name: 'Trespass to Timber—Essential Factual Elements (Civ. Code, § 3346)',
+          description: 'Unauthorized cutting or removal of timber',
+          caciSeries: 'CACI 2002',
+          elements: ['Timber cut or removed', 'Without permission', 'From plaintiff\'s property', 'Damages']
+        },
+        {
+          id: 'damage_timber_willful_2003',
+          name: 'Damage to Timber—Willful and Malicious Conduct',
+          description: 'Enhanced damages for willful timber trespass',
+          caciSeries: 'CACI 2003',
+          elements: ['Willful and malicious conduct', 'Timber damaged', 'Enhanced damages recoverable']
+        },
+        {
+          id: 'intentional_entry_explained_2004',
+          name: '"Intentional Entry" Explained',
+          description: 'Definition of intentional entry for trespass',
+          caciSeries: 'CACI 2004',
+          elements: ['Entry was intentional', 'Not accidental', 'Voluntary act']
+        },
+        {
+          id: 'affirmative_defense_necessity_2005',
+          name: 'Affirmative Defense—Necessity',
+          description: 'Necessity as defense to trespass',
+          caciSeries: 'CACI 2005',
+          elements: ['Necessity existed', 'Reasonable under circumstances', 'Defense applies']
+        },
+        {
+          id: 'public_nuisance_2020',
+          name: 'Public Nuisance—Essential Factual Elements',
+          description: 'Interference with public rights',
+          caciSeries: 'CACI 2020',
+          elements: ['Substantial interference', 'With public right', 'Unreasonable', 'Damages']
+        },
+        {
+          id: 'private_nuisance_2021',
+          name: 'Private Nuisance—Essential Factual Elements',
+          description: 'Interference with use and enjoyment of property',
+          caciSeries: 'CACI 2021',
+          elements: ['Substantial interference', 'With use and enjoyment', 'Unreasonable', 'Damages']
+        },
+        {
+          id: 'private_nuisance_balancing_2022',
+          name: 'Private Nuisance—Balancing-Test Factors—Seriousness of Harm and Public Benefit',
+          description: 'Balancing test for private nuisance',
+          caciSeries: 'CACI 2022',
+          elements: ['Seriousness of harm', 'Public benefit', 'Balancing factors', 'Unreasonable interference']
+        },
+        {
+          id: 'failure_abate_artificial_condition_2023',
+          name: 'Failure to Abate Artificial Condition on Land Creating Nuisance',
+          description: 'Liability for failing to abate nuisance',
+          caciSeries: 'CACI 2023',
+          elements: ['Artificial condition', 'Created nuisance', 'Failure to abate', 'Damages']
+        },
+        {
+          id: 'affirmative_defense_sol_trespass_2030',
+          name: 'Affirmative Defense—Statute of Limitations—Trespass or Private Nuisance',
+          description: 'Statute of limitations defense for trespass or nuisance',
+          caciSeries: 'CACI 2030',
+          elements: ['Trespass or nuisance claim', 'Statute of limitations period', 'Claim filed outside period']
+        },
+        {
+          id: 'damages_annoyance_discomfort_2031',
+          name: 'Damages for Annoyance and Discomfort—Trespass or Nuisance',
+          description: 'Damages for annoyance and discomfort',
+          caciSeries: 'CACI 2031',
+          elements: ['Trespass or nuisance proven', 'Annoyance and discomfort', 'Compensable damages']
+        }
+      ]
     },
     {
       id: 'series_2100',
       seriesNumber: 2100,
       title: 'CONVERSION',
-      causes: []
+      causes: [
+        {
+          id: 'conversion_essential_2100',
+          name: 'Conversion—Essential Factual Elements',
+          description: 'Wrongful exercise of dominion over personal property',
+          caciSeries: 'CACI 2100',
+          elements: ['Plaintiff owned or had right to possess property', 'Defendant wrongfully exercised dominion', 'Deprived plaintiff of property', 'Damages']
+        },
+        {
+          id: 'trespass_chattels_2101',
+          name: 'Trespass to Chattels—Essential Factual Elements',
+          description: 'Interference with personal property short of conversion',
+          caciSeries: 'CACI 2101',
+          elements: ['Plaintiff owned or had right to possess property', 'Defendant interfered with property', 'Deprived plaintiff of use', 'Damages']
+        },
+        {
+          id: 'presumed_measure_damages_conversion_2102',
+          name: 'Presumed Measure of Damages for Conversion (Civ. Code, § 3336)',
+          description: 'Statutory measure of damages for conversion',
+          caciSeries: 'CACI 2102',
+          elements: ['Conversion proven', 'Value at time of conversion', 'Plus interest', 'Plus any consequential damages']
+        }
+      ]
     },
     {
       id: 'series_2200',
       seriesNumber: 2200,
       title: 'ECONOMIC INTERFERENCE',
-      causes: []
+      causes: [
+        {
+          id: 'inducing_breach_contract_2200',
+          name: 'Inducing Breach of Contract',
+          description: 'Intentional interference with contractual relations',
+          caciSeries: 'CACI 2200',
+          elements: ['Valid contract existed', 'Defendant knew of contract', 'Intentional interference', 'Breach occurred', 'Damages']
+        },
+        {
+          id: 'intentional_interference_contractual_2201',
+          name: 'Intentional Interference With Contractual Relations—Essential Factual Elements',
+          description: 'Complete elements for intentional interference with contract',
+          caciSeries: 'CACI 2201',
+          elements: ['Valid contract', 'Defendant knew of contract', 'Intentional acts', 'Disrupted contract', 'Caused damages']
+        },
+        {
+          id: 'intentional_interference_prospective_2202',
+          name: 'Intentional Interference With Prospective Economic Relations—Essential Factual Elements',
+          description: 'Interference with prospective economic advantage',
+          caciSeries: 'CACI 2202',
+          elements: ['Economic relationship existed', 'Defendant knew of relationship', 'Intentional interference', 'Disrupted relationship', 'Damages']
+        },
+        {
+          id: 'intent_2203',
+          name: 'Intent',
+          description: 'Intent requirement for interference claims',
+          caciSeries: 'CACI 2203',
+          elements: ['Intent to interfere', 'Knowledge of relationship', 'Purpose to disrupt']
+        },
+        {
+          id: 'negligent_interference_prospective_2204',
+          name: 'Negligent Interference With Prospective Economic Relations',
+          description: 'Negligent interference with economic relations',
+          caciSeries: 'CACI 2204',
+          elements: ['Economic relationship existed', 'Defendant owed duty', 'Breach of duty', 'Interference caused', 'Damages']
+        },
+        {
+          id: 'intentional_interference_expected_inheritance_2205',
+          name: 'Intentional Interference With Expected Inheritance—Essential Factual Elements',
+          description: 'Interference with expected inheritance',
+          caciSeries: 'CACI 2205',
+          elements: ['Expected inheritance', 'Defendant interfered', 'Intent to disrupt inheritance', 'Damages']
+        },
+        {
+          id: 'affirmative_defense_privilege_economic_interest_2210',
+          name: 'Affirmative Defense—Privilege to Protect Own Economic Interest',
+          description: 'Privilege defense for protecting own economic interests',
+          caciSeries: 'CACI 2210',
+          elements: ['Legitimate economic interest', 'Reasonable means', 'Privilege applies']
+        }
+      ]
     },
     {
       id: 'series_2300',
       seriesNumber: 2300,
       title: 'INSURANCE LITIGATION',
-      causes: []
+      causes: [
+        {
+          id: 'breach_contractual_duty_pay_covered_claim_2300',
+          name: 'Breach of Contractual Duty to Pay a Covered Claim—Essential Factual Elements',
+          description: 'Insurer\'s breach of duty to pay covered claim',
+          caciSeries: 'CACI 2300',
+          elements: ['Insurance policy existed', 'Claim covered by policy', 'Insurer failed to pay', 'Damages']
+        },
+        {
+          id: 'breach_insurance_binder_2301',
+          name: 'Breach of Insurance Binder—Essential Factual Elements',
+          description: 'Breach of temporary insurance binder',
+          caciSeries: 'CACI 2301',
+          elements: ['Binder issued', 'Coverage provided', 'Breach of binder terms', 'Damages']
+        },
+        {
+          id: 'breach_contract_temporary_life_insurance_2302',
+          name: 'Breach of Contract for Temporary Life Insurance—Essential Factual Elements',
+          description: 'Breach of temporary life insurance contract',
+          caciSeries: 'CACI 2302',
+          elements: ['Temporary life insurance contract', 'Coverage provided', 'Breach occurred', 'Damages']
+        },
+        {
+          id: 'affirmative_defense_policy_exclusion_2303',
+          name: 'Affirmative Defense—Insurance Policy Exclusion',
+          description: 'Policy exclusion as defense to coverage',
+          caciSeries: 'CACI 2303',
+          elements: ['Policy exclusion exists', 'Exclusion applies', 'Defense applies']
+        },
+        {
+          id: 'exception_policy_exclusion_2304',
+          name: 'Exception to Insurance Policy Exclusion—Burden of Proof',
+          description: 'Exception to policy exclusion',
+          caciSeries: 'CACI 2304',
+          elements: ['Exception to exclusion', 'Burden of proof', 'Exception applies']
+        },
+        {
+          id: 'lost_destroyed_policy_2305',
+          name: 'Lost or Destroyed Insurance Policy',
+          description: 'Effect of lost or destroyed policy',
+          caciSeries: 'CACI 2305',
+          elements: ['Policy lost or destroyed', 'Terms may be proven', 'Secondary evidence admissible']
+        },
+        {
+          id: 'covered_excluded_risks_predominant_cause_2306',
+          name: 'Covered and Excluded Risks—Predominant Cause of Loss',
+          description: 'Determining coverage when multiple causes exist',
+          caciSeries: 'CACI 2306',
+          elements: ['Multiple causes', 'Predominant cause', 'Coverage determined by predominant cause']
+        },
+        {
+          id: 'insurance_agency_relationship_disputed_2307',
+          name: 'Insurance Agency Relationship Disputed',
+          description: 'Dispute over agency relationship',
+          caciSeries: 'CACI 2307',
+          elements: ['Agency relationship disputed', 'Agent\'s authority', 'Binding insurer']
+        },
+        {
+          id: 'affirmative_defense_misrepresentation_concealment_2308',
+          name: 'Affirmative Defense—Misrepresentation or Concealment in Insurance Application',
+          description: 'Misrepresentation or concealment as defense',
+          caciSeries: 'CACI 2308',
+          elements: ['Misrepresentation or concealment', 'In application', 'Material to risk', 'Defense applies']
+        },
+        {
+          id: 'termination_policy_fraudulent_claim_2309',
+          name: 'Termination of Insurance Policy for Fraudulent Claim',
+          description: 'Termination due to fraudulent claim',
+          caciSeries: 'CACI 2309',
+          elements: ['Fraudulent claim', 'Policy termination', 'Valid termination']
+        },
+        {
+          id: 'affirmative_defense_failure_timely_notice_2320',
+          name: 'Affirmative Defense—Failure to Provide Timely Notice',
+          description: 'Failure to provide timely notice as defense',
+          caciSeries: 'CACI 2320',
+          elements: ['Timely notice required', 'Notice not provided', 'Prejudice to insurer', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_breach_duty_cooperate_2321',
+          name: 'Affirmative Defense—Insured\'s Breach of Duty to Cooperate in Defense',
+          description: 'Breach of duty to cooperate as defense',
+          caciSeries: 'CACI 2321',
+          elements: ['Duty to cooperate', 'Breach of duty', 'Prejudice to insurer', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_voluntary_payment_2322',
+          name: 'Affirmative Defense—Insured\'s Voluntary Payment',
+          description: 'Voluntary payment as defense',
+          caciSeries: 'CACI 2322',
+          elements: ['Voluntary payment', 'Without insurer consent', 'Defense applies']
+        },
+        {
+          id: 'implied_obligation_good_faith_explained_2330',
+          name: 'Implied Obligation of Good Faith and Fair Dealing Explained',
+          description: 'Explanation of good faith obligation',
+          caciSeries: 'CACI 2330',
+          elements: ['Implied obligation', 'Good faith and fair dealing', 'Applies to insurance contracts']
+        },
+        {
+          id: 'breach_good_faith_failure_delay_payment_2331',
+          name: 'Breach of the Implied Obligation of Good Faith and Fair Dealing—Failure or Delay in Payment (First Party)—Essential Factual Elements',
+          description: 'Bad faith failure or delay in payment',
+          caciSeries: 'CACI 2331',
+          elements: ['Covered claim', 'Unreasonable failure or delay', 'No proper basis', 'Damages']
+        },
+        {
+          id: 'bad_faith_failure_investigate_2332',
+          name: 'Bad Faith (First Party)—Failure to Properly Investigate Claim—Essential Factual Elements',
+          description: 'Bad faith failure to investigate',
+          caciSeries: 'CACI 2332',
+          elements: ['Duty to investigate', 'Failure to investigate', 'Unreasonable', 'Damages']
+        },
+        {
+          id: 'bad_faith_breach_duty_inform_2333',
+          name: 'Bad Faith (First Party)—Breach of Duty to Inform Insured of Rights—Essential Factual Elements',
+          description: 'Bad faith breach of duty to inform',
+          caciSeries: 'CACI 2333',
+          elements: ['Duty to inform', 'Breach of duty', 'Unreasonable', 'Damages']
+        },
+        {
+          id: 'bad_faith_refusal_settlement_2334',
+          name: 'Bad Faith (Third Party)—Refusal to Accept Reasonable Settlement Demand Within Liability Policy Limits—Essential Factual Elements',
+          description: 'Bad faith refusal to settle',
+          caciSeries: 'CACI 2334',
+          elements: ['Reasonable settlement demand', 'Within policy limits', 'Refusal to settle', 'Excess judgment', 'Damages']
+        },
+        {
+          id: 'bad_faith_advice_counsel_2335',
+          name: 'Bad Faith—Advice of Counsel',
+          description: 'Advice of counsel defense to bad faith',
+          caciSeries: 'CACI 2335',
+          elements: ['Advice of counsel', 'Reasonable reliance', 'Defense applies']
+        },
+        {
+          id: 'bad_faith_unreasonable_failure_defend_2336',
+          name: 'Bad Faith (Third Party)—Unreasonable Failure to Defend—Essential Factual Elements',
+          description: 'Bad faith failure to defend',
+          caciSeries: 'CACI 2336',
+          elements: ['Duty to defend', 'Failure to defend', 'Unreasonable', 'Damages']
+        },
+        {
+          id: 'factors_evaluating_insurer_conduct_2337',
+          name: 'Factors to Consider in Evaluating Insurer\'s Conduct',
+          description: 'Factors for evaluating insurer conduct',
+          caciSeries: 'CACI 2337',
+          elements: ['Multiple factors', 'Evaluating conduct', 'Reasonableness']
+        },
+        {
+          id: 'damages_bad_faith_2350',
+          name: 'Damages for Bad Faith',
+          description: 'Damages recoverable for bad faith',
+          caciSeries: 'CACI 2350',
+          elements: ['Bad faith proven', 'Contract damages', 'Tort damages', 'Emotional distress', 'Punitive damages if applicable']
+        },
+        {
+          id: 'insurer_claim_reimbursement_defense_2351',
+          name: 'Insurer\'s Claim for Reimbursement of Costs of Defense of Uncovered Claims',
+          description: 'Insurer\'s right to reimbursement',
+          caciSeries: 'CACI 2351',
+          elements: ['Defense provided', 'Uncovered claims', 'Right to reimbursement', 'Reasonable costs']
+        },
+        {
+          id: 'judgment_creditor_action_insurer_2360',
+          name: 'Judgment Creditor\'s Action Against Insurer—Essential Factual Elements',
+          description: 'Direct action against insurer by judgment creditor',
+          caciSeries: 'CACI 2360',
+          elements: ['Judgment against insured', 'Insurer liable', 'Direct action', 'Damages']
+        },
+        {
+          id: 'negligent_failure_obtain_coverage_2361',
+          name: 'Negligent Failure to Obtain Insurance Coverage—Essential Factual Elements',
+          description: 'Agent\'s negligence in obtaining coverage',
+          caciSeries: 'CACI 2361',
+          elements: ['Agent duty', 'Failure to obtain coverage', 'Negligence', 'Damages']
+        }
+      ]
     },
     {
       id: 'series_2400',
       seriesNumber: 2400,
       title: 'WRONGFUL TERMINATION',
-      causes: []
+      causes: [
+        {
+          id: 'breach_employment_contract_at_will_2400',
+          name: 'Breach of Employment Contract—Unspecified Term—"At-Will" Presumption',
+          description: 'At-will employment presumption',
+          caciSeries: 'CACI 2400',
+          elements: ['Unspecified term', 'At-will presumption', 'May be rebutted']
+        },
+        {
+          id: 'breach_employment_contract_actual_constructive_discharge_2401',
+          name: 'Breach of Employment Contract—Unspecified Term—Actual or Constructive Discharge—Essential Factual Elements',
+          description: 'Actual or constructive discharge',
+          caciSeries: 'CACI 2401',
+          elements: ['Employment contract', 'Actual or constructive discharge', 'Without good cause', 'Damages']
+        },
+        {
+          id: 'breach_employment_contract_implied_promise_not_discharge_2403',
+          name: 'Breach of Employment Contract—Unspecified Term—Implied-in-Fact Promise Not to Discharge Without Good Cause',
+          description: 'Implied promise not to discharge without cause',
+          caciSeries: 'CACI 2403',
+          elements: ['Implied promise', 'Not to discharge without cause', 'Breach occurred', 'Damages']
+        },
+        {
+          id: 'breach_employment_contract_good_cause_defined_2404',
+          name: 'Breach of Employment Contract—Unspecified Term—"Good Cause" Defined',
+          description: 'Definition of good cause for termination',
+          caciSeries: 'CACI 2404',
+          elements: ['Good cause defined', 'Fair and honest reasons', 'Business necessity']
+        },
+        {
+          id: 'breach_implied_employment_contract_good_cause_misconduct_2405',
+          name: 'Breach of Implied Employment Contract—Unspecified Term—"Good Cause" Defined—Misconduct',
+          description: 'Good cause defined for misconduct',
+          caciSeries: 'CACI 2405',
+          elements: ['Misconduct', 'Good cause', 'Fair and honest reasons']
+        },
+        {
+          id: 'breach_employment_contract_damages_2406',
+          name: 'Breach of Employment Contract—Unspecified Term—Damages',
+          description: 'Damages for breach of employment contract',
+          caciSeries: 'CACI 2406',
+          elements: ['Breach proven', 'Lost wages', 'Benefits', 'Mitigation required']
+        },
+        {
+          id: 'breach_employment_contract_specified_term_2420',
+          name: 'Breach of Employment Contract—Specified Term—Essential Factual Elements',
+          description: 'Breach of fixed-term employment contract',
+          caciSeries: 'CACI 2420',
+          elements: ['Specified term contract', 'Termination before term', 'Without good cause', 'Damages']
+        },
+        {
+          id: 'breach_employment_contract_specified_term_good_cause_defense_2421',
+          name: 'Breach of Employment Contract—Specified Term—Good-Cause Defense (Lab. Code, § 2924)',
+          description: 'Good cause defense for specified term',
+          caciSeries: 'CACI 2421',
+          elements: ['Good cause existed', 'Statutory defense', 'Defense applies']
+        },
+        {
+          id: 'breach_employment_contract_specified_term_damages_2422',
+          name: 'Breach of Employment Contract—Specified Term—Damages',
+          description: 'Damages for breach of specified term contract',
+          caciSeries: 'CACI 2422',
+          elements: ['Breach proven', 'Remaining term damages', 'Mitigation required']
+        },
+        {
+          id: 'breach_implied_covenant_good_faith_employment_2423',
+          name: 'Breach of Implied Covenant of Good Faith and Fair Dealing—Employment Contract—Essential Factual Elements',
+          description: 'Breach of implied covenant in employment',
+          caciSeries: 'CACI 2423',
+          elements: ['Employment contract', 'Breach of implied covenant', 'Bad faith', 'Damages']
+        },
+        {
+          id: 'affirmative_defense_good_faith_mistaken_belief_2424',
+          name: 'Affirmative Defense—Breach of the Implied Covenant of Good Faith and Fair Dealing—Good Faith Though Mistaken Belief',
+          description: 'Good faith mistaken belief defense',
+          caciSeries: 'CACI 2424',
+          elements: ['Mistaken belief', 'Good faith', 'Defense applies']
+        },
+        {
+          id: 'wrongful_discharge_public_policy_2430',
+          name: 'Wrongful Discharge in Violation of Public Policy—Essential Factual Elements',
+          description: 'Termination in violation of public policy',
+          caciSeries: 'CACI 2430',
+          elements: ['Public policy violation', 'Termination', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'constructive_discharge_public_policy_required_violate_2431',
+          name: 'Constructive Discharge in Violation of Public Policy—Plaintiff Required to Violate Public Policy',
+          description: 'Constructive discharge requiring violation of policy',
+          caciSeries: 'CACI 2431',
+          elements: ['Required to violate public policy', 'Intolerable conditions', 'Constructive discharge', 'Damages']
+        },
+        {
+          id: 'constructive_discharge_public_policy_intolerable_conditions_2432',
+          name: 'Constructive Discharge in Violation of Public Policy—Plaintiff Required to Endure Intolerable Conditions That Violate Public Policy',
+          description: 'Constructive discharge from intolerable conditions',
+          caciSeries: 'CACI 2432',
+          elements: ['Intolerable conditions', 'Violate public policy', 'Constructive discharge', 'Damages']
+        },
+        {
+          id: 'discrimination_military_2441',
+          name: 'Discrimination Against Member of Military—Essential Factual Elements (Mil. & Vet. Code, § 394)',
+          description: 'Discrimination against military member',
+          caciSeries: 'CACI 2441',
+          elements: ['Military member', 'Discrimination', 'Termination or adverse action', 'Damages']
+        }
+      ]
     },
     {
       id: 'series_2500',
       seriesNumber: 2500,
       title: 'FAIR EMPLOYMENT AND HOUSING ACT',
-      causes: []
+      causes: [
+        {
+          id: 'disparate_treatment_2500',
+          name: 'Disparate Treatment—Essential Factual Elements (Gov. Code, § 12940(a))',
+          description: 'Intentional discrimination based on protected characteristic',
+          caciSeries: 'CACI 2500',
+          elements: ['Protected characteristic', 'Adverse employment action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'affirmative_defense_bfoq_2501',
+          name: 'Affirmative Defense—Bona fide Occupational Qualification',
+          description: 'BFOQ defense to discrimination',
+          caciSeries: 'CACI 2501',
+          elements: ['BFOQ exists', 'Necessary for business', 'Defense applies']
+        },
+        {
+          id: 'disparate_impact_2502',
+          name: 'Disparate Impact—Essential Factual Elements (Gov. Code, § 12940(a))',
+          description: 'Neutral policy with discriminatory impact',
+          caciSeries: 'CACI 2502',
+          elements: ['Neutral policy', 'Disparate impact', 'Protected group affected', 'Damages']
+        },
+        {
+          id: 'affirmative_defense_business_necessity_2503',
+          name: 'Affirmative Defense—Business Necessity/Job Relatedness',
+          description: 'Business necessity defense',
+          caciSeries: 'CACI 2503',
+          elements: ['Business necessity', 'Job related', 'Defense applies']
+        },
+        {
+          id: 'disparate_impact_rebuttal_business_necessity_2504',
+          name: 'Disparate Impact—Rebuttal to Business Necessity/Job Relatedness Defense',
+          description: 'Rebuttal to business necessity defense',
+          caciSeries: 'CACI 2504',
+          elements: ['Less discriminatory alternative', 'Equally effective', 'Rebuttal applies']
+        },
+        {
+          id: 'retaliation_2505',
+          name: 'Retaliation—Essential Factual Elements (Gov. Code, § 12940(h))',
+          description: 'Retaliation for protected activity',
+          caciSeries: 'CACI 2505',
+          elements: ['Protected activity', 'Adverse action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'limitation_remedies_after_acquired_evidence_2506',
+          name: 'Limitation on Remedies—After-Acquired Evidence',
+          description: 'Limitation on remedies with after-acquired evidence',
+          caciSeries: 'CACI 2506',
+          elements: ['After-acquired evidence', 'Would have terminated', 'Limitation applies']
+        },
+        {
+          id: 'substantial_motivating_reason_explained_2507',
+          name: '"Substantial Motivating Reason" Explained',
+          description: 'Definition of substantial motivating reason',
+          caciSeries: 'CACI 2507',
+          elements: ['Substantial motivating reason', 'More than trivial', 'Causal factor']
+        },
+        {
+          id: 'failure_file_timely_complaint_continuing_violation_2508',
+          name: 'Failure to File Timely Administrative Complaint—Plaintiff Alleges Continuing Violation (Gov Code, § 12960(e))',
+          description: 'Continuing violation exception to limitations',
+          caciSeries: 'CACI 2508',
+          elements: ['Continuing violation', 'Exception applies', 'Timely filing']
+        },
+        {
+          id: 'adverse_employment_action_explained_2509',
+          name: '"Adverse Employment Action" Explained',
+          description: 'Definition of adverse employment action',
+          caciSeries: 'CACI 2509',
+          elements: ['Adverse action', 'Material change', 'Terms or conditions']
+        },
+        {
+          id: 'constructive_discharge_explained_2510',
+          name: '"Constructive Discharge" Explained',
+          description: 'Definition of constructive discharge',
+          caciSeries: 'CACI 2510',
+          elements: ['Intolerable conditions', 'Reasonable person would resign', 'Constructive discharge']
+        },
+        {
+          id: 'adverse_action_decision_maker_without_animus_2511',
+          name: 'Adverse Action Made by Decision Maker Without Animus (Cat\'s Paw)',
+          description: 'Cat\'s paw theory of liability',
+          caciSeries: 'CACI 2511',
+          elements: ['Biased subordinate', 'Influenced decision', 'Causal connection']
+        },
+        {
+          id: 'limitation_remedies_same_decision_2512',
+          name: 'Limitation on Remedies—Same Decision',
+          description: 'Same decision defense limiting remedies',
+          caciSeries: 'CACI 2512',
+          elements: ['Same decision', 'Would have made anyway', 'Limitation applies']
+        },
+        {
+          id: 'business_judgment_at_will_employment_2513',
+          name: 'Business Judgment for "At-Will" Employment',
+          description: 'Business judgment for at-will employment',
+          caciSeries: 'CACI 2513',
+          elements: ['At-will employment', 'Business judgment', 'Not pretext']
+        },
+        {
+          id: 'quid_pro_quo_sexual_harassment_2520',
+          name: 'Quid pro quo Sexual Harassment—Essential Factual Elements',
+          description: 'Sexual harassment involving exchange',
+          caciSeries: 'CACI 2520',
+          elements: ['Sexual advances or conduct', 'Condition of employment', 'Adverse action', 'Damages']
+        },
+        {
+          id: 'work_environment_harassment_conduct_plaintiff_employer_2521a',
+          name: 'Work Environment Harassment—Conduct Directed at Plaintiff—Essential Factual Elements—Employer or Entity Defendant (Gov. Code, §§ 12923, 12940(j))',
+          description: 'Hostile work environment harassment against plaintiff by employer',
+          caciSeries: 'CACI 2521A',
+          elements: ['Harassing conduct', 'Directed at plaintiff', 'Severe or pervasive', 'Damages']
+        },
+        {
+          id: 'work_environment_harassment_conduct_others_employer_2521b',
+          name: 'Work Environment Harassment—Conduct Directed at Others—Essential Factual Elements—Employer or Entity Defendant (Gov. Code, §§ 12923, 12940(j))',
+          description: 'Hostile work environment harassment witnessed by plaintiff',
+          caciSeries: 'CACI 2521B',
+          elements: ['Harassing conduct', 'Directed at others', 'Witnessed by plaintiff', 'Severe or pervasive', 'Damages']
+        },
+        {
+          id: 'work_environment_harassment_sexual_favoritism_employer_2521c',
+          name: 'Work Environment Harassment—Sexual Favoritism—Essential Factual Elements—Employer or Entity Defendant (Gov. Code, §§ 12923, 12940(j))',
+          description: 'Sexual favoritism creating hostile environment',
+          caciSeries: 'CACI 2521C',
+          elements: ['Sexual favoritism', 'Widespread', 'Hostile environment', 'Damages']
+        },
+        {
+          id: 'work_environment_harassment_conduct_plaintiff_individual_2522a',
+          name: 'Work Environment Harassment—Conduct Directed at Plaintiff—Essential Factual Elements—Individual Defendant (Gov. Code, §§ 12923, 12940(j))',
+          description: 'Hostile work environment harassment against plaintiff by individual',
+          caciSeries: 'CACI 2522A',
+          elements: ['Harassing conduct', 'Directed at plaintiff', 'Severe or pervasive', 'Damages']
+        },
+        {
+          id: 'work_environment_harassment_conduct_others_individual_2522b',
+          name: 'Work Environment Harassment—Conduct Directed at Others—Essential Factual Elements—Individual Defendant (Gov. Code, §§ 12923, 12940(j))',
+          description: 'Hostile work environment harassment witnessed by plaintiff',
+          caciSeries: 'CACI 2522B',
+          elements: ['Harassing conduct', 'Directed at others', 'Witnessed by plaintiff', 'Severe or pervasive', 'Damages']
+        },
+        {
+          id: 'work_environment_harassment_sexual_favoritism_individual_2522c',
+          name: 'Work Environment Harassment—Sexual Favoritism—Essential Factual Elements—Individual Defendant (Gov. Code, §§ 12923, 12940(j))',
+          description: 'Sexual favoritism creating hostile environment',
+          caciSeries: 'CACI 2522C',
+          elements: ['Sexual favoritism', 'Widespread', 'Hostile environment', 'Damages']
+        },
+        {
+          id: 'harassing_conduct_explained_2523',
+          name: '"Harassing Conduct" Explained',
+          description: 'Definition of harassing conduct',
+          caciSeries: 'CACI 2523',
+          elements: ['Unwelcome conduct', 'Based on protected characteristic', 'Harassing']
+        },
+        {
+          id: 'severe_or_pervasive_explained_2524',
+          name: '"Severe or Pervasive" Explained',
+          description: 'Definition of severe or pervasive',
+          caciSeries: 'CACI 2524',
+          elements: ['Severe or pervasive', 'Alters conditions', 'Hostile environment']
+        },
+        {
+          id: 'harassment_supervisor_defined_2525',
+          name: 'Harassment—"Supervisor" Defined (Gov. Code, § 12926(t))',
+          description: 'Definition of supervisor for harassment',
+          caciSeries: 'CACI 2525',
+          elements: ['Supervisor defined', 'Authority', 'Statutory definition']
+        },
+        {
+          id: 'affirmative_defense_avoidable_consequences_2526',
+          name: 'Affirmative Defense—Avoidable Consequences Doctrine (Sexual Harassment by a Supervisor)',
+          description: 'Avoidable consequences defense',
+          caciSeries: 'CACI 2526',
+          elements: ['Reasonable steps available', 'Not taken', 'Defense applies']
+        },
+        {
+          id: 'failure_prevent_harassment_discrimination_retaliation_2527',
+          name: 'Failure to Prevent Harassment, Discrimination, or Retaliation—Essential Factual Elements—Employer or Entity Defendant (Gov. Code, § 12940(k))',
+          description: 'Failure to prevent harassment, discrimination, or retaliation',
+          caciSeries: 'CACI 2527',
+          elements: ['Harassment/discrimination/retaliation occurred', 'Failure to prevent', 'Damages']
+        },
+        {
+          id: 'failure_prevent_harassment_nonemployee_2528',
+          name: 'Failure to Prevent Harassment by Nonemployee (Gov. Code, § 12940(j))',
+          description: 'Failure to prevent nonemployee harassment',
+          caciSeries: 'CACI 2528',
+          elements: ['Nonemployee harassment', 'Employer knew or should have known', 'Failure to prevent', 'Damages']
+        },
+        {
+          id: 'disability_discrimination_disparate_treatment_2540',
+          name: 'Disability Discrimination—Disparate Treatment—Essential Factual Elements',
+          description: 'Disability discrimination',
+          caciSeries: 'CACI 2540',
+          elements: ['Disability', 'Adverse action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'disability_discrimination_reasonable_accommodation_2541',
+          name: 'Disability Discrimination—Reasonable Accommodation—Essential Factual Elements (Gov. Code, § 12940(m))',
+          description: 'Failure to provide reasonable accommodation',
+          caciSeries: 'CACI 2541',
+          elements: ['Disability', 'Reasonable accommodation needed', 'Failure to accommodate', 'Damages']
+        },
+        {
+          id: 'disability_discrimination_reasonable_accommodation_explained_2542',
+          name: 'Disability Discrimination—"Reasonable Accommodation" Explained',
+          description: 'Definition of reasonable accommodation',
+          caciSeries: 'CACI 2542',
+          elements: ['Reasonable accommodation', 'Enables performance', 'Not undue hardship']
+        },
+        {
+          id: 'disability_discrimination_essential_job_duties_2543',
+          name: 'Disability Discrimination—"Essential Job Duties" Explained (Gov. Code, §§ 12926(f), 12940(a)(1))',
+          description: 'Definition of essential job duties',
+          caciSeries: 'CACI 2543',
+          elements: ['Essential duties', 'Core functions', 'Fundamental to position']
+        },
+        {
+          id: 'disability_discrimination_affirmative_defense_health_safety_2544',
+          name: 'Disability Discrimination—Affirmative Defense—Health or Safety Risk',
+          description: 'Health or safety risk defense',
+          caciSeries: 'CACI 2544',
+          elements: ['Health or safety risk', 'Significant risk', 'Defense applies']
+        },
+        {
+          id: 'disability_discrimination_affirmative_defense_undue_hardship_2545',
+          name: 'Disability Discrimination—Affirmative Defense—Undue Hardship',
+          description: 'Undue hardship defense',
+          caciSeries: 'CACI 2545',
+          elements: ['Undue hardship', 'Significant difficulty', 'Defense applies']
+        },
+        {
+          id: 'disability_discrimination_failure_interactive_process_2546',
+          name: 'Disability Discrimination—Reasonable Accommodation—Failure to Engage in Interactive Process (Gov. Code, § 12940(n))',
+          description: 'Failure to engage in interactive process',
+          caciSeries: 'CACI 2546',
+          elements: ['Duty to engage', 'Failure to engage', 'Damages']
+        },
+        {
+          id: 'disability_associational_discrimination_2547',
+          name: 'Disability-Based Associational Discrimination—Essential Factual Elements',
+          description: 'Discrimination based on association with disabled person',
+          caciSeries: 'CACI 2547',
+          elements: ['Association with disabled person', 'Adverse action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'disability_discrimination_refusal_accommodation_housing_2548',
+          name: 'Disability Discrimination—Refusal to Make Reasonable Accommodation in Housing (Gov. Code, § 12927(c)(1))',
+          description: 'Failure to accommodate in housing',
+          caciSeries: 'CACI 2548',
+          elements: ['Disability', 'Housing accommodation needed', 'Refusal', 'Damages']
+        },
+        {
+          id: 'disability_discrimination_refusal_modification_housing_2549',
+          name: 'Disability Discrimination—Refusal to Permit Reasonable Modification to Housing Unit (Gov. Code, § 12927(c)(1))',
+          description: 'Failure to permit modification in housing',
+          caciSeries: 'CACI 2549',
+          elements: ['Disability', 'Housing modification needed', 'Refusal', 'Damages']
+        },
+        {
+          id: 'religious_creed_discrimination_failure_accommodate_2560',
+          name: 'Religious Creed Discrimination—Failure to Accommodate—Essential Factual Elements (Gov. Code, § 12940(l))',
+          description: 'Failure to accommodate religious creed',
+          caciSeries: 'CACI 2560',
+          elements: ['Religious creed', 'Accommodation needed', 'Failure to accommodate', 'Damages']
+        },
+        {
+          id: 'religious_creed_discrimination_undue_hardship_2561',
+          name: 'Religious Creed Discrimination—Reasonable Accommodation—Affirmative Defense—Undue Hardship (Gov. Code, §§ 12940(l)(1), 12926(u))',
+          description: 'Undue hardship defense to religious accommodation',
+          caciSeries: 'CACI 2561',
+          elements: ['Undue hardship', 'Significant difficulty', 'Defense applies']
+        },
+        {
+          id: 'age_discrimination_disparate_treatment_2570',
+          name: 'Age Discrimination—Disparate Treatment—Essential Factual Elements',
+          description: 'Age discrimination',
+          caciSeries: 'CACI 2570',
+          elements: ['Age', 'Adverse action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'pregnancy_discrimination_failure_accommodate_2580',
+          name: 'Pregnancy Discrimination—Failure to Accommodate—Essential Factual Elements (Gov. Code, § 12945(a)(3)(A))',
+          description: 'Failure to accommodate pregnancy',
+          caciSeries: 'CACI 2580',
+          elements: ['Pregnancy', 'Accommodation needed', 'Failure to accommodate', 'Damages']
+        },
+        {
+          id: 'pregnancy_discrimination_reasonable_accommodation_explained_2581',
+          name: 'Pregnancy Discrimination—"Reasonable Accommodation" Explained',
+          description: 'Definition of reasonable accommodation for pregnancy',
+          caciSeries: 'CACI 2581',
+          elements: ['Reasonable accommodation', 'Pregnancy-related', 'Not undue hardship']
+        }
+      ]
+    },
+    {
+      id: 'series_2600',
+      seriesNumber: 2600,
+      title: 'CALIFORNIA FAMILY RIGHTS ACT',
+      causes: [
+        {
+          id: 'violation_cfra_rights_2600',
+          name: 'Violation of CFRA Rights—Essential Factual Elements',
+          description: 'Violation of California Family Rights Act',
+          caciSeries: 'CACI 2600',
+          elements: ['Eligible employee', 'Qualifying reason', 'CFRA leave requested', 'Violation occurred', 'Damages']
+        },
+        {
+          id: 'eligibility_cfra_2601',
+          name: 'Eligibility',
+          description: 'Eligibility requirements for CFRA leave',
+          caciSeries: 'CACI 2601',
+          elements: ['12 months employment', '1250 hours worked', '50+ employees', 'Eligible']
+        },
+        {
+          id: 'reasonable_notice_cfra_2602',
+          name: 'Reasonable Notice by Employee of Need for CFRA Leave',
+          description: 'Employee\'s duty to provide notice',
+          caciSeries: 'CACI 2602',
+          elements: ['Reasonable notice', 'As soon as practicable', 'Sufficient information']
+        },
+        {
+          id: 'comparable_job_explained_2603',
+          name: '"Comparable Job" Explained',
+          description: 'Definition of comparable job',
+          caciSeries: 'CACI 2603',
+          elements: ['Comparable job', 'Equivalent pay', 'Benefits', 'Working conditions']
+        },
+        {
+          id: 'affirmative_defense_no_certification_2610',
+          name: 'Affirmative Defense—No Certification From Health Care Provider',
+          description: 'Defense for lack of certification',
+          caciSeries: 'CACI 2610',
+          elements: ['Certification required', 'Not provided', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_fitness_duty_2611',
+          name: 'Affirmative Defense—Fitness for Duty Statement',
+          description: 'Fitness for duty requirement',
+          caciSeries: 'CACI 2611',
+          elements: ['Fitness for duty required', 'Not provided', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_employment_would_ceased_2612',
+          name: 'Affirmative Defense—Employment Would Have Ceased',
+          description: 'Defense that employment would have ended anyway',
+          caciSeries: 'CACI 2612',
+          elements: ['Employment would have ceased', 'Regardless of CFRA', 'Defense applies']
+        },
+        {
+          id: 'cfra_retaliation_2620',
+          name: 'CFRA Rights Retaliation—Essential Factual Elements (Gov. Code, § 12945.2(k))',
+          description: 'Retaliation for exercising CFRA rights',
+          caciSeries: 'CACI 2620',
+          elements: ['CFRA rights exercised', 'Adverse action', 'Causal connection', 'Damages']
+        }
+      ]
     },
     {
       id: 'series_other',
@@ -2003,35 +3138,35 @@ Dated: ${new Date().toLocaleDateString()}
   ]
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200">
+    <div className="glass-card rounded-2xl shadow-2xl border border-white/20">
       <div className="p-6">
         <div className="flex items-center space-x-3 mb-6">
-          <FileText className="w-6 h-6 text-primary-500" />
-          <h2 className="text-2xl font-bold text-gray-900">Generate Legal Complaint</h2>
+          <FileText className="w-6 h-6 text-white drop-shadow-lg" />
+          <h2 className="text-2xl font-bold text-white drop-shadow-lg">Generate Legal Complaint</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Attorney Information Section */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-white">
                 Attorney Information
               </label>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-gray-200 opacity-90">
                 {attorneys.length}/5 attorneys
               </span>
             </div>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="text-gray-100 text-sm mb-4 opacity-90">
               Enter attorney details for the complaint header. At least one attorney is required.
             </p>
             
             <div className="space-y-4">
               {attorneys.map((attorney, index) => (
-                <div key={attorney.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div key={attorney.id} className="glass rounded-xl p-4 border border-white/20">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2">
                       <User className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-medium text-gray-700">
+                      <span className="text-sm font-medium text-white">
                         Attorney {index + 1}
                       </span>
                     </div>
@@ -2051,7 +3186,7 @@ Dated: ${new Date().toLocaleDateString()}
                     {/* Attorney Personal Information */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                        <label className="block text-xs font-medium text-gray-200 mb-1">
                           Attorney Name
                         </label>
                         <input
@@ -2065,7 +3200,7 @@ Dated: ${new Date().toLocaleDateString()}
                       </div>
                       
                       <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                        <label className="block text-xs font-medium text-gray-200 mb-1">
                           Email Address
                         </label>
                         <input
@@ -2079,7 +3214,7 @@ Dated: ${new Date().toLocaleDateString()}
                       </div>
                       
                       <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                        <label className="block text-xs font-medium text-gray-200 mb-1">
                           California State Bar Number
                         </label>
                         <input
@@ -2094,13 +3229,13 @@ Dated: ${new Date().toLocaleDateString()}
                     </div>
 
                     {/* Law Firm Information */}
-                    <div className="border-t border-gray-200 pt-3">
-                      <h4 className="text-xs font-semibold text-gray-700 mb-3 uppercase tracking-wide">
+                    <div className="border-t border-white/20 pt-3">
+                      <h4 className="text-xs font-semibold text-white mb-3 uppercase tracking-wide">
                         Law Firm Information
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-200 mb-1">
                             Law Firm Name
                           </label>
                           <input
@@ -2114,7 +3249,7 @@ Dated: ${new Date().toLocaleDateString()}
                         </div>
                         
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-200 mb-1">
                             Law Firm Address
                           </label>
                           <input
@@ -2128,7 +3263,7 @@ Dated: ${new Date().toLocaleDateString()}
                         </div>
                         
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-200 mb-1">
                             Telephone Number
                           </label>
                           <input
@@ -2162,10 +3297,10 @@ Dated: ${new Date().toLocaleDateString()}
 
           {/* County Selection */}
           <div>
-            <label htmlFor="county" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="county" className="block text-sm font-medium text-white mb-2">
               California County *
             </label>
-            <p className="text-gray-600 text-sm mb-3">
+            <p className="text-gray-200 text-sm mb-3 opacity-90">
               Select the county where the complaint will be filed.
             </p>
             <select
@@ -2195,24 +3330,24 @@ Dated: ${new Date().toLocaleDateString()}
           {/* Plaintiff Information Section */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-white">
                 Plaintiff Information *
               </label>
               <span className="text-xs text-gray-500">
                 {plaintiffs.length}/10 plaintiffs
               </span>
             </div>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="text-gray-200 text-sm mb-4 opacity-90">
               Enter the name(s) of the plaintiff(s) in this case. At least one plaintiff is required.
             </p>
             
             <div className="space-y-3">
               {plaintiffs.map((plaintiff, index) => (
-                <div key={plaintiff.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div key={plaintiff.id} className="glass rounded-xl p-4 border border-white/20">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2">
                       <User className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-medium text-gray-700">
+                      <span className="text-sm font-medium text-white">
                         Plaintiff {index + 1}
                       </span>
                     </div>
@@ -2261,24 +3396,24 @@ Dated: ${new Date().toLocaleDateString()}
           {/* Defendant Information Section */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-white">
                 Defendant Information *
               </label>
               <span className="text-xs text-gray-500">
                 {defendants.length}/10 defendants
               </span>
             </div>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="text-gray-200 text-sm mb-4 opacity-90">
               Enter the name(s) of the defendant(s) in this case. At least one defendant is required.
             </p>
             
             <div className="space-y-3">
               {defendants.map((defendant, index) => (
-                <div key={defendant.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                <div key={defendant.id} className="glass rounded-xl p-4 border border-white/20">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2">
                       <User className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-medium text-gray-700">
+                      <span className="text-sm font-medium text-white">
                         Defendant {index + 1}
                       </span>
                     </div>
@@ -2326,10 +3461,10 @@ Dated: ${new Date().toLocaleDateString()}
 
           {/* Case Number Section */}
           <div>
-            <label htmlFor="caseNumber" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="caseNumber" className="block text-sm font-medium text-white mb-2">
               Case Number
             </label>
-            <p className="text-gray-600 text-sm mb-3">
+            <p className="text-gray-200 text-sm mb-3 opacity-90">
               Enter the case number if already assigned by the court (optional).
             </p>
             <input
@@ -2354,7 +3489,7 @@ Dated: ${new Date().toLocaleDateString()}
             <label htmlFor="summary" className="block text-sm font-medium text-gray-700 mb-2">
               Case Summary *
             </label>
-            <p className="text-gray-600 text-sm mb-3">
+            <p className="text-gray-200 text-sm mb-3 opacity-90">
               Provide a detailed factual summary of the incident, including dates, locations, parties involved, 
               and the nature of damages or injuries.
             </p>
@@ -2383,7 +3518,7 @@ Dated: ${new Date().toLocaleDateString()}
           {/* Causes of Action Selection */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-white">
                 Causes of Action (Optional)
               </label>
               <button
@@ -2394,7 +3529,7 @@ Dated: ${new Date().toLocaleDateString()}
                 {showCauseSelection ? 'Hide' : 'Select Specific'} Causes
               </button>
             </div>
-            <p className="text-gray-600 text-sm mb-3">
+            <p className="text-gray-200 text-sm mb-3 opacity-90">
               {showCauseSelection 
                 ? 'Select specific causes of action to include in your complaint. If none selected, the AI will automatically determine appropriate causes based on your case summary.'
                 : 'The AI will automatically determine appropriate causes of action based on your case summary, or you can select specific ones.'
@@ -2402,9 +3537,9 @@ Dated: ${new Date().toLocaleDateString()}
             </p>
             
             {showCauseSelection && (
-              <div className="space-y-4 mb-4 p-4 bg-gray-50 rounded-lg border">
+              <div className="space-y-4 mb-4 p-4 glass rounded-xl border border-white/20">
                 {caciSeries.map((series) => series.causes.length > 0 && (
-                  <div key={series.id} className="border border-gray-300 rounded-lg bg-white">
+                  <div key={series.id} className="border border-white/20 rounded-xl glass-card">
                     <button
                       type="button"
                       onClick={() => {
@@ -2416,7 +3551,7 @@ Dated: ${new Date().toLocaleDateString()}
                         }
                         setExpandedSeries(newExpanded)
                       }}
-                      className="w-full flex items-center justify-between p-3 text-left hover:bg-gray-50 transition-colors"
+                      className="w-full flex items-center justify-between p-3 text-left hover:bg-white/10 transition-colors"
                     >
                       <h3 className="text-md font-bold text-gray-900">
                         SERIES {series.seriesNumber !== 0 ? series.seriesNumber : ''} {series.title}
@@ -2432,7 +3567,7 @@ Dated: ${new Date().toLocaleDateString()}
                     </button>
                     
                     {expandedSeries.has(series.id) && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-t border-gray-200">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border-t border-white/20">
                         {series.causes.map((cause) => (
                   <div key={cause.id} className="flex items-start space-x-3">
                     <input
@@ -2446,7 +3581,7 @@ Dated: ${new Date().toLocaleDateString()}
                           setSelectedCausesOfAction(selectedCausesOfAction.filter(id => id !== cause.id))
                         }
                       }}
-                      className="mt-1 h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                      className="mt-1 h-4 w-4 text-primary-400 focus:ring-primary-400 border-white/30 rounded"
                       disabled={isGenerating}
                     />
                     <div className="flex-1">
@@ -2558,14 +3693,14 @@ Dated: ${new Date().toLocaleDateString()}
                            Generate manual template instead
                          </button></li>
                     </ul>
-                    <p className="text-red-700 text-xs mt-2">
-                      📖 For detailed setup instructions, see <code className="bg-red-200 px-1 rounded">OPENAI_SETUP.md</code> in your project folder.
+                    <p className="text-red-200 text-xs mt-2">
+                      📖 For detailed setup instructions, see <code className="bg-red-500/30 px-1 rounded">OPENAI_SETUP.md</code> in your project folder.
                     </p>
                   </div>
                   
                   <details className="text-sm">
-                    <summary className="text-red-700 cursor-pointer hover:text-red-800">Show manual complaint template</summary>
-                    <div className="mt-2 p-3 bg-gray-100 rounded text-gray-700 font-mono text-xs">
+                    <summary className="text-red-200 cursor-pointer hover:text-red-100">Show manual complaint template</summary>
+                    <div className="mt-2 p-3 glass rounded-xl text-gray-100 font-mono text-xs">
                       <pre>{`[Attorney Name] (California State Bar No. [Number])
 [Email]
 [Law Firm Name]
@@ -2667,7 +3802,7 @@ I. Jurisdiction
           <h3 className="font-semibold text-gray-900 mb-4">Example Case Summaries</h3>
           <div className="space-y-4">
             {exampleSummaries.map((example, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-4">
+              <div key={index} className="glass rounded-xl p-4">
                 <p className="text-gray-700 text-sm mb-3">{example}</p>
                 <button
                   type="button"
