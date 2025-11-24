@@ -2778,6 +2778,1539 @@ export default function ComplaintForm({
       ]
     },
     {
+      id: 'series_2700',
+      seriesNumber: 2700,
+      title: 'LABOR CODE ACTIONS',
+      causes: [
+        {
+          id: 'nonpayment_wages_2700',
+          name: 'Nonpayment of Wages—Essential Factual Elements (Lab. Code, §§ 201, 202, 218)',
+          description: 'Failure to pay wages owed to employee',
+          caciSeries: 'CACI 2700',
+          elements: ['Employment relationship', 'Wages earned', 'Wages due', 'Failure to pay', 'Damages']
+        },
+        {
+          id: 'nonpayment_minimum_wage_2701',
+          name: 'Nonpayment of Minimum Wage—Essential Factual Elements (Lab. Code, § 1194)',
+          description: 'Payment below minimum wage',
+          caciSeries: 'CACI 2701',
+          elements: ['Employment relationship', 'Hours worked', 'Payment below minimum wage', 'Damages']
+        },
+        {
+          id: 'nonpayment_overtime_2702',
+          name: 'Nonpayment of Overtime Compensation—Essential Factual Elements (Lab. Code, § 1194)',
+          description: 'Failure to pay overtime wages',
+          caciSeries: 'CACI 2702',
+          elements: ['Employment relationship', 'Overtime hours worked', 'Failure to pay overtime', 'Damages']
+        },
+        {
+          id: 'nonpayment_overtime_proof_2703',
+          name: 'Nonpayment of Overtime Compensation—Proof of Overtime Hours Worked',
+          description: 'Proof requirements for overtime hours worked',
+          caciSeries: 'CACI 2703',
+          elements: ['Overtime hours worked', 'Employer records', 'Reasonable inference', 'Damages']
+        },
+        {
+          id: 'waiting_time_penalty_2704',
+          name: 'Waiting-Time Penalty for Nonpayment of Wages (Lab. Code, §§ 203, 218)',
+          description: 'Penalties for failure to pay wages upon termination',
+          caciSeries: 'CACI 2704',
+          elements: ['Employment terminated', 'Wages due', 'Failure to pay within time limit', 'Penalties']
+        },
+        {
+          id: 'independent_contractor_defense_2705',
+          name: 'Independent Contractor—Affirmative Defense—Worker Was Not Hiring Entity\'s Employee (Lab. Code, § 2775)',
+          description: 'Defense that worker was independent contractor, not employee',
+          caciSeries: 'CACI 2705',
+          elements: ['Independent contractor relationship', 'No employment relationship', 'Defense applies']
+        },
+        {
+          id: 'solicitation_misrepresentation_2710',
+          name: 'Solicitation of Employee by Misrepresentation—Essential Factual Elements (Lab. Code, § 970)',
+          description: 'False representations in employment solicitation',
+          caciSeries: 'CACI 2710',
+          elements: ['False representation', 'Reliance', 'Damages', 'Causation']
+        },
+        {
+          id: 'preventing_subsequent_employment_2711',
+          name: 'Preventing Subsequent Employment by Misrepresentation—Essential Factual Elements (Lab. Code, § 1050)',
+          description: 'Misrepresentation preventing subsequent employment',
+          caciSeries: 'CACI 2711',
+          elements: ['False representation', 'Prevented employment', 'Damages', 'Causation']
+        },
+        {
+          id: 'overtime_executive_exemption_2720',
+          name: 'Affirmative Defense—Nonpayment of Overtime—Executive Exemption',
+          description: 'Executive exemption defense to overtime claim',
+          caciSeries: 'CACI 2720',
+          elements: ['Executive duties', 'Salary basis', 'Exempt from overtime', 'Defense applies']
+        },
+        {
+          id: 'overtime_administrative_exemption_2721',
+          name: 'Affirmative Defense—Nonpayment of Overtime—Administrative Exemption',
+          description: 'Administrative exemption defense to overtime claim',
+          caciSeries: 'CACI 2721',
+          elements: ['Administrative duties', 'Salary basis', 'Exempt from overtime', 'Defense applies']
+        },
+        {
+          id: 'retaliatory_immigration_practice_2732',
+          name: 'Retaliatory Unfair Immigration-Related Practice—Essential Factual Elements (Lab. Code, § 1019)',
+          description: 'Retaliation based on immigration-related practices',
+          caciSeries: 'CACI 2732',
+          elements: ['Protected activity', 'Adverse action', 'Immigration-related retaliation', 'Damages']
+        },
+        {
+          id: 'equal_pay_act_violation_2740',
+          name: 'Violation of Equal Pay Act—Essential Factual Elements (Lab. Code, § 1197.5)',
+          description: 'Pay discrimination based on sex, race, or ethnicity',
+          caciSeries: 'CACI 2740',
+          elements: ['Substantially similar work', 'Different pay', 'Based on sex/race/ethnicity', 'Damages']
+        },
+        {
+          id: 'equal_pay_different_pay_justified_2741',
+          name: 'Affirmative Defense—Different Pay Justified',
+          description: 'Defense that different pay is justified',
+          caciSeries: 'CACI 2741',
+          elements: ['Seniority system', 'Merit system', 'Quantity/quality of production', 'Bona fide factor', 'Defense applies']
+        },
+        {
+          id: 'equal_pay_bona_fide_factor_2742',
+          name: 'Bona Fide Factor Other Than Sex, Race, or Ethnicity',
+          description: 'Bona fide factor defense to equal pay claim',
+          caciSeries: 'CACI 2742',
+          elements: ['Bona fide factor', 'Not sex/race/ethnicity', 'Job-related', 'Business necessity', 'Defense applies']
+        },
+        {
+          id: 'equal_pay_act_retaliation_2743',
+          name: 'Equal Pay Act—Retaliation—Essential Factual Elements (Lab. Code, § 1197.5(k))',
+          description: 'Retaliation for exercising equal pay rights',
+          caciSeries: 'CACI 2743',
+          elements: ['Equal pay rights exercised', 'Adverse action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'failure_reimburse_expenditures_2750',
+          name: 'Failure to Reimburse Employee for Necessary Expenditures or Losses—Essential Factual Elements (Lab. Code, § 2802(a))',
+          description: 'Failure to reimburse employee for necessary business expenditures',
+          caciSeries: 'CACI 2750',
+          elements: ['Employment relationship', 'Necessary expenditures', 'Incurred in discharge of duties', 'Failure to reimburse', 'Damages']
+        },
+        {
+          id: 'tip_pool_conversion_2752',
+          name: 'Tip Pool Conversion—Essential Factual Elements (Lab. Code, § 351)',
+          description: 'Unlawful conversion of tips or gratuities',
+          caciSeries: 'CACI 2752',
+          elements: ['Tips or gratuities', 'Belonged to employee', 'Conversion by employer', 'Damages']
+        },
+        {
+          id: 'failure_pay_vested_vacation_2753',
+          name: 'Failure to Pay All Vested Vacation Time—Essential Factual Elements (Lab. Code, § 227.3)',
+          description: 'Failure to pay accrued vacation wages upon termination',
+          caciSeries: 'CACI 2753',
+          elements: ['Vacation time accrued', 'Employment terminated', 'Failure to pay', 'Damages']
+        },
+        {
+          id: 'reporting_time_pay_2754',
+          name: 'Reporting Time Pay—Essential Factual Elements',
+          description: 'Failure to pay reporting time wages',
+          caciSeries: 'CACI 2754',
+          elements: ['Employee reported for work', 'Work not available', 'Minimum reporting time pay required', 'Failure to pay', 'Damages']
+        },
+        {
+          id: 'rest_break_violations_introduction_2760',
+          name: 'Rest Break Violations—Introduction (Lab. Code, § 226.7)',
+          description: 'Introduction to rest break violations',
+          caciSeries: 'CACI 2760',
+          elements: ['Rest break requirements', 'Violation occurred', 'Damages']
+        },
+        {
+          id: 'rest_break_violations_essential_2761',
+          name: 'Rest Break Violations—Essential Factual Elements (Lab. Code, § 226.7)',
+          description: 'Essential elements of rest break violations',
+          caciSeries: 'CACI 2761',
+          elements: ['Employment relationship', 'Work period requiring rest break', 'Failure to provide rest break', 'Damages']
+        },
+        {
+          id: 'rest_break_violations_pay_owed_2762',
+          name: 'Rest Break Violations—Pay Owed',
+          description: 'Pay owed for rest break violations',
+          caciSeries: 'CACI 2762',
+          elements: ['Rest break violation', 'Pay owed', 'One hour of pay', 'Damages']
+        },
+        {
+          id: 'meal_break_violations_introduction_2765',
+          name: 'Meal Break Violations—Introduction (Lab. Code, §§ 226.7, 512)',
+          description: 'Introduction to meal break violations',
+          caciSeries: 'CACI 2765',
+          elements: ['Meal break requirements', 'Violation occurred', 'Damages']
+        },
+        {
+          id: 'meal_break_violations_essential_2766a',
+          name: 'Meal Break Violations—Essential Factual Elements (Lab. Code, §§ 226.7, 512)',
+          description: 'Essential elements of meal break violations',
+          caciSeries: 'CACI 2766A',
+          elements: ['Employment relationship', 'Work period requiring meal break', 'Failure to provide meal break', 'Damages']
+        },
+        {
+          id: 'meal_break_violations_rebuttable_presumption_2766b',
+          name: 'Meal Break Violations—Rebuttable Presumption—Employer Records',
+          description: 'Rebuttable presumption based on employer records',
+          caciSeries: 'CACI 2766B',
+          elements: ['Employer records', 'No meal break recorded', 'Rebuttable presumption', 'Damages']
+        },
+        {
+          id: 'meal_break_violations_pay_owed_2767',
+          name: 'Meal Break Violations—Pay Owed',
+          description: 'Pay owed for meal break violations',
+          caciSeries: 'CACI 2767',
+          elements: ['Meal break violation', 'Pay owed', 'One hour of pay', 'Damages']
+        },
+        {
+          id: 'meal_break_waiver_mutual_consent_2770',
+          name: 'Affirmative Defense—Meal Breaks—Waiver by Mutual Consent',
+          description: 'Defense that meal break was waived by mutual consent',
+          caciSeries: 'CACI 2770',
+          elements: ['Mutual consent', 'Waiver of meal break', 'Defense applies']
+        },
+        {
+          id: 'meal_break_written_consent_onduty_2771',
+          name: 'Affirmative Defense—Meal Breaks—Written Consent to On-Duty Meal Breaks',
+          description: 'Defense for written consent to on-duty meal breaks',
+          caciSeries: 'CACI 2771',
+          elements: ['Written consent', 'On-duty meal break', 'Defense applies']
+        },
+        {
+          id: 'nonpayment_wages_rounding_system_2775',
+          name: 'Nonpayment of Wages Under Rounding System—Essential Factual Elements',
+          description: 'Failure to pay wages under rounding system',
+          caciSeries: 'CACI 2775',
+          elements: ['Rounding system', 'Unfavorable rounding', 'Wages not paid', 'Damages']
+        }
+      ]
+    },
+    {
+      id: 'series_2800',
+      seriesNumber: 2800,
+      title: 'WORKERS\' COMPENSATION',
+      causes: [
+        {
+          id: 'employer_defense_workers_comp_2800',
+          name: 'Employer\'s Affirmative Defense—Injury Covered by Workers\' Compensation',
+          description: 'Defense that injury is covered by workers\' compensation',
+          caciSeries: 'CACI 2800',
+          elements: ['Workers\' compensation coverage', 'Exclusive remedy', 'Defense applies']
+        },
+        {
+          id: 'employer_willful_assault_2801',
+          name: 'Employer\'s Willful Physical Assault—Essential Factual Elements (Lab. Code, § 3602(b)(1))',
+          description: 'Willful physical assault by employer',
+          caciSeries: 'CACI 2801',
+          elements: ['Employer', 'Willful physical assault', 'Injury', 'Damages']
+        },
+        {
+          id: 'fraudulent_concealment_injury_2802',
+          name: 'Fraudulent Concealment of Injury—Essential Factual Elements (Lab. Code, § 3602(b)(2))',
+          description: 'Fraudulent concealment of work injury',
+          caciSeries: 'CACI 2802',
+          elements: ['Injury', 'Fraudulent concealment', 'Knowledge', 'Damages']
+        },
+        {
+          id: 'employer_defective_product_2803',
+          name: 'Employer\'s Defective Product—Essential Factual Elements (Lab. Code, § 3602(b)(3))',
+          description: 'Injury from employer\'s defective product',
+          caciSeries: 'CACI 2803',
+          elements: ['Defective product', 'Employer manufactured', 'Injury', 'Damages']
+        },
+        {
+          id: 'power_press_guards_2804',
+          name: 'Removal or Noninstallation of Power Press Guards—Essential Factual Elements (Lab. Code, § 4558)',
+          description: 'Removal or failure to install power press guards',
+          caciSeries: 'CACI 2804',
+          elements: ['Power press', 'Guard removed or not installed', 'Injury', 'Damages']
+        },
+        {
+          id: 'employee_not_course_employment_2805',
+          name: 'Employee Not Within Course of Employment—Employer Conduct Unrelated to Employment',
+          description: 'Injury outside course of employment',
+          caciSeries: 'CACI 2805',
+          elements: ['Not in course of employment', 'Employer conduct unrelated', 'Injury', 'Damages']
+        },
+        {
+          id: 'coemployee_defense_workers_comp_2810',
+          name: 'Coemployee\'s Affirmative Defense—Injury Covered by Workers\' Compensation',
+          description: 'Defense that injury is covered by workers\' compensation',
+          caciSeries: 'CACI 2810',
+          elements: ['Workers\' compensation coverage', 'Coemployee immunity', 'Defense applies']
+        },
+        {
+          id: 'coemployee_willful_aggression_2811',
+          name: 'Co-Employee\'s Willful and Unprovoked Physical Act of Aggression—Essential Factual Elements (Lab. Code, § 3601(a)(1))',
+          description: 'Willful and unprovoked physical aggression by co-employee',
+          caciSeries: 'CACI 2811',
+          elements: ['Co-employee', 'Willful and unprovoked', 'Physical aggression', 'Injury', 'Damages']
+        },
+        {
+          id: 'coemployee_intoxication_2812',
+          name: 'Injury Caused by Co-Employee\'s Intoxication—Essential Factual Elements (Lab. Code, § 3601(a)(2))',
+          description: 'Injury caused by co-employee\'s intoxication',
+          caciSeries: 'CACI 2812',
+          elements: ['Co-employee', 'Intoxication', 'Causation', 'Injury', 'Damages']
+        }
+      ]
+    },
+    {
+      id: 'series_2900',
+      seriesNumber: 2900,
+      title: 'FEDERAL EMPLOYERS\' LIABILITY ACT',
+      causes: [
+        {
+          id: 'fela_essential_2900',
+          name: 'FELA—Essential Factual Elements',
+          description: 'Federal Employers\' Liability Act essential elements',
+          caciSeries: 'CACI 2900',
+          elements: ['Common carrier', 'Employee', 'Injury', 'Negligence', 'Causation', 'Damages']
+        },
+        {
+          id: 'fela_negligence_duty_railroad_2901',
+          name: 'Negligence—Duty of Railroad',
+          description: 'Railroad\'s duty of care under FELA',
+          caciSeries: 'CACI 2901',
+          elements: ['Railroad', 'Duty of care', 'Reasonable care', 'Safe workplace']
+        },
+        {
+          id: 'fela_negligence_assignment_employees_2902',
+          name: 'Negligence—Assignment of Employees',
+          description: 'Negligence in assignment of employees',
+          caciSeries: 'CACI 2902',
+          elements: ['Assignment', 'Negligent assignment', 'Injury', 'Causation']
+        },
+        {
+          id: 'fela_causation_negligence_2903',
+          name: 'Causation—Negligence',
+          description: 'Causation requirement under FELA',
+          caciSeries: 'CACI 2903',
+          elements: ['Negligence', 'Substantial factor', 'Injury', 'Causation']
+        },
+        {
+          id: 'fela_comparative_fault_2904',
+          name: 'Comparative Fault',
+          description: 'Comparative fault under FELA',
+          caciSeries: 'CACI 2904',
+          elements: ['Employee negligence', 'Contributory negligence', 'Apportionment', 'Damages']
+        },
+        {
+          id: 'fela_compliance_employer_requests_2905',
+          name: 'Compliance With Employer\'s Requests or Directions',
+          description: 'Compliance with employer requests',
+          caciSeries: 'CACI 2905',
+          elements: ['Employer request', 'Compliance', 'Reasonable', 'No contributory negligence']
+        },
+        {
+          id: 'fela_fsaa_bia_essential_2920',
+          name: 'Federal Safety Appliance Act or Boiler Inspection Act—Essential Factual Elements',
+          description: 'Violation of FSAA or BIA',
+          caciSeries: 'CACI 2920',
+          elements: ['FSAA or BIA violation', 'Injury', 'Causation', 'Damages']
+        },
+        {
+          id: 'fela_causation_fsaa_bia_2921',
+          name: 'Causation Under FSAA or BIA',
+          description: 'Causation under FSAA or BIA',
+          caciSeries: 'CACI 2921',
+          elements: ['FSAA or BIA violation', 'Substantial factor', 'Injury', 'Causation']
+        },
+        {
+          id: 'fela_statute_limitations_2922',
+          name: 'Statute of Limitations—Special Verdict Form or Interrogatory',
+          description: 'Statute of limitations under FELA',
+          caciSeries: 'CACI 2922',
+          elements: ['Filing deadline', 'Discovery rule', 'Timely filing']
+        },
+        {
+          id: 'fela_borrowed_servant_dual_employee_2923',
+          name: 'Borrowed Servant/Dual Employee',
+          description: 'Borrowed servant or dual employee status',
+          caciSeries: 'CACI 2923',
+          elements: ['Borrowed servant', 'Dual employment', 'Control', 'Employment relationship']
+        },
+        {
+          id: 'fela_status_defendant_employee_subservant_2924',
+          name: 'Status as Defendant\'s Employee—Subservant Company',
+          description: 'Employee status with subservant company',
+          caciSeries: 'CACI 2924',
+          elements: ['Subservant company', 'Employee status', 'Control', 'Employment relationship']
+        },
+        {
+          id: 'fela_status_common_carrier_2925',
+          name: 'Status of Defendant as Common Carrier',
+          description: 'Defendant\'s status as common carrier',
+          caciSeries: 'CACI 2925',
+          elements: ['Common carrier', 'Interstate commerce', 'Railroad operations']
+        },
+        {
+          id: 'fela_scope_employment_2926',
+          name: 'Scope of Employment',
+          description: 'Scope of employment under FELA',
+          caciSeries: 'CACI 2926',
+          elements: ['Course of employment', 'Scope of duties', 'Employment relationship']
+        },
+        {
+          id: 'fela_income_tax_effects_2940',
+          name: 'Income Tax Effects of Award',
+          description: 'Income tax effects on FELA award',
+          caciSeries: 'CACI 2940',
+          elements: ['Award', 'Tax consequences', 'No reduction for taxes']
+        },
+        {
+          id: 'fela_damages_personal_injury_intro_2941',
+          name: 'Introduction to Damages for Personal Injury',
+          description: 'Introduction to personal injury damages under FELA',
+          caciSeries: 'CACI 2941',
+          elements: ['Personal injury', 'Damages', 'Compensation']
+        },
+        {
+          id: 'fela_damages_death_employee_2942',
+          name: 'Damages for Death of Employee',
+          description: 'Damages for death of employee under FELA',
+          caciSeries: 'CACI 2942',
+          elements: ['Death', 'Survivors', 'Damages', 'Loss of support']
+        }
+      ]
+    },
+    {
+      id: 'series_3000',
+      seriesNumber: 3000,
+      title: 'CIVIL RIGHTS',
+      causes: [
+        {
+          id: 'violation_federal_civil_rights_3000',
+          name: 'Violation of Federal Civil Rights—In General—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Violation of federal civil rights under § 1983',
+          caciSeries: 'CACI 3000',
+          elements: ['State action', 'Constitutional violation', 'Causation', 'Damages']
+        },
+        {
+          id: 'local_government_liability_policy_custom_3001',
+          name: 'Local Government Liability—Policy or Custom—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Local government liability for policy or custom',
+          caciSeries: 'CACI 3001',
+          elements: ['Local government', 'Policy or custom', 'Constitutional violation', 'Causation', 'Damages']
+        },
+        {
+          id: 'official_policy_custom_explained_3002',
+          name: '"Official Policy or Custom" Explained (42 U.S.C. § 1983)',
+          description: 'Definition of official policy or custom',
+          caciSeries: 'CACI 3002',
+          elements: ['Official policy', 'Custom', 'Deliberate indifference']
+        },
+        {
+          id: 'local_government_liability_failure_train_3003',
+          name: 'Local Government Liability—Failure to Train—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Local government liability for failure to train',
+          caciSeries: 'CACI 3003',
+          elements: ['Failure to train', 'Deliberate indifference', 'Constitutional violation', 'Causation', 'Damages']
+        },
+        {
+          id: 'local_government_liability_ratification_3004',
+          name: 'Local Government Liability—Act or Ratification by Official With Final Policymaking Authority—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Local government liability for ratification by policymaker',
+          caciSeries: 'CACI 3004',
+          elements: ['Final policymaker', 'Ratification', 'Constitutional violation', 'Causation', 'Damages']
+        },
+        {
+          id: 'supervisor_liability_subordinates_3005',
+          name: 'Supervisor Liability for Acts of Subordinates (42 U.S.C. § 1983)',
+          description: 'Supervisor liability for subordinate actions',
+          caciSeries: 'CACI 3005',
+          elements: ['Supervisor', 'Subordinate violation', 'Supervisory liability', 'Causation', 'Damages']
+        },
+        {
+          id: 'excessive_force_unreasonable_arrest_3020',
+          name: 'Excessive Use of Force—Unreasonable Arrest or Other Seizure—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Excessive force in arrest or seizure',
+          caciSeries: 'CACI 3020',
+          elements: ['Arrest or seizure', 'Excessive force', 'Unreasonable', 'Injury', 'Damages']
+        },
+        {
+          id: 'unlawful_arrest_no_warrant_3021',
+          name: 'Unlawful Arrest by Peace Officer Without a Warrant—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Unlawful arrest without warrant',
+          caciSeries: 'CACI 3021',
+          elements: ['Arrest', 'No warrant', 'No probable cause', 'Damages']
+        },
+        {
+          id: 'unreasonable_search_with_warrant_3022',
+          name: 'Unreasonable Search—Search With a Warrant—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Unreasonable search with warrant',
+          caciSeries: 'CACI 3022',
+          elements: ['Search', 'Warrant', 'Unreasonable execution', 'Damages']
+        },
+        {
+          id: 'unreasonable_search_seizure_no_warrant_3023',
+          name: 'Unreasonable Search or Seizure—Search or Seizure Without a Warrant—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Unreasonable search or seizure without warrant',
+          caciSeries: 'CACI 3023',
+          elements: ['Search or seizure', 'No warrant', 'No exception', 'Unreasonable', 'Damages']
+        },
+        {
+          id: 'affirmative_defense_search_incident_arrest_3024',
+          name: 'Affirmative Defense—Search Incident to Lawful Arrest',
+          description: 'Defense for search incident to lawful arrest',
+          caciSeries: 'CACI 3024',
+          elements: ['Lawful arrest', 'Search incident', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_consent_search_3025',
+          name: 'Affirmative Defense—Consent to Search',
+          description: 'Defense for consent to search',
+          caciSeries: 'CACI 3025',
+          elements: ['Voluntary consent', 'Search', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_exigent_circumstances_3026',
+          name: 'Affirmative Defense—Exigent Circumstances',
+          description: 'Defense for exigent circumstances',
+          caciSeries: 'CACI 3026',
+          elements: ['Exigent circumstances', 'Emergency', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_emergency_3027',
+          name: 'Affirmative Defense—Emergency',
+          description: 'Defense for emergency search',
+          caciSeries: 'CACI 3027',
+          elements: ['Emergency', 'Immediate danger', 'Defense applies']
+        },
+        {
+          id: 'prisoner_civil_rights_substantial_risk_3040',
+          name: 'Violation of Prisoner\'s Federal Civil Rights—Eighth Amendment—Substantial Risk of Serious Harm (42 U.S.C. § 1983)',
+          description: 'Eighth Amendment violation—substantial risk of serious harm',
+          caciSeries: 'CACI 3040',
+          elements: ['Prisoner', 'Substantial risk', 'Serious harm', 'Deliberate indifference', 'Damages']
+        },
+        {
+          id: 'prisoner_civil_rights_medical_care_3041',
+          name: 'Violation of Prisoner\'s Federal Civil Rights—Eighth Amendment—Medical Care (42 U.S.C. § 1983)',
+          description: 'Eighth Amendment violation—medical care',
+          caciSeries: 'CACI 3041',
+          elements: ['Prisoner', 'Serious medical need', 'Deliberate indifference', 'Injury', 'Damages']
+        },
+        {
+          id: 'prisoner_civil_rights_excessive_force_3042',
+          name: 'Violation of Prisoner\'s Federal Civil Rights—Eighth Amendment—Excessive Force (42 U.S.C. § 1983)',
+          description: 'Eighth Amendment violation—excessive force',
+          caciSeries: 'CACI 3042',
+          elements: ['Prisoner', 'Excessive force', 'Unnecessary', 'Injury', 'Damages']
+        },
+        {
+          id: 'prisoner_civil_rights_deprivation_necessities_3043',
+          name: 'Violation of Prisoner\'s Federal Civil Rights—Eighth Amendment—Deprivation of Necessities (42 U.S.C. § 1983)',
+          description: 'Eighth Amendment violation—deprivation of necessities',
+          caciSeries: 'CACI 3043',
+          elements: ['Prisoner', 'Deprivation', 'Basic necessities', 'Deliberate indifference', 'Damages']
+        },
+        {
+          id: 'pretrial_detainee_civil_rights_3046',
+          name: 'Violation of Pretrial Detainee\'s Federal Civil Rights—Fourteenth Amendment—Medical Care and Conditions of Confinement (42 U.S.C. § 1983)',
+          description: 'Fourteenth Amendment violation—pretrial detainee medical care and conditions',
+          caciSeries: 'CACI 3046',
+          elements: ['Pretrial detainee', 'Medical care or conditions', 'Punishment', 'Damages']
+        },
+        {
+          id: 'retaliation_essential_3050',
+          name: 'Retaliation—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Retaliation for exercising constitutional rights',
+          caciSeries: 'CACI 3050',
+          elements: ['Protected activity', 'Adverse action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'unlawful_removal_child_custody_3051',
+          name: 'Unlawful Removal of Child From Parental Custody Without a Warrant—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Unlawful removal of child from parental custody',
+          caciSeries: 'CACI 3051',
+          elements: ['Child removal', 'No warrant', 'No emergency', 'Damages']
+        },
+        {
+          id: 'use_fabricated_evidence_3052',
+          name: 'Use of Fabricated Evidence—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Use of fabricated evidence',
+          caciSeries: 'CACI 3052',
+          elements: ['Fabricated evidence', 'Use in prosecution', 'Injury', 'Damages']
+        },
+        {
+          id: 'retaliation_free_speech_public_employee_3053',
+          name: 'Retaliation for Exercise of Free Speech Rights—Public Employee—Essential Factual Elements (42 U.S.C. § 1983)',
+          description: 'Retaliation against public employee for free speech',
+          caciSeries: 'CACI 3053',
+          elements: ['Public employee', 'Free speech', 'Adverse action', 'Causal connection', 'Damages']
+        },
+        {
+          id: 'rebuttal_retaliatory_motive_3055',
+          name: 'Rebuttal of Retaliatory Motive',
+          description: 'Rebuttal of retaliatory motive defense',
+          caciSeries: 'CACI 3055',
+          elements: ['Legitimate reason', 'Pretext', 'Retaliatory motive']
+        },
+        {
+          id: 'unruh_civil_rights_act_3060',
+          name: 'Unruh Civil Rights Act—Essential Factual Elements (Civ. Code, §§ 51, 52)',
+          description: 'Violation of Unruh Civil Rights Act',
+          caciSeries: 'CACI 3060',
+          elements: ['Business establishment', 'Discrimination', 'Protected characteristic', 'Damages']
+        },
+        {
+          id: 'discrimination_business_dealings_3061',
+          name: 'Discrimination in Business Dealings—Essential Factual Elements (Civ. Code, § 51.5)',
+          description: 'Discrimination in business dealings',
+          caciSeries: 'CACI 3061',
+          elements: ['Business dealings', 'Discrimination', 'Protected characteristic', 'Damages']
+        },
+        {
+          id: 'gender_price_discrimination_3062',
+          name: 'Gender Price Discrimination—Essential Factual Elements (Civ. Code, § 51.6)',
+          description: 'Gender-based price discrimination',
+          caciSeries: 'CACI 3062',
+          elements: ['Gender', 'Price discrimination', 'Same services', 'Damages']
+        },
+        {
+          id: 'ralph_act_violence_3063',
+          name: 'Acts of Violence—Ralph Act—Essential Factual Elements (Civ. Code, § 51.7)',
+          description: 'Acts of violence under Ralph Act',
+          caciSeries: 'CACI 3063',
+          elements: ['Violence', 'Protected characteristic', 'Injury', 'Damages']
+        },
+        {
+          id: 'ralph_act_threats_3064',
+          name: 'Threats of Violence—Ralph Act—Essential Factual Elements (Civ. Code, § 51.7)',
+          description: 'Threats of violence under Ralph Act',
+          caciSeries: 'CACI 3064',
+          elements: ['Threats of violence', 'Protected characteristic', 'Damages']
+        },
+        {
+          id: 'sexual_harassment_defined_relationship_3065',
+          name: 'Sexual Harassment in Defined Relationship—Essential Factual Elements (Civ. Code, § 51.9)',
+          description: 'Sexual harassment in defined relationship',
+          caciSeries: 'CACI 3065',
+          elements: ['Defined relationship', 'Sexual harassment', 'Unwelcome conduct', 'Damages']
+        },
+        {
+          id: 'bane_act_3066',
+          name: 'Bane Act—Essential Factual Elements (Civ. Code, § 52.1)',
+          description: 'Violation of Bane Act',
+          caciSeries: 'CACI 3066',
+          elements: ['Constitutional right', 'Interference', 'Threat or intimidation', 'Damages']
+        },
+        {
+          id: 'unruh_act_damages_3067',
+          name: 'Unruh Civil Rights Act—Damages (Civ. Code, §§ 51, 52(a))',
+          description: 'Damages under Unruh Act',
+          caciSeries: 'CACI 3067',
+          elements: ['Violation', 'Actual damages', 'Statutory damages', 'Attorney fees']
+        },
+        {
+          id: 'ralph_act_damages_penalty_3068',
+          name: 'Ralph Act—Damages and Penalty (Civ. Code, §§ 51.7, 52(b))',
+          description: 'Damages and penalty under Ralph Act',
+          caciSeries: 'CACI 3068',
+          elements: ['Violation', 'Actual damages', 'Statutory penalty', 'Attorney fees']
+        },
+        {
+          id: 'harassment_educational_institution_3069',
+          name: 'Harassment in Educational Institution (Ed. Code, § 220)',
+          description: 'Harassment in educational institution',
+          caciSeries: 'CACI 3069',
+          elements: ['Educational institution', 'Harassment', 'Protected characteristic', 'Damages']
+        },
+        {
+          id: 'disability_discrimination_access_barriers_3070',
+          name: 'Disability Discrimination—Access Barriers to Public Facility—Construction-Related Accessibility Standards Act—Essential Factual Elements (Civ. Code, §§ 54.3, 55.56)',
+          description: 'Disability discrimination—access barriers',
+          caciSeries: 'CACI 3070',
+          elements: ['Public facility', 'Access barriers', 'Disability', 'Damages']
+        },
+        {
+          id: 'retaliation_refusing_disclosure_medical_3071',
+          name: 'Retaliation for Refusing to Authorize Disclosure of Medical Information—Essential Factual Elements (Civ. Code, § 56.20(b))',
+          description: 'Retaliation for refusing medical information disclosure',
+          caciSeries: 'CACI 3071',
+          elements: ['Refusal to authorize', 'Medical information', 'Retaliation', 'Damages']
+        }
+      ]
+    },
+    {
+      id: 'series_3100',
+      seriesNumber: 3100,
+      title: 'ELDER ABUSE AND DEPENDENT ADULT CIVIL PROTECTION ACT',
+      causes: [
+        {
+          id: 'financial_abuse_essential_3100',
+          name: 'Financial Abuse—Essential Factual Elements (Welf. & Inst. Code, § 15610.30)',
+          description: 'Financial abuse of elder or dependent adult',
+          caciSeries: 'CACI 3100',
+          elements: ['Elder or dependent adult', 'Financial abuse', 'Taking or secret use', 'Damages']
+        },
+        {
+          id: 'financial_abuse_decedent_pain_suffering_3101',
+          name: 'Financial Abuse—Decedent\'s Pain and Suffering (Welf. & Inst. Code, § 15657.5)',
+          description: 'Financial abuse—decedent\'s pain and suffering',
+          caciSeries: 'CACI 3101',
+          elements: ['Financial abuse', 'Decedent', 'Pain and suffering', 'Damages']
+        },
+        {
+          id: 'employer_liability_enhanced_remedies_both_3102a',
+          name: 'Employer Liability for Enhanced Remedies—Both Individual and Employer Defendants (Welf. & Inst. Code, §§ 15657, 15657.05; Civ. Code, § 3294(b))',
+          description: 'Employer liability for enhanced remedies—both defendants',
+          caciSeries: 'CACI 3102A',
+          elements: ['Employer', 'Employee abuse', 'Ratification or advance knowledge', 'Enhanced remedies']
+        },
+        {
+          id: 'employer_liability_enhanced_remedies_employer_only_3102b',
+          name: 'Employer Liability for Enhanced Remedies—Employer Defendant Only (Welf. & Inst. Code, §§ 15657, 15657.05; Civ. Code, § 3294(b))',
+          description: 'Employer liability for enhanced remedies—employer only',
+          caciSeries: 'CACI 3102B',
+          elements: ['Employer', 'Employee abuse', 'Ratification or advance knowledge', 'Enhanced remedies']
+        },
+        {
+          id: 'neglect_essential_3103',
+          name: 'Neglect—Essential Factual Elements (Welf. & Inst. Code, § 15610.57)',
+          description: 'Neglect of elder or dependent adult',
+          caciSeries: 'CACI 3103',
+          elements: ['Elder or dependent adult', 'Neglect', 'Failure to provide care', 'Damages']
+        },
+        {
+          id: 'neglect_enhanced_remedies_3104',
+          name: 'Neglect—Enhanced Remedies Sought (Welf. & Inst. Code, § 15657)',
+          description: 'Neglect with enhanced remedies',
+          caciSeries: 'CACI 3104',
+          elements: ['Neglect', 'Recklessness, oppression, fraud, or malice', 'Enhanced remedies', 'Damages']
+        },
+        {
+          id: 'physical_abuse_essential_3106',
+          name: 'Physical Abuse—Essential Factual Elements (Welf. & Inst. Code, § 15610.63)',
+          description: 'Physical abuse of elder or dependent adult',
+          caciSeries: 'CACI 3106',
+          elements: ['Elder or dependent adult', 'Physical abuse', 'Bodily harm', 'Damages']
+        },
+        {
+          id: 'physical_abuse_enhanced_remedies_3107',
+          name: 'Physical Abuse—Enhanced Remedies Sought (Welf. & Inst. Code, § 15657)',
+          description: 'Physical abuse with enhanced remedies',
+          caciSeries: 'CACI 3107',
+          elements: ['Physical abuse', 'Recklessness, oppression, fraud, or malice', 'Enhanced remedies', 'Damages']
+        },
+        {
+          id: 'abduction_essential_3109',
+          name: 'Abduction—Essential Factual Elements (Welf. & Inst. Code, § 15610.06)',
+          description: 'Abduction of elder or dependent adult',
+          caciSeries: 'CACI 3109',
+          elements: ['Elder or dependent adult', 'Abduction', 'Removal from place', 'Damages']
+        },
+        {
+          id: 'abduction_enhanced_remedies_3110',
+          name: 'Abduction—Enhanced Remedies Sought (Welf. & Inst. Code, § 15657.05)',
+          description: 'Abduction with enhanced remedies',
+          caciSeries: 'CACI 3110',
+          elements: ['Abduction', 'Recklessness, oppression, fraud, or malice', 'Enhanced remedies', 'Damages']
+        },
+        {
+          id: 'dependent_adult_explained_3112',
+          name: '"Dependent Adult" Explained (Welf. & Inst. Code, § 15610.23)',
+          description: 'Definition of dependent adult',
+          caciSeries: 'CACI 3112',
+          elements: ['Dependent adult', 'Physical or mental limitations', 'Inability to protect rights']
+        },
+        {
+          id: 'recklessness_explained_3113',
+          name: '"Recklessness" Explained',
+          description: 'Definition of recklessness',
+          caciSeries: 'CACI 3113',
+          elements: ['Recklessness', 'Conscious disregard', 'High probability of harm']
+        },
+        {
+          id: 'malice_explained_3114',
+          name: '"Malice" Explained',
+          description: 'Definition of malice',
+          caciSeries: 'CACI 3114',
+          elements: ['Malice', 'Desire to cause injury', 'Willful and conscious disregard']
+        },
+        {
+          id: 'oppression_explained_3115',
+          name: '"Oppression" Explained',
+          description: 'Definition of oppression',
+          caciSeries: 'CACI 3115',
+          elements: ['Oppression', 'Despicable conduct', 'Subjecting to cruel hardship']
+        },
+        {
+          id: 'fraud_explained_3116',
+          name: '"Fraud" Explained',
+          description: 'Definition of fraud',
+          caciSeries: 'CACI 3116',
+          elements: ['Fraud', 'Intentional misrepresentation', 'Concealment', 'Deceit']
+        },
+        {
+          id: 'financial_abuse_undue_influence_explained_3117',
+          name: 'Financial Abuse—"Undue Influence" Explained',
+          description: 'Definition of undue influence in financial abuse',
+          caciSeries: 'CACI 3117',
+          elements: ['Undue influence', 'Excessive persuasion', 'Overcoming free will', 'Unfair advantage']
+        }
+      ]
+    },
+    {
+      id: 'series_3200',
+      seriesNumber: 3200,
+      title: 'SONG-BEVERLY CONSUMER WARRANTY ACT',
+      causes: [
+        {
+          id: 'failure_repurchase_replace_consumer_good_3200',
+          name: 'Failure to Repurchase or Replace Consumer Good After Reasonable Number of Repair Opportunities—Essential Factual Elements (Civ. Code, § 1793.2(d))',
+          description: 'Failure to repurchase or replace consumer good',
+          caciSeries: 'CACI 3200',
+          elements: ['Consumer good', 'Reasonable repair opportunities', 'Failure to repair', 'Repurchase or replace', 'Damages']
+        },
+        {
+          id: 'failure_repurchase_replace_motor_vehicle_3201',
+          name: 'Failure to Promptly Repurchase or Replace New Motor Vehicle After Reasonable Number of Repair Opportunities—Essential Factual Elements (Civ. Code, § 1793.2(d))',
+          description: 'Failure to repurchase or replace new motor vehicle',
+          caciSeries: 'CACI 3201',
+          elements: ['New motor vehicle', 'Reasonable repair opportunities', 'Failure to repair', 'Repurchase or replace', 'Damages']
+        },
+        {
+          id: 'repair_opportunities_explained_3202',
+          name: '"Repair Opportunities" Explained',
+          description: 'Definition of repair opportunities',
+          caciSeries: 'CACI 3202',
+          elements: ['Repair opportunities', 'Attempts to repair', 'Same nonconformity']
+        },
+        {
+          id: 'reasonable_repair_opportunities_rebuttable_presumption_3203',
+          name: 'Reasonable Number of Repair Opportunities—Rebuttable Presumption (Civ. Code, § 1793.22(b))',
+          description: 'Rebuttable presumption for reasonable repair opportunities',
+          caciSeries: 'CACI 3203',
+          elements: ['Repair attempts', 'Rebuttable presumption', 'Reasonable number']
+        },
+        {
+          id: 'substantially_impaired_explained_3204',
+          name: '"Substantially Impaired" Explained',
+          description: 'Definition of substantially impaired',
+          caciSeries: 'CACI 3204',
+          elements: ['Substantially impaired', 'Use or value', 'Safety or reliability']
+        },
+        {
+          id: 'failure_begin_complete_repairs_3205',
+          name: 'Failure to Begin Repairs Within Reasonable Time or to Complete Repairs Within 30 Days—Essential Factual Elements (Civ. Code, § 1793.2(b))',
+          description: 'Failure to begin or complete repairs timely',
+          caciSeries: 'CACI 3205',
+          elements: ['Repair request', 'Failure to begin timely', 'Failure to complete within 30 days', 'Damages']
+        },
+        {
+          id: 'breach_disclosure_obligations_3206',
+          name: 'Breach of Disclosure Obligations—Essential Factual Elements',
+          description: 'Breach of disclosure obligations',
+          caciSeries: 'CACI 3206',
+          elements: ['Disclosure obligation', 'Failure to disclose', 'Material information', 'Damages']
+        },
+        {
+          id: 'breach_implied_warranty_merchantability_3210',
+          name: 'Breach of Implied Warranty of Merchantability—Essential Factual Elements',
+          description: 'Breach of implied warranty of merchantability',
+          caciSeries: 'CACI 3210',
+          elements: ['Merchant', 'Consumer good', 'Not merchantable', 'Damages']
+        },
+        {
+          id: 'breach_implied_warranty_fitness_particular_purpose_3211',
+          name: 'Breach of Implied Warranty of Fitness for a Particular Purpose—Essential Factual Elements',
+          description: 'Breach of implied warranty of fitness for particular purpose',
+          caciSeries: 'CACI 3211',
+          elements: ['Seller', 'Particular purpose', 'Reliance', 'Not fit', 'Damages']
+        },
+        {
+          id: 'duration_implied_warranty_3212',
+          name: 'Duration of Implied Warranty',
+          description: 'Duration of implied warranty',
+          caciSeries: 'CACI 3212',
+          elements: ['Implied warranty', 'Duration', 'Reasonable time']
+        },
+        {
+          id: 'affirmative_defense_unauthorized_unreasonable_use_3220',
+          name: 'Affirmative Defense—Unauthorized or Unreasonable Use',
+          description: 'Defense for unauthorized or unreasonable use',
+          caciSeries: 'CACI 3220',
+          elements: ['Unauthorized use', 'Unreasonable use', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_disclaimer_implied_warranties_3221',
+          name: 'Affirmative Defense—Disclaimer of Implied Warranties',
+          description: 'Defense for disclaimer of implied warranties',
+          caciSeries: 'CACI 3221',
+          elements: ['Disclaimer', 'Implied warranties', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_statute_limitations_3222',
+          name: 'Affirmative Defense—Statute of Limitations (Cal. U. Com. Code, § 2725)',
+          description: 'Defense for statute of limitations',
+          caciSeries: 'CACI 3222',
+          elements: ['Statute of limitations', 'Filing deadline', 'Defense applies']
+        },
+        {
+          id: 'continued_reasonable_use_permitted_3230',
+          name: 'Continued Reasonable Use Permitted',
+          description: 'Continued reasonable use permitted',
+          caciSeries: 'CACI 3230',
+          elements: ['Reasonable use', 'During repair', 'Permitted']
+        },
+        {
+          id: 'continuation_express_implied_warranty_during_repairs_3231',
+          name: 'Continuation of Express or Implied Warranty During Repairs (Civ. Code, § 1795.6)',
+          description: 'Continuation of warranty during repairs',
+          caciSeries: 'CACI 3231',
+          elements: ['Warranty', 'During repairs', 'Extended period']
+        },
+        {
+          id: 'reimbursement_damages_consumer_goods_3240',
+          name: 'Reimbursement Damages—Consumer Goods (Civ. Code, §§ 1793.2(d)(1), 1794(b))',
+          description: 'Reimbursement damages for consumer goods',
+          caciSeries: 'CACI 3240',
+          elements: ['Consumer good', 'Reimbursement', 'Purchase price', 'Damages']
+        },
+        {
+          id: 'restitution_manufacturer_motor_vehicle_3241',
+          name: 'Restitution From Manufacturer—New Motor Vehicle (Civ. Code, §§ 1793.2(d)(2), 1794(b))',
+          description: 'Restitution from manufacturer for new motor vehicle',
+          caciSeries: 'CACI 3241',
+          elements: ['New motor vehicle', 'Restitution', 'Manufacturer', 'Damages']
+        },
+        {
+          id: 'incidental_damages_3242',
+          name: 'Incidental Damages',
+          description: 'Incidental damages',
+          caciSeries: 'CACI 3242',
+          elements: ['Incidental damages', 'Reasonable expenses', 'Damages']
+        },
+        {
+          id: 'consequential_damages_3243',
+          name: 'Consequential Damages',
+          description: 'Consequential damages',
+          caciSeries: 'CACI 3243',
+          elements: ['Consequential damages', 'Foreseeable', 'Damages']
+        },
+        {
+          id: 'civil_penalty_willful_violation_3244',
+          name: 'Civil Penalty—Willful Violation (Civ. Code, § 1794(c))',
+          description: 'Civil penalty for willful violation',
+          caciSeries: 'CACI 3244',
+          elements: ['Willful violation', 'Civil penalty', 'Two times actual damages']
+        }
+      ]
+    },
+    {
+      id: 'series_3300',
+      seriesNumber: 3300,
+      title: 'UNFAIR PRACTICES ACT',
+      causes: [
+        {
+          id: 'locality_discrimination_3300',
+          name: 'Locality Discrimination—Essential Factual Elements',
+          description: 'Locality discrimination under Unfair Practices Act',
+          caciSeries: 'CACI 3300',
+          elements: ['Different prices', 'Different localities', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'below_cost_sales_3301',
+          name: 'Below Cost Sales—Essential Factual Elements',
+          description: 'Below cost sales under Unfair Practices Act',
+          caciSeries: 'CACI 3301',
+          elements: ['Sale below cost', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'loss_leader_sales_3302',
+          name: 'Loss Leader Sales—Essential Factual Elements',
+          description: 'Loss leader sales under Unfair Practices Act',
+          caciSeries: 'CACI 3302',
+          elements: ['Loss leader sale', 'Below cost', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'definition_cost_3303',
+          name: 'Definition of "Cost"',
+          description: 'Definition of cost under Unfair Practices Act',
+          caciSeries: 'CACI 3303',
+          elements: ['Cost', 'Invoice cost', 'Replacement cost', 'Lowest cost']
+        },
+        {
+          id: 'presumptions_costs_manufacturer_3304',
+          name: 'Presumptions Concerning Costs—Manufacturer',
+          description: 'Presumptions concerning costs for manufacturer',
+          caciSeries: 'CACI 3304',
+          elements: ['Manufacturer', 'Cost presumptions', 'Invoice cost']
+        },
+        {
+          id: 'presumptions_costs_distributor_3305',
+          name: 'Presumptions Concerning Costs—Distributor',
+          description: 'Presumptions concerning costs for distributor',
+          caciSeries: 'CACI 3305',
+          elements: ['Distributor', 'Cost presumptions', 'Invoice cost']
+        },
+        {
+          id: 'methods_allocating_costs_3306',
+          name: 'Methods of Allocating Costs to an Individual Product',
+          description: 'Methods of allocating costs to individual product',
+          caciSeries: 'CACI 3306',
+          elements: ['Cost allocation', 'Individual product', 'Reasonable method']
+        },
+        {
+          id: 'secret_rebates_3320',
+          name: 'Secret Rebates—Essential Factual Elements',
+          description: 'Secret rebates under Unfair Practices Act',
+          caciSeries: 'CACI 3320',
+          elements: ['Secret rebate', 'Discrimination', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'secret_rebates_definition_secret_3321',
+          name: 'Secret Rebates—Definition of "Secret"',
+          description: 'Definition of secret in secret rebates',
+          caciSeries: 'CACI 3321',
+          elements: ['Secret', 'Not disclosed', 'Selective disclosure']
+        },
+        {
+          id: 'affirmative_defense_locality_discrimination_cost_justification_3330',
+          name: 'Affirmative Defense to Locality Discrimination Claim—Cost Justification',
+          description: 'Defense for cost justification in locality discrimination',
+          caciSeries: 'CACI 3330',
+          elements: ['Cost justification', 'Different costs', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_closed_out_discontinued_damaged_perishable_3331',
+          name: 'Affirmative Defense to Locality Discrimination, Below Cost Sales, and Loss Leader Sales Claims—Closed-out, Discontinued, Damaged, or Perishable Items',
+          description: 'Defense for closed-out, discontinued, damaged, or perishable items',
+          caciSeries: 'CACI 3331',
+          elements: ['Closed-out items', 'Discontinued items', 'Damaged items', 'Perishable items', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_functional_classifications_3332',
+          name: 'Affirmative Defense to Locality Discrimination, Below Cost Sales, Loss Leader Sales, and Secret Rebates—Functional Classifications',
+          description: 'Defense for functional classifications',
+          caciSeries: 'CACI 3332',
+          elements: ['Functional classifications', 'Different treatment', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_meeting_competition_3333',
+          name: 'Affirmative Defense to Locality Discrimination, Below Cost Sales, and Loss Leader Sales Claims—Meeting Competition',
+          description: 'Defense for meeting competition',
+          caciSeries: 'CACI 3333',
+          elements: ['Meeting competition', 'Good faith', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_manufacturer_meeting_downstream_competition_3334',
+          name: 'Affirmative Defense to Locality Discrimination Claim—Manufacturer Meeting Downstream Competition',
+          description: 'Defense for manufacturer meeting downstream competition',
+          caciSeries: 'CACI 3334',
+          elements: ['Manufacturer', 'Downstream competition', 'Good faith', 'Defense applies']
+        },
+        {
+          id: 'affirmative_defense_good_faith_explained_3335',
+          name: 'Affirmative Defense—"Good Faith" Explained',
+          description: 'Definition of good faith',
+          caciSeries: 'CACI 3335',
+          elements: ['Good faith', 'Honest belief', 'Reasonable grounds']
+        }
+      ]
+    },
+    {
+      id: 'series_3400',
+      seriesNumber: 3400,
+      title: 'CARTWRIGHT ACT',
+      causes: [
+        {
+          id: 'horizontal_vertical_restraints_price_fixing_3400',
+          name: 'Horizontal and Vertical Restraints (Use for Direct Competitors)—Price Fixing—Essential Factual Elements',
+          description: 'Price fixing under Cartwright Act',
+          caciSeries: 'CACI 3400',
+          elements: ['Agreement', 'Price fixing', 'Unreasonable restraint', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'horizontal_restraints_allocation_trade_3401',
+          name: 'Horizontal Restraints (Use for Direct Competitors)—Allocation of Trade or Commerce—Essential Factual Elements',
+          description: 'Allocation of trade or commerce under Cartwright Act',
+          caciSeries: 'CACI 3401',
+          elements: ['Agreement', 'Allocation of trade', 'Unreasonable restraint', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'horizontal_restraints_dual_distributor_3402',
+          name: 'Horizontal Restraints—Dual Distributor Restraints—Essential Factual Elements',
+          description: 'Dual distributor restraints under Cartwright Act',
+          caciSeries: 'CACI 3402',
+          elements: ['Dual distributor', 'Restraint', 'Unreasonable', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'horizontal_restraints_group_boycott_per_se_3403',
+          name: 'Horizontal Restraints (Use for Direct Competitors)—Group Boycott—Per Se Violation—Essential Factual Elements',
+          description: 'Group boycott per se violation under Cartwright Act',
+          caciSeries: 'CACI 3403',
+          elements: ['Group boycott', 'Per se violation', 'Unreasonable restraint', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'horizontal_restraints_group_boycott_rule_reason_3404',
+          name: 'Horizontal Restraints—Group Boycott—Rule of Reason—Essential Factual Elements',
+          description: 'Group boycott rule of reason under Cartwright Act',
+          caciSeries: 'CACI 3404',
+          elements: ['Group boycott', 'Rule of reason', 'Unreasonable restraint', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'horizontal_vertical_restraints_other_unreasonable_3405',
+          name: 'Horizontal and Vertical Restraints (Use for Direct Competitors or Supplier/Reseller Relations)—Other Unreasonable Restraint of Trade—Rule of Reason—Essential Factual Elements',
+          description: 'Other unreasonable restraint of trade under Cartwright Act',
+          caciSeries: 'CACI 3405',
+          elements: ['Restraint of trade', 'Rule of reason', 'Unreasonable', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'horizontal_vertical_restraints_agreement_explained_3406',
+          name: 'Horizontal and Vertical Restraints—"Agreement" Explained',
+          description: 'Definition of agreement under Cartwright Act',
+          caciSeries: 'CACI 3406',
+          elements: ['Agreement', 'Conspiracy', 'Understanding', 'Common plan']
+        },
+        {
+          id: 'horizontal_vertical_restraints_agreement_company_employee_3407',
+          name: 'Horizontal and Vertical Restraints—Agreement Between Company and Its Employee',
+          description: 'Agreement between company and employee',
+          caciSeries: 'CACI 3407',
+          elements: ['Company', 'Employee', 'No agreement', 'Single entity']
+        },
+        {
+          id: 'vertical_restraints_coercion_explained_3408',
+          name: 'Vertical Restraints—"Coercion" Explained',
+          description: 'Definition of coercion in vertical restraints',
+          caciSeries: 'CACI 3408',
+          elements: ['Coercion', 'Threat', 'Pressure', 'Forced agreement']
+        },
+        {
+          id: 'vertical_restraints_termination_reseller_3409',
+          name: 'Vertical Restraints—Termination of Reseller',
+          description: 'Termination of reseller under Cartwright Act',
+          caciSeries: 'CACI 3409',
+          elements: ['Termination', 'Reseller', 'Unreasonable restraint', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'vertical_restraints_agreement_seller_reseller_competitor_3410',
+          name: 'Vertical Restraints—Agreement Between Seller and Reseller\'s Competitor',
+          description: 'Agreement between seller and reseller\'s competitor',
+          caciSeries: 'CACI 3410',
+          elements: ['Seller', 'Reseller\'s competitor', 'Agreement', 'Unreasonable restraint', 'Damages']
+        },
+        {
+          id: 'rule_reason_anticompetitive_beneficial_effects_3411',
+          name: 'Rule of Reason—Anticompetitive Versus Beneficial Effects',
+          description: 'Rule of reason—anticompetitive vs beneficial effects',
+          caciSeries: 'CACI 3411',
+          elements: ['Anticompetitive effects', 'Beneficial effects', 'Balancing', 'Unreasonable restraint']
+        },
+        {
+          id: 'rule_reason_market_power_explained_3412',
+          name: 'Rule of Reason—"Market Power" Explained',
+          description: 'Definition of market power',
+          caciSeries: 'CACI 3412',
+          elements: ['Market power', 'Control prices', 'Exclude competition']
+        },
+        {
+          id: 'rule_reason_product_market_explained_3413',
+          name: 'Rule of Reason—"Product Market" Explained',
+          description: 'Definition of product market',
+          caciSeries: 'CACI 3413',
+          elements: ['Product market', 'Reasonable interchangeability', 'Cross-elasticity']
+        },
+        {
+          id: 'rule_reason_geographic_market_explained_3414',
+          name: 'Rule of Reason—"Geographic Market" Explained',
+          description: 'Definition of geographic market',
+          caciSeries: 'CACI 3414',
+          elements: ['Geographic market', 'Area of competition', 'Reasonable interchangeability']
+        },
+        {
+          id: 'tying_real_estate_products_services_3420',
+          name: 'Tying—Real Estate, Products, or Services—Essential Factual Elements (Bus. & Prof. Code, § 16720)',
+          description: 'Tying arrangement for real estate, products, or services',
+          caciSeries: 'CACI 3420',
+          elements: ['Tying arrangement', 'Separate products', 'Economic power', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'tying_products_services_3421',
+          name: 'Tying—Products or Services—Essential Factual Elements (Bus. & Prof. Code, § 16727)',
+          description: 'Tying arrangement for products or services',
+          caciSeries: 'CACI 3421',
+          elements: ['Tying arrangement', 'Separate products', 'Economic power', 'Injury to competition', 'Damages']
+        },
+        {
+          id: 'tying_separate_products_explained_3422',
+          name: 'Tying—"Separate Products" Explained',
+          description: 'Definition of separate products in tying',
+          caciSeries: 'CACI 3422',
+          elements: ['Separate products', 'Distinct demand', 'Separate markets']
+        },
+        {
+          id: 'tying_economic_power_explained_3423',
+          name: 'Tying—"Economic Power" Explained',
+          description: 'Definition of economic power in tying',
+          caciSeries: 'CACI 3423',
+          elements: ['Economic power', 'Market power', 'Coercion']
+        },
+        {
+          id: 'noerr_pennington_doctrine_3430',
+          name: '"Noerr-Pennington" Doctrine',
+          description: 'Noerr-Pennington doctrine defense',
+          caciSeries: 'CACI 3430',
+          elements: ['Petitioning government', 'Immune from liability', 'Sham exception']
+        },
+        {
+          id: 'affirmative_defense_in_pari_delicto_3431',
+          name: 'Affirmative Defense—In Pari Delicto',
+          description: 'In pari delicto defense',
+          caciSeries: 'CACI 3431',
+          elements: ['Equal fault', 'Plaintiff participation', 'Defense applies']
+        },
+        {
+          id: 'damages_3440',
+          name: 'Damages',
+          description: 'Damages under Cartwright Act',
+          caciSeries: 'CACI 3440',
+          elements: ['Antitrust injury', 'Overcharge', 'Lost profits', 'Treble damages']
+        }
+      ]
+    },
+    {
+      id: 'series_3500',
+      seriesNumber: 3500,
+      title: 'EMINENT DOMAIN',
+      causes: [
+        {
+          id: 'eminent_domain_introductory_3500',
+          name: 'Introductory Instruction',
+          description: 'Introductory instruction for eminent domain',
+          caciSeries: 'CACI 3500',
+          elements: ['Eminent domain', 'Just compensation', 'Fair market value']
+        },
+        {
+          id: 'fair_market_value_explained_3501',
+          name: '"Fair Market Value" Explained',
+          description: 'Definition of fair market value',
+          caciSeries: 'CACI 3501',
+          elements: ['Fair market value', 'Willing buyer', 'Willing seller', 'Highest price']
+        },
+        {
+          id: 'highest_best_use_explained_3502',
+          name: '"Highest and Best Use" Explained',
+          description: 'Definition of highest and best use',
+          caciSeries: 'CACI 3502',
+          elements: ['Highest and best use', 'Most profitable', 'Legally permissible', 'Physically possible']
+        },
+        {
+          id: 'change_zoning_land_use_restriction_3503',
+          name: 'Change in Zoning or Land Use Restriction',
+          description: 'Change in zoning or land use restriction',
+          caciSeries: 'CACI 3503',
+          elements: ['Zoning change', 'Land use restriction', 'Value impact']
+        },
+        {
+          id: 'project_enhanced_value_3504',
+          name: 'Project Enhanced Value',
+          description: 'Project enhanced value',
+          caciSeries: 'CACI 3504',
+          elements: ['Project enhancement', 'Value increase', 'Excluded from compensation']
+        },
+        {
+          id: 'information_discovered_after_valuation_3505',
+          name: 'Information Discovered after Date of Valuation',
+          description: 'Information discovered after date of valuation',
+          caciSeries: 'CACI 3505',
+          elements: ['Post-valuation information', 'Excluded', 'Date of valuation']
+        },
+        {
+          id: 'effect_improvements_3506',
+          name: 'Effect of Improvements',
+          description: 'Effect of improvements on value',
+          caciSeries: 'CACI 3506',
+          elements: ['Improvements', 'Value impact', 'Compensation']
+        },
+        {
+          id: 'personal_property_inventory_3507',
+          name: 'Personal Property and Inventory',
+          description: 'Personal property and inventory compensation',
+          caciSeries: 'CACI 3507',
+          elements: ['Personal property', 'Inventory', 'Compensation', 'Fair market value']
+        },
+        {
+          id: 'bonus_value_leasehold_interest_3508',
+          name: 'Bonus Value of Leasehold Interest',
+          description: 'Bonus value of leasehold interest',
+          caciSeries: 'CACI 3508',
+          elements: ['Leasehold interest', 'Bonus value', 'Compensation']
+        },
+        {
+          id: 'precondemnation_damages_unreasonable_delay_3509a',
+          name: 'Precondemnation Damages—Unreasonable Delay (Klopping Damages)',
+          description: 'Precondemnation damages for unreasonable delay',
+          caciSeries: 'CACI 3509A',
+          elements: ['Unreasonable delay', 'Precondemnation damages', 'Klopping damages', 'Compensation']
+        },
+        {
+          id: 'precondemnation_damages_authorized_entry_3509b',
+          name: 'Precondemnation Damages—Public Entity\'s Authorized Entry to Investigate Property\'s Suitability (Code Civ. Proc., § 1245.060)',
+          description: 'Precondemnation damages for authorized entry',
+          caciSeries: 'CACI 3509B',
+          elements: ['Authorized entry', 'Investigation', 'Property suitability', 'Damages']
+        },
+        {
+          id: 'value_easement_3510',
+          name: 'Value of Easement',
+          description: 'Value of easement',
+          caciSeries: 'CACI 3510',
+          elements: ['Easement', 'Value', 'Compensation']
+        },
+        {
+          id: 'severance_damages_remainder_3511a',
+          name: 'Severance Damages to Remainder (Code Civ. Proc., §§ 1263.410, 1263.420(a))',
+          description: 'Severance damages to remainder property',
+          caciSeries: 'CACI 3511A',
+          elements: ['Severance damages', 'Remainder property', 'Diminution in value', 'Compensation']
+        },
+        {
+          id: 'damage_remainder_during_construction_3511b',
+          name: 'Damage to Remainder During Construction (Code Civ. Proc., § 1263.420(b))',
+          description: 'Damage to remainder during construction',
+          caciSeries: 'CACI 3511B',
+          elements: ['Construction damage', 'Remainder property', 'Temporary damage', 'Compensation']
+        },
+        {
+          id: 'severance_damages_offset_benefits_3512',
+          name: 'Severance Damages—Offset for Benefits',
+          description: 'Severance damages offset for benefits',
+          caciSeries: 'CACI 3512',
+          elements: ['Severance damages', 'Benefits', 'Offset', 'Net damages']
+        }
+      ]
+    },
+    {
+      id: 'series_3600',
+      seriesNumber: 3600,
+      title: 'CONSPIRACY',
+      causes: [
+        {
+          id: 'conspiracy_essential_3600',
+          name: 'Conspiracy—Essential Factual Elements',
+          description: 'Conspiracy essential factual elements',
+          caciSeries: 'CACI 3600',
+          elements: ['Agreement', 'Unlawful act', 'Overt act', 'Damages']
+        },
+        {
+          id: 'ongoing_conspiracy_3601',
+          name: 'Ongoing Conspiracy',
+          description: 'Ongoing conspiracy',
+          caciSeries: 'CACI 3601',
+          elements: ['Ongoing conspiracy', 'Continuous agreement', 'Multiple acts']
+        },
+        {
+          id: 'affirmative_defense_agent_employee_immunity_3602',
+          name: 'Affirmative Defense—Agent and Employee Immunity Rule',
+          description: 'Defense for agent and employee immunity',
+          caciSeries: 'CACI 3602',
+          elements: ['Agent or employee', 'Acting within scope', 'No conspiracy', 'Defense applies']
+        },
+        {
+          id: 'aiding_abetting_tort_3610',
+          name: 'Aiding and Abetting Tort—Essential Factual Elements',
+          description: 'Aiding and abetting tort',
+          caciSeries: 'CACI 3610',
+          elements: ['Tort committed', 'Knowledge', 'Substantial assistance', 'Causation', 'Damages']
+        }
+      ]
+    },
+    {
+      id: 'series_3700',
+      seriesNumber: 3700,
+      title: 'VICARIOUS RESPONSIBILITY',
+      causes: [
+        {
+          id: 'introduction_vicarious_responsibility_3700',
+          name: 'Introduction to Vicarious Responsibility',
+          description: 'Introduction to vicarious responsibility',
+          caciSeries: 'CACI 3700',
+          elements: ['Vicarious liability', 'Principal', 'Agent or employee', 'Responsibility']
+        },
+        {
+          id: 'tort_liability_principal_3701',
+          name: 'Tort Liability Asserted Against Principal—Essential Factual Elements',
+          description: 'Tort liability against principal',
+          caciSeries: 'CACI 3701',
+          elements: ['Principal', 'Agent or employee', 'Tort committed', 'Scope of employment', 'Liability']
+        },
+        {
+          id: 'affirmative_defense_comparative_fault_plaintiff_agent_3702',
+          name: 'Affirmative Defense—Comparative Fault of Plaintiff\'s Agent',
+          description: 'Defense for comparative fault of plaintiff\'s agent',
+          caciSeries: 'CACI 3702',
+          elements: ['Plaintiff\'s agent', 'Comparative fault', 'Defense applies']
+        },
+        {
+          id: 'legal_relationship_not_disputed_3703',
+          name: 'Legal Relationship Not Disputed',
+          description: 'Legal relationship not disputed',
+          caciSeries: 'CACI 3703',
+          elements: ['Legal relationship', 'Not disputed', 'Established']
+        },
+        {
+          id: 'existence_employee_status_disputed_3704',
+          name: 'Existence of "Employee" Status Disputed',
+          description: 'Existence of employee status disputed',
+          caciSeries: 'CACI 3704',
+          elements: ['Employee status', 'Disputed', 'Control', 'Employment relationship']
+        },
+        {
+          id: 'existence_agency_relationship_disputed_3705',
+          name: 'Existence of "Agency" Relationship Disputed',
+          description: 'Existence of agency relationship disputed',
+          caciSeries: 'CACI 3705',
+          elements: ['Agency relationship', 'Disputed', 'Consent', 'Control']
+        },
+        {
+          id: 'special_employment_lending_employer_denies_3706',
+          name: 'Special Employment—Lending Employer Denies Responsibility for Worker\'s Acts',
+          description: 'Special employment—lending employer denies responsibility',
+          caciSeries: 'CACI 3706',
+          elements: ['Special employment', 'Lending employer', 'Denies responsibility', 'Control']
+        },
+        {
+          id: 'special_employment_joint_responsibility_3707',
+          name: 'Special Employment—Joint Responsibility',
+          description: 'Special employment—joint responsibility',
+          caciSeries: 'CACI 3707',
+          elements: ['Special employment', 'Joint responsibility', 'Both employers liable']
+        },
+        {
+          id: 'peculiar_risk_doctrine_3708',
+          name: 'Peculiar-Risk Doctrine',
+          description: 'Peculiar-risk doctrine',
+          caciSeries: 'CACI 3708',
+          elements: ['Peculiar risk', 'Inherent danger', 'Nondelegable duty', 'Liability']
+        },
+        {
+          id: 'ostensible_agent_3709',
+          name: 'Ostensible Agent',
+          description: 'Ostensible agent',
+          caciSeries: 'CACI 3709',
+          elements: ['Ostensible agent', 'Apparent authority', 'Reliance', 'Liability']
+        },
+        {
+          id: 'ratification_3710',
+          name: 'Ratification',
+          description: 'Ratification of agent\'s acts',
+          caciSeries: 'CACI 3710',
+          elements: ['Ratification', 'Unauthorized act', 'Acceptance', 'Liability']
+        },
+        {
+          id: 'partnerships_3711',
+          name: 'Partnerships',
+          description: 'Partnership liability',
+          caciSeries: 'CACI 3711',
+          elements: ['Partnership', 'Partner acts', 'Partnership business', 'Liability']
+        },
+        {
+          id: 'joint_ventures_3712',
+          name: 'Joint Ventures',
+          description: 'Joint venture liability',
+          caciSeries: 'CACI 3712',
+          elements: ['Joint venture', 'Venturer acts', 'Venture business', 'Liability']
+        },
+        {
+          id: 'nondelegable_duty_3713',
+          name: 'Nondelegable Duty',
+          description: 'Nondelegable duty',
+          caciSeries: 'CACI 3713',
+          elements: ['Nondelegable duty', 'Cannot delegate', 'Liability', 'Independent contractor']
+        },
+        {
+          id: 'ostensible_agency_physician_hospital_3714',
+          name: 'Ostensible Agency—Physician-Hospital Relationship—Essential Factual Elements',
+          description: 'Ostensible agency—physician-hospital relationship',
+          caciSeries: 'CACI 3714',
+          elements: ['Physician', 'Hospital', 'Ostensible agency', 'Apparent authority', 'Liability']
+        },
+        {
+          id: 'scope_employment_3720',
+          name: 'Scope of Employment',
+          description: 'Scope of employment',
+          caciSeries: 'CACI 3720',
+          elements: ['Scope of employment', 'Authorized acts', 'Course of employment', 'Liability']
+        },
+        {
+          id: 'scope_employment_peace_officer_misuse_authority_3721',
+          name: 'Scope of Employment—Peace Officer\'s Misuse of Authority',
+          description: 'Scope of employment—peace officer\'s misuse of authority',
+          caciSeries: 'CACI 3721',
+          elements: ['Peace officer', 'Misuse of authority', 'Scope of employment', 'Liability']
+        },
+        {
+          id: 'scope_employment_unauthorized_acts_3722',
+          name: 'Scope of Employment—Unauthorized Acts',
+          description: 'Scope of employment—unauthorized acts',
+          caciSeries: 'CACI 3722',
+          elements: ['Unauthorized acts', 'Scope of employment', 'Incidental to authorized', 'Liability']
+        },
+        {
+          id: 'substantial_deviation_3723',
+          name: 'Substantial Deviation',
+          description: 'Substantial deviation from scope of employment',
+          caciSeries: 'CACI 3723',
+          elements: ['Substantial deviation', 'Outside scope', 'No liability']
+        },
+        {
+          id: 'social_recreational_activities_3724',
+          name: 'Social or Recreational Activities',
+          description: 'Social or recreational activities',
+          caciSeries: 'CACI 3724',
+          elements: ['Social activities', 'Recreational activities', 'Outside scope', 'No liability']
+        },
+        {
+          id: 'going_coming_rule_vehicle_use_exception_3725',
+          name: 'Going-and-Coming Rule—Vehicle-Use Exception',
+          description: 'Going-and-coming rule—vehicle-use exception',
+          caciSeries: 'CACI 3725',
+          elements: ['Going-and-coming rule', 'Vehicle-use exception', 'Scope of employment', 'Liability']
+        },
+        {
+          id: 'going_coming_rule_business_errand_exception_3726',
+          name: 'Going-and-Coming Rule—Business-Errand Exception',
+          description: 'Going-and-coming rule—business-errand exception',
+          caciSeries: 'CACI 3726',
+          elements: ['Going-and-coming rule', 'Business-errand exception', 'Scope of employment', 'Liability']
+        },
+        {
+          id: 'going_coming_rule_compensated_travel_time_exception_3727',
+          name: 'Going-and-Coming Rule—Compensated Travel Time Exception',
+          description: 'Going-and-coming rule—compensated travel time exception',
+          caciSeries: 'CACI 3727',
+          elements: ['Going-and-coming rule', 'Compensated travel time', 'Scope of employment', 'Liability']
+        }
+      ]
+    },
+    {
+      id: 'series_3800',
+      seriesNumber: 3800,
+      title: 'EQUITABLE INDEMNITY',
+      causes: [
+        {
+          id: 'comparative_fault_tortfeasors_3800',
+          name: 'Comparative Fault Between and Among Tortfeasors',
+          description: 'Comparative fault between and among tortfeasors',
+          caciSeries: 'CACI 3800',
+          elements: ['Multiple tortfeasors', 'Comparative fault', 'Apportionment', 'Indemnity']
+        },
+        {
+          id: 'implied_contractual_indemnity_3801',
+          name: 'Implied Contractual Indemnity',
+          description: 'Implied contractual indemnity',
+          caciSeries: 'CACI 3801',
+          elements: ['Contractual relationship', 'Implied indemnity', 'Duty to indemnify', 'Damages']
+        }
+      ]
+    },
+    {
       id: 'series_other',
       seriesNumber: 0,
       title: 'OTHER',
