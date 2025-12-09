@@ -4311,6 +4311,90 @@ export default function ComplaintForm({
       ]
     },
     {
+      id: 'series_4100',
+      seriesNumber: 4100,
+      title: 'FIDUCIARY DUTY',
+      causes: [
+        {
+          id: 'failure_use_reasonable_care_4101',
+          name: 'Failure to Use Reasonable Care—Essential Factual Elements',
+          description: 'Failure to use reasonable care as fiduciary',
+          caciSeries: 'CACI 4101',
+          elements: ['Fiduciary relationship', 'Duty of care', 'Failure to use reasonable care', 'Damages']
+        },
+        {
+          id: 'duty_undivided_loyalty_4102',
+          name: 'Duty of Undivided Loyalty—Essential Factual Elements',
+          description: 'Duty of undivided loyalty',
+          caciSeries: 'CACI 4102',
+          elements: ['Fiduciary relationship', 'Duty of loyalty', 'Breach', 'Damages']
+        },
+        {
+          id: 'duty_confidentiality_4103',
+          name: 'Duty of Confidentiality—Essential Factual Elements',
+          description: 'Duty of confidentiality',
+          caciSeries: 'CACI 4103',
+          elements: ['Fiduciary relationship', 'Duty of confidentiality', 'Breach', 'Damages']
+        },
+        {
+          id: 'duties_escrow_holder_4104',
+          name: 'Duties of Escrow Holder',
+          description: 'Duties of escrow holder',
+          caciSeries: 'CACI 4104',
+          elements: ['Escrow holder', 'Fiduciary duties', 'Breach', 'Damages']
+        },
+        {
+          id: 'duties_stockbroker_speculative_securities_4105',
+          name: 'Duties of Stockbroker—Speculative Securities',
+          description: 'Duties of stockbroker regarding speculative securities',
+          caciSeries: 'CACI 4105',
+          elements: ['Stockbroker', 'Speculative securities', 'Duty to warn', 'Breach', 'Damages']
+        },
+        {
+          id: 'breach_fiduciary_duty_attorney_4106',
+          name: 'Breach of Fiduciary Duty by Attorney—Essential Factual Elements',
+          description: 'Breach of fiduciary duty by attorney',
+          caciSeries: 'CACI 4106',
+          elements: ['Attorney-client relationship', 'Fiduciary duty', 'Breach', 'Damages']
+        },
+        {
+          id: 'duty_disclosure_real_estate_broker_client_4107',
+          name: 'Duty of Disclosure by Real Estate Broker to Client',
+          description: 'Duty of disclosure by real estate broker to client',
+          caciSeries: 'CACI 4107',
+          elements: ['Real estate broker', 'Client', 'Duty of disclosure', 'Breach', 'Damages']
+        },
+        {
+          id: 'failure_seller_real_estate_broker_reasonable_inspection_4108',
+          name: 'Failure of Seller\'s Real Estate Broker to Conduct Reasonable Inspection—Essential Factual Elements (Civ. Code, § 2079)',
+          description: 'Failure of seller\'s real estate broker to conduct reasonable inspection',
+          caciSeries: 'CACI 4108',
+          elements: ['Seller\'s broker', 'Reasonable inspection', 'Failure to inspect', 'Damages']
+        },
+        {
+          id: 'duty_disclosure_seller_real_estate_broker_buyer_4109',
+          name: 'Duty of Disclosure by Seller\'s Real Estate Broker to Buyer',
+          description: 'Duty of disclosure by seller\'s real estate broker to buyer',
+          caciSeries: 'CACI 4109',
+          elements: ['Seller\'s broker', 'Buyer', 'Duty of disclosure', 'Breach', 'Damages']
+        },
+        {
+          id: 'breach_duty_real_estate_seller_agent_inaccurate_mls_4110',
+          name: 'Breach of Duty by Real Estate Seller\'s Agent—Inaccurate Information in Multiple Listing Service—Essential Factual Elements (Civ. Code, § 1088)',
+          description: 'Breach of duty by real estate seller\'s agent—inaccurate MLS information',
+          caciSeries: 'CACI 4110',
+          elements: ['Seller\'s agent', 'Multiple listing service', 'Inaccurate information', 'Breach', 'Damages']
+        },
+        {
+          id: 'constructive_fraud_4111',
+          name: 'Constructive Fraud (Civ. Code, § 1573)',
+          description: 'Constructive fraud',
+          caciSeries: 'CACI 4111',
+          elements: ['Fiduciary relationship', 'Breach of duty', 'Constructive fraud', 'Damages']
+        }
+      ]
+    },
+    {
       id: 'series_other',
       seriesNumber: 0,
       title: 'OTHER',
